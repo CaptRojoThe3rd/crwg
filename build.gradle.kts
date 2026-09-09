@@ -1,4 +1,4 @@
 
 plugins {
-    id("com.gtnewhorizons.gtnhconvention")
+	id("com.gtnewhorizons.gtnhconvention")
 }

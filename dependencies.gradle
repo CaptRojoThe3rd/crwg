@@ -34,8 +34,9 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev")
+	runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev")
 
-    implementation("com.github.CaptRojoThe3rd:ChunkAPI:0.8.4-EHL:dev")
-    implementation("com.github.CaptRojoThe3rd:EndlessIDs:1.7.4-EHL:dev")
+	implementation(deobf("https://github.com/FalsePattern/FalsePatternLib/releases/download/1.12.2/falsepatternlib-mc1.7.10-1.12.2.jar"))
+	implementation(deobf("https://github.com/CaptRojoThe3rd/ChunkAPI/releases/download/0.8.4-EHL/chunkapi-mc1.7.10-0.8.4-EHL.jar"))
+	implementation(deobf("https://github.com/CaptRojoThe3rd/EndlessIDs/releases/download/1.7.4-EHL/endlessids-mc1.7.10-1.7.4-EHL.jar"))
 }
