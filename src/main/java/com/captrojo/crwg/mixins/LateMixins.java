@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @LateMixin
-public class LateMixinsLoader implements ILateMixinLoader
+public class LateMixins implements ILateMixinLoader
 {
 	@Override
 	public String getMixinConfig()

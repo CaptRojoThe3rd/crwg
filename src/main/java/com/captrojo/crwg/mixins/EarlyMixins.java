@@ -1,16 +1,18 @@
 package com.captrojo.crwg.mixins;
 
-import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
-import cpw.mods.fml.relauncher.FMLLaunchHandler;
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
+import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
+
+import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+
 @IFMLLoadingPlugin.MCVersion("1.7.10")
-public class EarlyMixinsLoader implements IFMLLoadingPlugin, IEarlyMixinLoader
+public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 {
 	@Override
 	public String[] getASMTransformerClass()
@@ -47,6 +49,7 @@ public class EarlyMixinsLoader implements IFMLLoadingPlugin, IEarlyMixinLoader
 		return "mixins.crwg.early.json";
 	}
 
+	@Nonnull
 	@Override
 	public List<String> getMixins(Set<String> loadedCoreMods)
 	{

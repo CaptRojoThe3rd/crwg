@@ -18,11 +18,16 @@
 
 package com.captrojo.crwg.main;
 
-import com.captrojo.crwg.Tags;
-import com.captrojo.crwg.world.WorldTypeCRWG;
-import net.minecraft.world.WorldType;
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.captrojo.crwg.Tags;
+import com.captrojo.crwg.block.ModBlocks;
+import com.captrojo.crwg.creativetab.TabBlocks;
+import com.captrojo.crwg.world.WorldTypeCRWG;
+import com.captrojo.crwg.world.biome.ModBiomes;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -30,6 +35,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import net.minecraft.creativetab.CreativeTabs;
 
 @Mod(
 	modid = CRWG.MOD_ID,
@@ -44,20 +50,45 @@ public class CRWG
 
 	public static final Logger LOG = LogManager.getLogger(MOD_ID);
 
-	@SidedProxy(clientSide = "com.captrojo.crwg.main.ClientProxy", serverSide = "com.captrojo.crwg.main.CommonProxy")
+	@SidedProxy(
+		clientSide = "com.captrojo.crwg.main.ClientProxy",
+		serverSide = "com.captrojo.crwg.main.CommonProxy"
+	)
 	public static CommonProxy proxy;
+	
+	public static String dir_config;
+	
+	public static CreativeTabs tab_blocks = new TabBlocks();
+	
+	public static String ident(String s)
+	{
+		if (s.contains(":")) {
+			return s;
+		}
+		return MOD_ID + ":" + s;
+	}
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		proxy.preInit(event);
+		dir_config = event.getModConfigurationDirectory().getPath() + File.separator + "crwg";
+		File f = new File(dir_config);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+		
+		ModBlocks.initBlocks();
+		ModBlocks.registerBlocks();
 
-		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG();
+		proxy.preInit(event);
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		ModBiomes.init();
+		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG();
+		
 		proxy.init(event);
 	}
 

@@ -1,6 +1,18 @@
 package com.captrojo.crwg.world;
 
-import com.captrojo.crwg.world.genlayer.*;
+import java.util.List;
+import java.util.Random;
+
+import com.captrojo.crwg.world.gen.genlayer.GenLayerBiomes;
+import com.captrojo.crwg.world.gen.noise.layer.NLayer;
+import com.captrojo.crwg.world.gen.noise.layer.NLayer2DNoise;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerContinentToHeight;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerFade;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerFadeLessSteep;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerHillsMountains;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerIncreaseOceans;
+import com.captrojo.crwg.world.gen.noise.layer.NLayerSaved;
+
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -8,63 +20,54 @@ import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-import java.util.List;
-import java.util.Random;
-
 public class WorldChunkManagerCRWG extends WorldChunkManager
 {
-	public Layer layer_continentalness;
-	public Layer layer_height;
+	public NLayerSaved nl_continentalness;
+	public NLayerSaved nl_hill_selector;
+	public NLayerSaved nl_height;
+	
+	public NLayer nl_temperature;
+	public NLayer nl_rainfall;
 
-	public LayerRiverSelector layer_river_selector;
-
-	public Layer layer_rainfall;
-	public Layer layer_temperature;
-
+	public GenLayer layer_height_types;
 	public GenLayer layer_biomes;
 
 	public WorldChunkManagerCRWG(World world)
 	{
 		long seed = world.getSeed();
-		Layer layer;
-		Layer layer2;
-		Layer layer3;
+		Random rand = new Random(seed);
 
-		layer = new Layer2DNoise(Layer.createSeed(seed, 1L), 4, 500, 1.0 / 7.0);
-		layer = new LayerIncreaseOceans(layer); /* Make oceans majority */
-		this.layer_continentalness = layer;
+		NLayer layer, layer2, layer3, layer4;
+		
+		double terrain_scale = 2.0;
+		double biome_scale = 1.0;
 
-		layer = new LayerContinentHeightCurve(layer);
+		layer = new NLayer2DNoise(rand, 10, false, 1.0 / (900.0 * terrain_scale), 1.0 / (900.0 * terrain_scale), 1.0);
+		layer = new NLayerIncreaseOceans(layer);
+		layer = new NLayerSaved(layer, true);
+		this.nl_continentalness = (NLayerSaved) layer;
 
-		layer2 = new Layer2DNoise(Layer.createSeed(seed, 5784934345L), 3, 100, 1.0);
-		layer = new LayerLandHeightTweaks(layer, layer2, 1.0 / 5.0);
+		layer = new NLayerContinentToHeight(layer);
+		
+		layer2 = new NLayer2DNoise(rand, 5, true, 1.0 / (100.0 * terrain_scale), 1.0 / (100.0 * terrain_scale));
+		layer2 = new NLayerSaved(layer2, false);
+		this.nl_hill_selector = (NLayerSaved) layer2;
+		
+		layer3 = new NLayer2DNoise(rand, 3, true, 1.0 / 50.0, 1.0 / 50.0);
+		layer3 = new NLayerFade(layer3);
+		layer4 = new NLayer2DNoise(rand, 8, true, 1.0 / 130.0, 1.0 / 130.0);
+		layer = new NLayerHillsMountains(layer, this.nl_continentalness, layer2, layer3, layer4);
 
-		layer2 = new Layer2DNoise(Layer.createSeed(seed, 8L), 4, 50, 1.0);
-		layer3 = new Layer2DNoise(Layer.createSeed(seed, 35445246234L), 3, 20, 1.0);
-		layer = new LayerAddMountains(layer, layer2, 1.0 / 7.0, layer3, 0.1);
-
-		layer2 = new Layer2DNoise(Layer.createSeed(seed, 1234567890L), 3, 37, 1.0);
-		layer = new LayerAdd(layer, layer2, 0.06);
-
-		layer2 = new Layer2DNoise(Layer.createSeed(seed, 9999999L), 2, 10, 1.0);
-		layer = new LayerAdd(layer, layer2, 0.01);
-
-		layer2 = new Layer2DNoise(Layer.createSeed(seed, 444444L), 3, 100, 1.0);
-		this.layer_river_selector = new LayerRiverSelector(layer2, 0.07);
-		layer = new LayerRivers(layer, this.layer_river_selector);
-
-		this.layer_height = layer;
-
-		this.layer_rainfall = new Layer2DNoise(Layer.createSeed(seed, 1234L), 3, 1000, 1.0);
-		this.layer_temperature = new Layer2DNoise(Layer.createSeed(seed, 5678L), 3, 1000, 1.0);
-
-		this.layer_biomes = new GenLayerBiomes(
-			1L,
-			this.layer_height,
-			this.layer_river_selector,
-			this.layer_rainfall,
-			this.layer_temperature
-		);
+		layer = new NLayerSaved(layer, false);
+		this.nl_height = (NLayerSaved) layer;
+		
+		this.nl_temperature = new NLayer2DNoise(rand, 3, true, 1.0 / (320.0 * biome_scale), 1.0 / (320.0 * biome_scale));
+		this.nl_temperature = new NLayerFade(this.nl_temperature);
+		
+		this.nl_rainfall = new NLayer2DNoise(rand, 3, true, 1.0 / (640.0 * biome_scale), 1.0 / (640.0 * biome_scale));
+		this.nl_rainfall = new NLayerFade(this.nl_rainfall);
+		
+		this.layer_biomes = new GenLayerBiomes(seed, this);
 		this.layer_biomes.initWorldGenSeed(seed);
 	}
 

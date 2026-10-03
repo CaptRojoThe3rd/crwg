@@ -1,0 +1,8 @@
+
+itemGroup.crwg_blocks=CRWG - Blocks
+
+tile.palm_log.regular.name=Palm Log
+tile.palm_log.regular_stripped.name=Stripped Palm Log
+tile.palm_log.fullbark.name=Palm Wood
+tile.palm_log.fullbark_stripped.name=Stripped Palm Wood
+tile.palm_planks.name=Palm Planks

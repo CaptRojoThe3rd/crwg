@@ -9,21 +9,17 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.ChunkPosition;
-import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
-import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.ArrayList;
@@ -35,11 +31,6 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINE
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA;
 
 public class ChunkProviderCRWG implements IChunkProvider
 {
@@ -111,6 +102,10 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		int k = -1;
 		int l = (int) (noise / 3.0 + 3.0 + this.rand.nextDouble() * 0.25);
+		if (biome.rootHeight < -0.2f) {
+			l = 0;
+		}
+
 		int x = x1 & 15;
 		int z = z1 & 15;
 
@@ -158,7 +153,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 				if (y >= 127) {
 					ablock[idx] = top_block;
 					ameta[idx] = top_meta;
-				} else if (y < 120 - l) {
+				} else if (y < 127 - l) {
 					top_block = null;
 					filler_block = Blocks.stone;
 					ablock[idx] = Blocks.gravel;
@@ -192,8 +187,6 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		WorldChunkManagerCRWG wcm = (WorldChunkManagerCRWG) this.world.getWorldChunkManager();
 
-		double[] height_map = wcm.layer_height.generate(chunk_x << 4, chunk_z << 4, 16, 16, 256);
-
 		this.biomes_for_gen = wcm.getBiomesForGeneration(this.biomes_for_gen, chunk_x << 4, chunk_z << 4, 16, 16);
 		short[] abiomeid = new short[256];
 		BiomeGenBase[] abiome = new BiomeGenBase[256];
@@ -207,19 +200,21 @@ public class ChunkProviderCRWG implements IChunkProvider
 			}
 		}
 
-		for (int xz = 0; xz < 256; xz++) {
-			int h = (int) ((height_map[xz] + 1) * 128.0);
-			h = Math.min(h, 511);
-			int ht = h - (3 + this.rand.nextInt(3));
+		double[] height_map = wcm.nl_height.generate(chunk_x << 4, chunk_z << 4, 16, 16, 256);
 
-			for (int y = 0; y <= h; y++) {
-				int idx = xz | (y << 8);
-				ablock[idx] = Blocks.stone;
+		for (int xz = 0; xz < 256; xz++) {
+			double n = height_map[xz] + 1.0;
+			int h = (int) (n * 128.0);
+
+			for (int y = 0; y < h && y < 512; y++) {
+				int i = xz | (y << 8);
+				ablock[i] = Blocks.stone;
 			}
-			for (int y = 0; y < 128; y++) {
-				int idx = xz | (y << 8);
-				if (ablock[idx] == null) {
-					ablock[idx] = Blocks.water;
+
+			for (int y = 0; y < 127; y++){
+				int i = xz | (y << 8);
+				if (ablock[i] == null) {
+					ablock[i] = Blocks.water;
 				}
 			}
 		}
@@ -264,81 +259,83 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		boolean village_flag = false;
 
-		MinecraftForge.EVENT_BUS.post(
-			new PopulateChunkEvent.Pre(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag)
-		);
+//		MinecraftForge.EVENT_BUS.post(
+//			new PopulateChunkEvent.Pre(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag)
+//		);
 
-		if (this.map_features_enabled) {
+//		if (this.map_features_enabled) {
 //			this.mineshaftGenerator.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
 //			village_flag = this.villageGenerator.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
 //			this.strongholdGenerator.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
 //			this.scatteredFeatureGenerator.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
-		}
+//		}
 
+		boolean do_gen;
 		int i;
 		int x;
 		int y;
 		int z;
 
-		if (
-			biome != BiomeGenBase.desert &&
-			biome != BiomeGenBase.desertHills &&
-			!village_flag &&
-			this.rand.nextInt(4) == 0 &&
-			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAKE)
-		) {
-			x = x0 + this.rand.nextInt(16) + 8;
-			y = this.rand.nextInt(512);
-			z = z0 + this.rand.nextInt(16) + 8;
-			(new WorldGenLakes(Blocks.water)).generate(this.world, this.rand, x, y, z);
-		}
+//		if (
+//			biome != BiomeGenBase.desert &&
+//			biome != BiomeGenBase.desertHills &&
+//			!village_flag &&
+//			this.rand.nextInt(4) == 0 &&
+//			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAKE)
+//		) {
+//			x = x0 + this.rand.nextInt(16) + 8;
+//			y = this.rand.nextInt(512);
+//			z = z0 + this.rand.nextInt(16) + 8;
+//			(new WorldGenLakes(Blocks.water)).generate(this.world, this.rand, x, y, z);
+//		}
 
-		if (
-			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAVA) &&
-			!village_flag &&
-			this.rand.nextInt(8) == 0
-		) {
-			x = x0 + this.rand.nextInt(16) + 8;
-			y = this.rand.nextInt(this.rand.nextInt(504) + 8);
-			z = z0 + this.rand.nextInt(16) + 8;
+//		if (
+//			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAVA) &&
+//			!village_flag &&
+//			this.rand.nextInt(8) == 0
+//		) {
+//			x = x0 + this.rand.nextInt(16) + 8;
+//			y = this.rand.nextInt(this.rand.nextInt(504) + 8);
+//			z = z0 + this.rand.nextInt(16) + 8;
+//
+//			if (y < 127 || this.rand.nextInt(10) == 0) {
+//				(new WorldGenLakes(Blocks.lava)).generate(this.world, this.rand, x, y, z);
+//			}
+//		}
 
-			if (y < 127 || this.rand.nextInt(10) == 0) {
-				(new WorldGenLakes(Blocks.lava)).generate(this.world, this.rand, x, y, z);
-			}
-		}
+//		do_gen = TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, DUNGEON);
+//		for (i = 0; do_gen && i < 8; i++) {
+//			x = x0 + this.rand.nextInt(16) + 8;
+//			y = this.rand.nextInt(512);
+//			z = z0 + this.rand.nextInt(16) + 8;
+//			(new WorldGenDungeons()).generate(this.world, this.rand, x, y, z);
+//		}
 
-		boolean do_gen = TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, DUNGEON);
-		for (i = 0; do_gen && i < 8; i++) {
-			x = x0 + this.rand.nextInt(16) + 8;
-			y = this.rand.nextInt(512);
-			z = z0 + this.rand.nextInt(16) + 8;
-			(new WorldGenDungeons()).generate(this.world, this.rand, x, y, z);
-		}
+//		biome.decorate(this.world, this.rand, x0, z0);
 
-		biome.decorate(this.world, this.rand, x0, z0);
-		if (TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ANIMALS)) {
-			SpawnerAnimals.performWorldGenSpawning(this.world, biome, x0 + 8, z0 + 8, 16, 16, this.rand);
-		}
+//		if (TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ANIMALS)) {
+//			SpawnerAnimals.performWorldGenSpawning(this.world, biome, x0 + 8, z0 + 8, 16, 16, this.rand);
+//		}
 
 		x0 += 8;
 		z0 += 8;
 
-		do_gen = TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ICE);
-		for (x = 0; do_gen && x < 16; x++) {
-			for (z = 0; z < 16; z++) {
-				y = this.world.getPrecipitationHeight(x0 + x, z0 + z);
+//		do_gen = TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ICE);
+//		for (x = 0; do_gen && x < 16; x++) {
+//			for (z = 0; z < 16; z++) {
+//				y = this.world.getPrecipitationHeight(x0 + x, z0 + z);
+//
+//				if (this.world.isBlockFreezable(x + x0, y - 1, z + z0)) {
+//					this.world.setBlock(x + x0, y - 1, z + z0, Blocks.ice, 0, 2);
+//				}
+//
+//				if (this.world.func_147478_e(x + x0, y, z + z0, true)) {
+//					this.world.setBlock(x + x0, y, z + z0, Blocks.snow_layer, 0, 2);
+//				}
+//			}
+//		}
 
-				if (this.world.isBlockFreezable(x + x0, y - 1, z + z0)) {
-					this.world.setBlock(x + x0, y - 1, z + z0, Blocks.ice, 0, 2);
-				}
-
-				if (this.world.func_147478_e(x + x0, y, z + z0, true)) {
-					this.world.setBlock(x + x0, y, z + z0, Blocks.snow_layer, 0, 2);
-				}
-			}
-		}
-
-		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunk_prov, world, rand, chunk_x, chunk_z, village_flag));
+//		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunk_prov, world, rand, chunk_x, chunk_z, village_flag));
 
 		BlockFalling.fallInstantly = false;
 	}
