@@ -1,7 +1,20 @@
 package com.captrojo.crwg.world;
 
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import com.captrojo.crwg.world.biome.BiomeTypeCRWG;
 import com.captrojo.crwg.world.gen.MapGenCavesCRWG;
+import com.captrojo.crwg.world.gen.genlayer.GConst;
 import com.falsepattern.endlessids.mixin.helpers.ChunkBiomeHook;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
@@ -15,22 +28,11 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.event.terraingen.TerrainGen;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
 
 public class ChunkProviderCRWG implements IChunkProvider
 {
@@ -43,7 +45,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				for (int y = 0; y < height; y++) {
-					int idx = (z | (x << 4) | (y << 8));
+					int idx = (x | (z << 4) | (y << 8));
 
 					Block block = ablock[idx];
 					if (block == null || block == Blocks.air) {
@@ -66,10 +68,9 @@ public class ChunkProviderCRWG implements IChunkProvider
 	}
 
 	World world;
+	WorldChunkManagerCRWG wcm;
 	Random rand;
 	boolean map_features_enabled;
-
-	BiomeGenBase[] biomes_for_gen;
 
 	private MapGenBase caveGenerator = new MapGenCavesCRWG();
 	private MapGenStronghold mapgen_stronghold = new MapGenStronghold();
@@ -102,15 +103,12 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		int k = -1;
 		int l = (int) (noise / 3.0 + 3.0 + this.rand.nextDouble() * 0.25);
-		if (biome.rootHeight < -0.2f) {
-			l = 0;
-		}
 
 		int x = x1 & 15;
 		int z = z1 & 15;
 
 		for (int y = 511; y >= 0; y--) {
-			int idx = z | (x << 4) | (y << 8);
+			int idx = x | (z << 4) | (y << 8);
 
 			if (y <= this.rand.nextInt(5)) {
 				ablock[idx] = Blocks.bedrock;
@@ -171,6 +169,70 @@ public class ChunkProviderCRWG implements IChunkProvider
 			}
 		}
 	}
+	
+	public void genTerrain(int chunk_x, int chunk_z, Block[] ablock, WorldChunkManagerCRWG.GenArrays arrays)
+	{
+		int x0 = chunk_x << 4;
+		int z0 = chunk_z << 4;
+		
+		final double[][] noise_arrays = {
+			arrays.deep_ocean_noise,
+			arrays.ocean_noise,
+			arrays.shallow_ocean_noise,
+			arrays.beach_noise,
+			
+			arrays.lowland_noise,
+			arrays.hill_noise,
+			arrays.highland_noise,
+			arrays.mountain_noise,
+			
+			arrays.river_noise
+		};
+		
+		final double[][] sel_arrays = {
+			arrays.deep_ocean_sel,
+			arrays.ocean_sel,
+			arrays.shallow_ocean_sel,
+			arrays.beach_sel,
+			
+			arrays.lowland_sel,
+			arrays.hill_sel,
+			arrays.highland_sel,
+			arrays.mountain_sel,
+			
+			arrays.river_sel
+		};
+		
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				int xz = x | (z << 4);
+				
+				/* calculate height */
+				double noise_sum = 0.0;
+				double sel_sum = 0.0;
+				for (int j = 0; j < noise_arrays.length; j++) {
+					double n = noise_arrays[j][xz];
+					double s = sel_arrays[j][xz];
+					noise_sum += (n * s);
+					sel_sum += s;
+				}
+				noise_sum /= sel_sum;
+				int h = (int) (noise_sum * 100.0);
+				
+				/* fill in blocks */
+				for (int y = 0; y <= h; y++) {
+					int i = xz | (y << 8);
+					ablock[i] = Blocks.stone;
+				}
+				for (int y = 0; y < 128; y++) {
+					int i = xz | (y << 8);
+					if (ablock[i] != Blocks.stone) {
+						ablock[i] = Blocks.water;
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public boolean chunkExists(int chunk_x, int chunk_z)
@@ -185,37 +247,17 @@ public class ChunkProviderCRWG implements IChunkProvider
 		Block[] ablock = new Block[16 * 16 * 512];
 		short[] ameta = new short[16 * 16 * 512];
 
-		WorldChunkManagerCRWG wcm = (WorldChunkManagerCRWG) this.world.getWorldChunkManager();
+		this.wcm = (WorldChunkManagerCRWG) this.world.getWorldChunkManager();
+		WorldChunkManagerCRWG.GenArrays arrays = this.wcm.generateArrays(chunk_x << 4, chunk_z << 4, 16, 16);
+		
+		this.genTerrain(chunk_x, chunk_z, ablock, arrays);
 
-		this.biomes_for_gen = wcm.getBiomesForGeneration(this.biomes_for_gen, chunk_x << 4, chunk_z << 4, 16, 16);
+		BiomeGenBase[] abiome = arrays.biome_array;
 		short[] abiomeid = new short[256];
-		BiomeGenBase[] abiome = new BiomeGenBase[256];
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				int xz = z | (x << 4);
-				int xzb = x | (z << 4);
-				BiomeGenBase biome = this.biomes_for_gen[xz];
-				abiome[xz] = biome;
-				abiomeid[xzb] = (short) biome.biomeID;
-			}
-		}
-
-		double[] height_map = wcm.nl_height.generate(chunk_x << 4, chunk_z << 4, 16, 16, 256);
-
-		for (int xz = 0; xz < 256; xz++) {
-			double n = height_map[xz] + 1.0;
-			int h = (int) (n * 128.0);
-
-			for (int y = 0; y < h && y < 512; y++) {
-				int i = xz | (y << 8);
-				ablock[i] = Blocks.stone;
-			}
-
-			for (int y = 0; y < 127; y++){
-				int i = xz | (y << 8);
-				if (ablock[i] == null) {
-					ablock[i] = Blocks.water;
-				}
+				int xz = x | (z << 4);
+				abiomeid[xz] = (short) arrays.biome_id_array[xz];
 			}
 		}
 
@@ -224,7 +266,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				int xz = z | (x << 4);
+				int xz = x | (z << 4);
 				BiomeGenBase biome = abiome[xz];
 				this.genBiomeTerrain(biome, ablock, ameta, x, z, 0.0);
 			}

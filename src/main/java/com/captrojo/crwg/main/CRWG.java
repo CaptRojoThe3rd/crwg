@@ -86,7 +86,9 @@ public class CRWG
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		ModBiomes.init();
+		ModBiomes.registerBiomes();
+		ModBiomes.initBiomeTypes();
+		
 		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG();
 		
 		proxy.init(event);
@@ -95,6 +97,8 @@ public class CRWG
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
+		ModBiomes.initBiomeTypes();
+		
 		proxy.postInit(event);
 	}
 

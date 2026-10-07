@@ -1,14 +1,16 @@
 package com.captrojo.crwg.world.gen.noise.layer;
 
-public class NLayerMultiply extends NLayer
+public class NLayerMultiplyAdd extends NLayer
 {
 	final NLayer parent;
 	final double m;
+	final double a;
 	
-	public NLayerMultiply(NLayer parent, double m)
+	public NLayerMultiplyAdd(NLayer parent, double m, double a)
 	{
 		this.parent = parent;
 		this.m = m;
+		this.a = a;
 	}
 	
 	@Override
@@ -18,9 +20,9 @@ public class NLayerMultiply extends NLayer
 
 		for (int i = 0; i < asize; i++) {
 			array[i] *= this.m;
+			array[i] += this.a;
 		}
 		
 		return array;
 	}
-
 }

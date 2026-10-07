@@ -1,31 +1,42 @@
 package com.captrojo.crwg.world.biome;
 
-import com.captrojo.crwg.config.BiomeConfig;
-
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.common.BiomeManager;
-import net.minecraftforge.common.BiomeManager.BiomeEntry;
-import net.minecraftforge.common.BiomeManager.BiomeType;
 
 public abstract class ModBiomes
 {
-	public static BiomeGenBase dry_plains;
-	public static BiomeGenBase dry_plains_cold;
-	
-	public static void init()
+	public static void registerBiomes()
 	{
-		dry_plains = new BiomeGenDryPlains(BiomeConfig.id_dry_plains, 0xacba6d, 0x8b965a, 0.8f, "Dry Plains");
-		dry_plains_cold = new BiomeGenDryPlains(BiomeConfig.id_dry_plains_cold, 0x92b28e, 0x677a65, 0.4f, "Cold Dry Plains");
+	}
+
+	public static void initBiomeTypes()
+	{
+		BiomeTypeCRWG.DESERT.addGroupOf(BiomeGenBase.desert, BiomeGenBase.desertHills, BiomeGenBase.desertHills, BiomeGenBase.mesaPlateau, BiomeGenBase.mesaPlateau);
 		
-		BiomeDictionary.registerBiomeType(dry_plains, Type.DEAD);
-		BiomeDictionary.registerBiomeType(dry_plains_cold, Type.DEAD, Type.COLD);
+		BiomeTypeCRWG.SAVANNA.addGroupOf(BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.savannaPlateau, BiomeGenBase.savannaPlateau, BiomeGenBase.savannaPlateau);
 		
-		BiomeEntry e_dry_plains = new BiomeEntry(dry_plains, 10);
-		BiomeEntry e_dry_plains_cold = new BiomeEntry(dry_plains_cold, 10);
+		BiomeTypeCRWG.SCRUBLAND.addGroupOf(BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.savannaPlateau, BiomeGenBase.savannaPlateau, BiomeGenBase.savannaPlateau);
 		
-		BiomeManager.addBiome(BiomeType.WARM, e_dry_plains);
-		BiomeManager.addBiome(BiomeType.COOL, e_dry_plains_cold);
+		BiomeTypeCRWG.TROPICAL_FOREST.addGroupOf(BiomeGenBase.roofedForest, BiomeGenBase.roofedForest, BiomeGenBase.roofedForest, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.RAINFOREST.addGroupOf(BiomeGenBase.jungle, BiomeGenBase.jungleHills, BiomeGenBase.jungleHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.COOLER_DESERT.addGroupOf(BiomeGenBase.desert, BiomeGenBase.desertHills, BiomeGenBase.desertHills, BiomeGenBase.mesaPlateau_F, BiomeGenBase.mesaPlateau_F);
+		
+		BiomeTypeCRWG.GRASSLAND.addGroupOf(BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+
+		BiomeTypeCRWG.CHAPARRAL.addGroupOf(BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.DECIDUOUS_FOREST.addGroupOf(BiomeGenBase.forest, BiomeGenBase.forestHills, BiomeGenBase.forestHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		BiomeTypeCRWG.DECIDUOUS_FOREST.addGroupOf(BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.birchForestHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+	
+		BiomeTypeCRWG.DENSE_DECIDUOUS_FOREST.addGroupOf(BiomeGenBase.forest, BiomeGenBase.forestHills, BiomeGenBase.forestHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.COLD_GRASSLAND.addGroupOf(BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.plains, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.BOREAL_FOREST.addGroupOf(BiomeGenBase.taiga, BiomeGenBase.taigaHills, BiomeGenBase.taigaHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.DENSE_BOREAL_FOREST.addGroupOf(BiomeGenBase.megaTaiga, BiomeGenBase.megaTaigaHills, BiomeGenBase.megaTaigaHills, BiomeGenBase.extremeHills, BiomeGenBase.extremeHills);
+		
+		BiomeTypeCRWG.TUNDRA.addGroupOf(BiomeGenBase.icePlains, BiomeGenBase.icePlains, BiomeGenBase.iceMountains, BiomeGenBase.iceMountains, BiomeGenBase.iceMountains);
 	}
 }

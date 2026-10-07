@@ -92,7 +92,7 @@ public class NoisePerlin
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				int idx = y + (x * height);
+				int idx = x + (y * height);
 
 				final double xf = x0 + (double) x * scale_x + this.x_offset;
 				final double yf = y0 + (double) y * scale_y + this.y_offset;
