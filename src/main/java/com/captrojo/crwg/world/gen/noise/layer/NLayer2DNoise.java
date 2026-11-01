@@ -29,6 +29,11 @@ public class NLayer2DNoise extends NLayer
 		this.scale_x = scale_x;
 		this.scale_y = scale_y;
 	}
+	
+	protected NoisePerlinFractal createNoiseGen(int octaves, boolean normalize, Random rand)
+	{
+		return (new NoisePerlinFractal(octaves, normalize)).initNoiseGens(rand);
+	}
 
 	@Override
 	public double[] generate(int ax, int ay, int aw, int ah, int asize)

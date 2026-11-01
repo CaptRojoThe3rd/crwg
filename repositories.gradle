@@ -1,5 +1,14 @@
 // Add any additional repositories for your dependencies here.
 
 repositories {
-	
+	maven {
+		url = uri("https://jitpack.io")
+	}
+	maven {
+		name = "mavenpattern"
+		url = "https://mvn.falsepattern.com/releases"
+		content {
+			includeGroup("com.falsepattern")
+		}
+	}
 }

@@ -5,9 +5,12 @@ import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerRand extends GenLayer
 {
-	public GenLayerRand(long base_seed)
+	final int bound;
+	
+	public GenLayerRand(long base_seed, int bound)
 	{
 		super(base_seed);
+		this.bound = bound;
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public class GenLayerRand extends GenLayer
 			for (int y = 0; y < ah; y++) {
 				int idx = x + (y * aw);
 				this.initChunkSeed((long) (ax + x), (long) (ay + y));
-				array[idx] = this.nextInt(32768);
+				array[idx] = this.nextInt(this.bound);
 			}
 		}
 		

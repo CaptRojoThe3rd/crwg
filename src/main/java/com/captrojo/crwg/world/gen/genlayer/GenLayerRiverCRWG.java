@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world.gen.genlayer;
 
+import com.captrojo.crwg.world.gen.data.GConst;
+
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 

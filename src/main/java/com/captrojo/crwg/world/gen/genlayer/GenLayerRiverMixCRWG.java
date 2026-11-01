@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world.gen.genlayer;
 
+import com.captrojo.crwg.world.gen.data.GConst;
+
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -13,6 +15,13 @@ public class GenLayerRiverMixCRWG extends GenLayer
 		this.parent = parent;
 		this.river = river;
 	}
+	
+	@Override
+	public void initWorldGenSeed(long seed)
+	{
+		this.river.initWorldGenSeed(seed);
+		super.initWorldGenSeed(seed);
+	}
 
 	@Override
 	public int[] getInts(int ax, int ay, int aw, int ah)
@@ -25,7 +34,7 @@ public class GenLayerRiverMixCRWG extends GenLayer
 		
 		for (int i = 0; i < asize; i++) {
 			n_arr[i] = p_arr[i];
-			if (r_arr[i] == GConst.WATER && p_arr[i] > GConst.SHALLOWOCEAN) {
+			if (r_arr[i] == GConst.WATER && p_arr[i] > GConst.SHALLOWOCEAN && p_arr[i] < GConst.MOUNTAINS) {
 				n_arr[i] = GConst.RIVERS;
 			}
 		}

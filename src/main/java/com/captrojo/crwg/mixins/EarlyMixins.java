@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import org.spongepowered.asm.mixin.MixinEnvironment;
+
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
@@ -14,6 +16,8 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 @IFMLLoadingPlugin.MCVersion("1.7.10")
 public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 {
+	public static final MixinEnvironment.Side SIDE = MixinEnvironment.getCurrentEnvironment().getSide();
+	
 	@Override
 	public String[] getASMTransformerClass()
 	{
@@ -49,11 +53,28 @@ public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 		return "mixins.crwg.early.json";
 	}
 
-	@Nonnull
 	@Override
-	public List<String> getMixins(Set<String> loadedCoreMods)
+	public @Nonnull List<String> getMixins(Set<String> loaded_core_mods)
 	{
 		List<String> mixins = new ArrayList<>();
+		
+		boolean angelica = false;
+		for (String mod : loaded_core_mods) {
+			if (mod.contains("com.gtnewhorizons.angelica")) {
+				angelica = true;
+				break;
+			}
+		}
+		
+		mixins.add("common.BlockDeadBushMixin");
+		
+		mixins.add("common.ChunkMixin");
+		mixins.add("common.WorldMixin");
+		
+		if (SIDE == MixinEnvironment.Side.CLIENT && !angelica) {
+			mixins.add("client.RenderBlocksMixin");
+		}
+		
 		return mixins;
 	}
 }

@@ -3,20 +3,31 @@ package com.captrojo.crwg.main;
 import java.io.File;
 
 import com.captrojo.crwg.config.BiomeConfig;
+import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.config.ModConfig;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy
 {
-	public void preInit(FMLPreInitializationEvent event)
+	public void loadConfig()
 	{
 		ModConfig.load(new File(CRWG.dir_config + File.separator + "common.cfg"));
+		
 		BiomeConfig.init();
+		GeneralConfig.init();
+		
 		ModConfig.save();
+	}
+	
+	public void preInit(FMLPreInitializationEvent event)
+	{
+		CommonEvents.instance = new CommonEvents();
+		MinecraftForge.EVENT_BUS.register(CommonEvents.instance);
 	}
 
 	public void init(FMLInitializationEvent event)

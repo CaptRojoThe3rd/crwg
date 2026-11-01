@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world;
 
+import com.captrojo.crwg.main.CRWG;
+
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
@@ -35,5 +37,11 @@ public class WorldTypeCRWG extends WorldType
 	public GenLayer getBiomeLayer(long seed, GenLayer parent)
 	{
 		return super.getBiomeLayer(seed, parent);
+	}
+	
+	@Override
+	public float getCloudHeight()
+	{
+		return CRWG.funcs.getSeaLevel() + 224;
 	}
 }

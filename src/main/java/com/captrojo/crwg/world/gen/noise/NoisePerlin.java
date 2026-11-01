@@ -37,12 +37,12 @@ public class NoisePerlin
 		this.y_offset = rand.nextDouble() * 1024.0;
 	}
 
-	private double lerp(double t, double a, double b)
+	private final double lerp(double t, double a, double b)
 	{
 		return a + t * (b - a);
 	}
 
-	private double fade(double t)
+	private final double fade(double t)
 	{
 		return ((6 * t - 15) * t + 10) * t * t * t;
 	}

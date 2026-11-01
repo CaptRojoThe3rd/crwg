@@ -1,8 +1,127 @@
 
 itemGroup.crwg_blocks=CRWG - Blocks
 
+tile.bald_cypress_log.regular.name=Bald Cypress Log
+tile.bald_cypress_log.regular_stripped.name=Stripped Bald Cypress Log
+tile.bald_cypress_log.fullbark.name=Bald Cypress Wood
+tile.bald_cypress_log.fullbark_stripped.name=Stripped Bald Cypress Wood
+tile.bald_cypress_planks.name=Bald Cypress Planks
+tile.bald_cypress_slab.name=Bald Cypress Slab
+tile.bald_cypress_stairs.name=Bald Cypress Stairs
+tile.bald_cypress_fence.name=Bald Cypress Fence
+tile.bald_cypress_fence_gate.name=Bald Cypress Fence Gate
+tile.bald_cypress_button.name=Bald Cypress Button
+tile.bald_cypress_pressure_plate.name=Bald Cypress Pressure Plate
+tile.bald_cypress_door.name=Bald Cypress Door
+tile.bald_cypress_trapdoor.name=Bald Cypress Trap Door
+tile.bald_cypress_sign.name=Bald Cypress Sign
+tile.bald_cypress_sapling.name=Bald Cypress Sapling
+tile.bald_cypress_leaves.name=Bald Cypress Leaves
+
 tile.palm_log.regular.name=Palm Log
 tile.palm_log.regular_stripped.name=Stripped Palm Log
 tile.palm_log.fullbark.name=Palm Wood
 tile.palm_log.fullbark_stripped.name=Stripped Palm Wood
 tile.palm_planks.name=Palm Planks
+tile.palm_slab.name=Palm Slab
+tile.palm_stairs.name=Palm Stairs
+tile.palm_fence.name=Palm Fence
+tile.palm_fence_gate.name=Palm Fence Gate
+tile.palm_button.name=Palm Button
+tile.palm_pressure_plate.name=Palm Pressure Plate
+tile.palm_door.name=Palm Door
+tile.palm_trapdoor.name=Palm Trap Door
+tile.palm_sign.name=Palm Sign
+tile.palm_sapling.name=Palm Sapling
+tile.palm_leaves.name=Palm Leaves
+
+tile.pine_log.regular.name=Pine Log
+tile.pine_log.regular_stripped.name=Stripped Pine Log
+tile.pine_log.fullbark.name=Pine Wood
+tile.pine_log.fullbark_stripped.name=Stripped Pine Wood
+tile.pine_planks.name=Pine Planks
+tile.pine_slab.name=Pine Slab
+tile.pine_stairs.name=Pine Stairs
+tile.pine_fence.name=Pine Fence
+tile.pine_fence_gate.name=Pine Fence Gate
+tile.pine_button.name=Pine Button
+tile.pine_pressure_plate.name=Pine Pressure Plate
+tile.pine_door.name=Pine Door
+tile.pine_trapdoor.name=Pine Trap Door
+tile.pine_sign.name=Pine Sign
+tile.pine_sapling.name=Pine Sapling
+tile.pine_leaves.name=Pine Leaves
+
+tile.cedar_log.regular.name=Cedar Log
+tile.cedar_log.regular_stripped.name=Stripped Cedar Log
+tile.cedar_log.fullbark.name=Cedar Wood
+tile.cedar_log.fullbark_stripped.name=Stripped Cedar Wood
+tile.cedar_planks.name=Cedar Planks
+tile.cedar_slab.name=Cedar Slab
+tile.cedar_stairs.name=Cedar Stairs
+tile.cedar_fence.name=Cedar Fence
+tile.cedar_fence_gate.name=Cedar Fence Gate
+tile.cedar_button.name=Cedar Button
+tile.cedar_pressure_plate.name=Cedar Pressure Plate
+tile.cedar_door.name=Cedar Door
+tile.cedar_trapdoor.name=Cedar Trap Door
+tile.cedar_sign.name=Cedar Sign
+tile.cedar_sapling.name=Cedar Sapling
+tile.cedar_leaves.name=Cedar Leaves
+
+tile.silty_dirt.name=Silty Dirt
+tile.coarse_silty_dirt.name=Coarse Silty Dirt
+tile.silty_grass.name=Silty Grass Block
+tile.silty_podzol.name=Silty Podzol
+tile.silty_farmland.name=Silty Farmland
+
+tile.loamy_dirt.name=Loamy Dirt
+tile.coarse_loamy_dirt.name=Coarse Loamy Dirt
+tile.loamy_grass.name=Loamy Grass Block
+tile.loamy_podzol.name=Loamy Podzol
+tile.loamy_farmland.name=Loamy Farmland
+
+tile.clay_dirt.name=Clay Dirt
+tile.coarse_clay_dirt.name=Coarse Clay Dirt
+tile.clay_grass.name=Clay Grass Block
+tile.clay_podzol.name=Clay Podzol
+tile.clay_farmland.name=Clay Farmland
+
+tile.dry_short_grass.name=Dry Short Grass
+
+tile.purple_owls_clover.name=Purple Owl's Clover
+tile.purple_owls_clover.desc=§7§oCastilleja exserta
+tile.clustered_tarweed.name=Clustered Tarweed
+tile.clustered_tarweed.desc=§7§oDeinandra fasciculata
+tile.longspur_lupine.name=Longspur Lupine
+tile.longspur_lupine.desc=§7§oLupinus arbustus
+tile.silver_lupine.name=Silver Lupine
+tile.silver_lupine.desc=§7§oLupinus albifrons
+tile.sky_blue_lupine.name=Sky Blue Lupine
+tile.sky_blue_lupine.desc=§7§oLupinus diffusus
+
+tile.sage.name=Sage
+tile.sage.desc=§7§oSalvia officinalis
+tile.woodland_sage.name=Woodland Sage
+tile.woodland_sage.desc=§7§oSalvia nemorosa
+
+tile.purple_nightshade.name=Purple Nightshade
+tile.purple_nightshade.desc=§7§oSolanum umbelliferum §r§7var. §7§oxanti
+
+tile.clover.name=Clover
+tile.large_clover.name=Large Clover
+
+tile.small_waterlily.name=Small Lily Pad
+
+tile.orange_sand.name=Orange Sand
+tile.orange_sandstone.name=Orange Sandstone
+tile.cut_orange_sandstone.name=Cut Orange Sandstone
+tile.chiseled_orange_sandstone.name=Chiseled Orange Sandstone
+tile.smooth_orange_sandstone.name=Smooth Orange Sandstone
+
+tile.orange_sandstone_slab.name=Orange Sandstone Slab
+tile.cut_orange_sandstone_slab.name=Cut Orange Sandstone Slab
+tile.smooth_orange_sandstone_slab.name=Smooth Orange Sandstone Slab
+
+tile.orange_sandstone_stairs.name=Orange Sandstone Stairs
+tile.smooth_orange_sandstone_stairs.name=Smooth Orange Sandstone Stairs

@@ -1,6 +1,6 @@
 package com.captrojo.crwg.world.gen.genlayer;
 
-import com.captrojo.crwg.world.biome.BiomeTypeCRWG;
+import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
