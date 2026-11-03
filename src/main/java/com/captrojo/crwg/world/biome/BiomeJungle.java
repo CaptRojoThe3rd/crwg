@@ -19,19 +19,22 @@ public class BiomeJungle extends BiomeCRWGBase
 		super(id, name, color, temperature, rainfall);
 
 		if (sparseness == 0) {
-			this.decorator_lowlands.trees = 30;
-			this.decorator_lowlands.grass = 25;
-			this.decorator_lowlands.flowers = 4;
+			this.decorator.trees = 30;
+			this.decorator.grass = 25;
+			this.decorator.flowers = 4;
 		} else if (sparseness == 1) {
-			this.decorator_lowlands.trees = 10;
-			this.decorator_lowlands.grass = 17;
-			this.decorator_lowlands.flowers = 3;
+			this.decorator.trees = 10;
+			this.decorator.grass = 17;
+			this.decorator.flowers = 3;
 		} else {
-			this.decorator_lowlands.trees = 5;
-			this.decorator_lowlands.grass = 10;
-			this.decorator_lowlands.flowers = 2;
+			this.decorator.trees = 5;
+			this.decorator.grass = 10;
+			this.decorator.flowers = 2;
 		}
-		this.decorator_lowlands.pumpkin_chance = 0.0625F;
+		this.decorator.pumpkin_chance = 0.0625F;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 
 		if (sparseness < 1) {
 			this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityOcelot.class, 2, 1, 1));

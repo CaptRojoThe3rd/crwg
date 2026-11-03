@@ -113,9 +113,7 @@ public class CRWG
 		ModTileEntities.registerTileEntities();
 
 		WorldEvents.instance = new WorldEvents();
-		MinecraftForge.EVENT_BUS.register(WorldEvents.instance);
 		MinecraftForge.TERRAIN_GEN_BUS.register(WorldEvents.instance);
-		FMLCommonHandler.instance().bus().register(WorldEvents.instance);
 
 		proxy.preInit(event);
 	}

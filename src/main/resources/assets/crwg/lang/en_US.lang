@@ -72,22 +72,27 @@ tile.cedar_leaves.name=Cedar Leaves
 tile.silty_dirt.name=Silty Dirt
 tile.coarse_silty_dirt.name=Coarse Silty Dirt
 tile.silty_grass.name=Silty Grass Block
+tile.silty_mycelium.name=Silty Mycelium
 tile.silty_podzol.name=Silty Podzol
 tile.silty_farmland.name=Silty Farmland
 
 tile.loamy_dirt.name=Loamy Dirt
 tile.coarse_loamy_dirt.name=Coarse Loamy Dirt
 tile.loamy_grass.name=Loamy Grass Block
+tile.loamy_mycelium.name=Loamy Mycelium
 tile.loamy_podzol.name=Loamy Podzol
 tile.loamy_farmland.name=Loamy Farmland
 
 tile.clay_dirt.name=Clay Dirt
 tile.coarse_clay_dirt.name=Coarse Clay Dirt
 tile.clay_grass.name=Clay Grass Block
+tile.clay_mycelium.name=Clay Mycelium
 tile.clay_podzol.name=Clay Podzol
 tile.clay_farmland.name=Clay Farmland
 
 tile.dry_short_grass.name=Dry Short Grass
+
+tile.bush.name=Bush
 
 tile.purple_owls_clover.name=Purple Owl's Clover
 tile.purple_owls_clover.desc=§7§oCastilleja exserta
@@ -110,6 +115,8 @@ tile.purple_nightshade.desc=§7§oSolanum umbelliferum §r§7var. §7§oxanti
 
 tile.clover.name=Clover
 tile.large_clover.name=Large Clover
+
+tile.leaf_pile.name=Leaf Pile
 
 tile.small_waterlily.name=Small Lily Pad
 

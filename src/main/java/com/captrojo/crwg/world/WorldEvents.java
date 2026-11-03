@@ -28,11 +28,7 @@ public class WorldEvents
 		}
 
 		/* birch chaparral */
-		if (
-			event.biome == ModBiomes.birch_chaparral ||
-			event.biome == ModBiomes.birch_chaparral_hills ||
-			event.biome == ModBiomes.birch_chaparral_highlands
-		) {
+		if (event.biome == ModBiomes.birch_chaparral) {
 			event.setResult(Result.DENY);
 			if (event.original == Blocks.oak_stairs) {
 				event.replacement = Blocks.birch_stairs;
@@ -43,11 +39,7 @@ public class WorldEvents
 		}
 
 		/* desert */
-		if (
-			event.biome == ModBiomes.desert ||
-			event.biome == ModBiomes.desert_hills ||
-			event.biome == ModBiomes.desert_highlands
-		) {
+		if (event.biome == ModBiomes.desert) {
 			event.setResult(Result.DENY);
 			if (event.original == Blocks.cobblestone) {
 				event.replacement = Blocks.sandstone;
@@ -96,11 +88,7 @@ public class WorldEvents
 		}
 
 		/* birch chaparral */
-		if (
-			event.biome == ModBiomes.birch_chaparral ||
-			event.biome == ModBiomes.birch_chaparral_hills ||
-			event.biome == ModBiomes.birch_chaparral_highlands
-		) {
+		if (event.biome == ModBiomes.birch_chaparral) {
 			event.setResult(Result.DENY);
 			if (event.original == Blocks.planks) {
 				event.replacement = 2; /* birch (Blocks.planks) */
@@ -113,11 +101,7 @@ public class WorldEvents
 		}
 
 		/* desert */
-		if (
-			event.biome == ModBiomes.desert ||
-			event.biome == ModBiomes.desert_hills ||
-			event.biome == ModBiomes.desert_highlands
-		) {
+		if (event.biome == ModBiomes.desert) {
 			event.setResult(Result.DENY);
 			if (event.original == Blocks.log) {
 				event.replacement = 0; /* sandstone (Blocks.sandstone) */

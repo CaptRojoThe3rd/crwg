@@ -24,9 +24,9 @@ public interface WorldCRWG
 	
 	boolean crwg$setSoilType(int x, int z, Soil soil_type);
 	
-	int crwg$getSpeciesVal(int x, int z);
+	int crwg$getSubspeciesVal(int x, int z);
 	
-	boolean crwg$setSpeciesVal(int x, int z, int species);
+	boolean crwg$setSubspeciesVal(int x, int z, int species);
 	
 	/* GENERATION DATA */
 	

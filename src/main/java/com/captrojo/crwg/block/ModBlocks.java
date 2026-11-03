@@ -22,37 +22,44 @@ public abstract class ModBlocks
 	public static Block silty_dirt;
 	public static Block coarse_silty_dirt;
 	public static Block silty_grass;
+	public static Block silty_mycelium;
 	public static Block silty_podzol;
 	public static Block silty_farmland;
 
 	public static Block loamy_dirt;
 	public static Block coarse_loamy_dirt;
 	public static Block loamy_grass;
+	public static Block loamy_mycelium;
 	public static Block loamy_podzol;
 	public static Block loamy_farmland;
 
 	public static Block clay_dirt;
 	public static Block coarse_clay_dirt;
 	public static Block clay_grass;
+	public static Block clay_mycelium;
 	public static Block clay_podzol;
 	public static Block clay_farmland;
 
 	public static Block dry_short_grass;
 	
+	public static Block bush;
+
 	public static Block flower_purple_owls_clover;
 	public static Block flower_clustered_tarweed;
-	
+
 	public static Block flower_longspur_lupine;
 	public static Block flower_silver_lupine;
 	public static Block flower_sky_blue_lupine;
-	
+
 	public static Block flower_sage;
 	public static Block flower_woodland_sage;
-	
+
 	public static Block dflower_purple_nightshade;
-	
+
 	public static Block clover;
 	public static Block clover_large;
+	
+	public static Block leaf_pile;
 	
 	public static Block small_waterlily;
 
@@ -77,7 +84,7 @@ public abstract class ModBlocks
 		WoodBlocks.values();
 
 		/* SOILS */
-		
+
 		silty_dirt = (new BlockDirtCRWG("silty_dirt", Material.ground))
 			.setHarvestTool("shovel", 0)
 			.setHardness(0.5F)
@@ -91,6 +98,10 @@ public abstract class ModBlocks
 		silty_grass = (new BlockGrassCRWG("silty_grass", silty_dirt))
 			.setHardness(0.5F)
 			.setBlockTextureName(CRWG.ident("soil/silty_grass"))
+			.setStepSound(Block.soundTypeGrass);
+		silty_mycelium = (new BlockMyceliumCRWG("silty_mycelium", silty_dirt))
+			.setHardness(0.5F)
+			.setBlockTextureName(CRWG.ident("soil/silty_mycelium"))
 			.setStepSound(Block.soundTypeGrass);
 		silty_podzol = (new BlockPodzol("silty_podzol", silty_grass))
 			.setHardness(0.5F)
@@ -115,6 +126,10 @@ public abstract class ModBlocks
 			.setHardness(0.5F)
 			.setBlockTextureName(CRWG.ident("soil/loamy_grass"))
 			.setStepSound(Block.soundTypeGrass);
+		loamy_mycelium = (new BlockMyceliumCRWG("loamy_mycelium", silty_dirt))
+			.setHardness(0.5F)
+			.setBlockTextureName(CRWG.ident("soil/loamy_mycelium"))
+			.setStepSound(Block.soundTypeGrass);
 		loamy_podzol = (new BlockPodzol("loamy_podzol", loamy_grass))
 			.setHardness(0.5F)
 			.setBlockTextureName(CRWG.ident("soil/loamy"))
@@ -138,6 +153,10 @@ public abstract class ModBlocks
 			.setHardness(0.7F)
 			.setBlockTextureName(CRWG.ident("soil/clay_grass"))
 			.setStepSound(Block.soundTypeGrass);
+		clay_mycelium = (new BlockMyceliumCRWG("clay_mycelium", silty_dirt))
+			.setHardness(0.5F)
+			.setBlockTextureName(CRWG.ident("soil/clay_mycelium"))
+			.setStepSound(Block.soundTypeGrass);
 		clay_podzol = (new BlockPodzol("clay_podzol", clay_grass))
 			.setHardness(0.7F)
 			.setBlockTextureName(CRWG.ident("soil/clay"))
@@ -148,44 +167,57 @@ public abstract class ModBlocks
 			.setStepSound(Block.soundTypeGravel);
 
 		/* PLANTS */
-		
-		dry_short_grass = (new BlockShortGrass("dry_short_grass", 4, EnumPlantType.Desert))
+
+		dry_short_grass = (new BlockBushCRWG("dry_short_grass", Material.plants, EnumPlantType.Desert))
+			.setVariantCount(4, false)
+			.setShearsRequired()
+			.setSize(0.8F, 0.6F)
 			.setBlockTextureName(CRWG.ident("plants/dry_short_grass"))
 			.setStepSound(Block.soundTypeGrass);
 		
+		bush = (new BlockBushCRWG("bush", Material.plants, EnumPlantType.Plains))
+			.setSize(0.8F, 0.7F)
+			.setColorizer(Colorizer.BIOME_GRASS)
+			.setBlockTextureName(CRWG.ident("plants/bush"))
+			.setStepSound(Block.soundTypeGrass);
+
 		flower_purple_owls_clover = (new BlockBushCRWG("purple_owls_clover", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_purple_owls_clover"));
 		flower_clustered_tarweed = (new BlockBushCRWG("clustered_tarweed", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_clustered_tarweed"));
-		
+
 		flower_longspur_lupine = (new BlockBushCRWG("longspur_lupine", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_longspur_lupine"));
 		flower_silver_lupine = (new BlockBushCRWG("silver_lupine", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_silver_lupine"));
 		flower_sky_blue_lupine = (new BlockBushCRWG("sky_blue_lupine", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_sky_blue_lupine"));
-		
+
 		flower_sage = (new BlockBushCRWG("sage", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_sage"));
 		flower_woodland_sage = (new BlockBushCRWG("woodland_sage", 1))
 			.setBlockTextureName(CRWG.ident("plants/flower_woodland_sage"));
-		
+
 		dflower_purple_nightshade = (new BlockDoublePlantCRWG("purple_nightshade", 1, false))
 			.setBlockTextureName(CRWG.ident("plants/double_flower_purple_nightshade"));
-		
+
 		clover = (new Block2x2FloorPlant("clover"))
 			.setColorizer(Colorizer.BIOME_GRASS)
 			.setBlockTextureName(CRWG.ident("plants/clover"));
-		clover_large = (new BlockFloorPlant("large_clover", 1))
+		clover_large = (new BlockFloorPlant("large_clover"))
 			.setColorizer(Colorizer.BIOME_GRASS)
 			.setBlockTextureName(CRWG.ident("plants/large_clover"));
 		
+		leaf_pile = (new Block2x2FloorPlant("leaf_pile"))
+			.setColorizer(Colorizer.BIOME_FOLIAGE)
+			.setBlockTextureName(CRWG.ident("plants/leaf_pile"));
+
 		small_waterlily = (new Block2x2FloorPlant("small_waterlily", Material.plants, EnumPlantType.Water))
 			.setColorizer(Colorizer.fixed(0x208030))
 			.setBlockTextureName(CRWG.ident("plants/small_waterlily"));
 
 		/* STONE BLOCKS */
-		
+
 		orange_sand = (new BlockOrangeSand("orange_sand"))
 			.setBlockTextureName(CRWG.ident("orange_sand"))
 			.setStepSound(Block.soundTypeSand);
@@ -237,40 +269,47 @@ public abstract class ModBlocks
 		registerBlock(silty_dirt);
 		registerBlock(coarse_silty_dirt);
 		registerBlock(silty_grass);
+		registerBlock(silty_mycelium);
 		registerBlock(silty_podzol);
 		registerBlock(silty_farmland);
 
 		registerBlock(loamy_dirt);
 		registerBlock(coarse_loamy_dirt);
 		registerBlock(loamy_grass);
+		registerBlock(loamy_mycelium);
 		registerBlock(loamy_podzol);
 		registerBlock(loamy_farmland);
 
 		registerBlock(clay_dirt);
 		registerBlock(coarse_clay_dirt);
 		registerBlock(clay_grass);
+		registerBlock(clay_mycelium);
 		registerBlock(clay_podzol);
 		registerBlock(clay_farmland);
 
 		registerBlock(dry_short_grass, new ItemBlockWithMetadata(dry_short_grass, dry_short_grass));
+		
+		registerBlock(bush);
 
 		registerBlock(flower_purple_owls_clover);
 		registerBlock(flower_clustered_tarweed);
-		
+
 		registerBlock(flower_longspur_lupine);
 		registerBlock(flower_silver_lupine);
 		registerBlock(flower_sky_blue_lupine);
-		
+
 		registerBlock(flower_sage);
 		registerBlock(flower_woodland_sage);
-		
+
 		registerBlock(dflower_purple_nightshade, ItemDoublePlantCRWG.class);
-		
+
 		registerBlock(clover, new Item2x2FloorPlant(clover, false));
 		registerBlock(clover_large);
 		
+		registerBlock(leaf_pile, new Item2x2FloorPlant(leaf_pile, false));
+
 		registerBlock(small_waterlily, new Item2x2FloorPlant(small_waterlily, true));
-		
+
 		registerBlock(orange_sand);
 		registerBlock(orange_sandstone);
 		registerBlock(orange_cut_sandstone);
@@ -289,12 +328,12 @@ public abstract class ModBlocks
 	{
 		GameRegistry.registerBlock(block, ItemBlockCRWG.class, block.getUnlocalizedName());
 	}
-	
+
 	static void registerBlock(Block block, Class<? extends ItemBlock> item_class)
 	{
 		GameRegistry.registerBlock(block, item_class, block.getUnlocalizedName());
 	}
-	
+
 	static void registerBlock(Block block, ItemBlock item)
 	{
 		GameRegistry2.registerBlock(block, item, block.getUnlocalizedName());

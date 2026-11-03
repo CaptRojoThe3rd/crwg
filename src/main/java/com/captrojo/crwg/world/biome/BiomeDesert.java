@@ -21,14 +21,17 @@ public class BiomeDesert extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 
-		this.decorator_lowlands.grass = 1;
-		this.decorator_lowlands.grass_chance = 0.25f;
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.reeds = 50;
-		this.decorator_lowlands.cacti = 10;
-		this.decorator_lowlands.dead_bushes = 2;
+		this.decorator.grass = 1;
+		this.decorator.grass_chance = 0.25f;
+		this.decorator.flowers = 0;
+		this.decorator.reeds = 50;
+		this.decorator.cacti = 10;
+		this.decorator.dead_bushes = 2;
 
 		this.spawnableCreatureList.clear();
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override

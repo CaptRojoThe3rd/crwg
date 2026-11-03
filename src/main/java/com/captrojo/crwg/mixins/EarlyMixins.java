@@ -14,7 +14,7 @@ import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.MCVersion("1.7.10")
-public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
+public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 {
 	public static final MixinEnvironment.Side SIDE = MixinEnvironment.getCurrentEnvironment().getSide();
 	
@@ -56,6 +56,7 @@ public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 	@Override
 	public @Nonnull List<String> getMixins(Set<String> loaded_core_mods)
 	{
+		this.loadConfig("early_mixins");
 		List<String> mixins = new ArrayList<>();
 		
 		boolean angelica = false;
@@ -66,14 +67,22 @@ public class EarlyMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 			}
 		}
 		
-		mixins.add("common.BlockDeadBushMixin");
+		this.addMixin(mixins, "common.BlockDeadBushMixin");
 		
-		mixins.add("common.ChunkMixin");
-		mixins.add("common.WorldMixin");
+		this.addMixin(mixins, "common.ChunkMixin");
+		this.addMixin(mixins, "common.WorldMixin");
 		
-		if (SIDE == MixinEnvironment.Side.CLIENT && !angelica) {
-			mixins.add("client.RenderBlocksMixin");
+		this.addMixin(mixins, "common.joke.MapGenVillageMixin");
+		
+		if (SIDE == MixinEnvironment.Side.CLIENT) {
+			this.addMixin(mixins, "client.BlockMyceliumMixin");
+			
+			if (!angelica) {
+				this.addMixin(mixins, "client.RenderBlocksMixin");
+			}
 		}
+		
+		this.saveConfig();
 		
 		return mixins;
 	}

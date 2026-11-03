@@ -60,6 +60,9 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 	public static double rain_scale;
 	public static double rain_scale_64;
+	
+	public static double awesome_scale;
+	public static double awesome_scale_64;
 
 	static {
 		temp_scale = 1.0 / 640.0;
@@ -67,6 +70,9 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		rain_scale = 1.0 / 640.0;
 		rain_scale_64 = rain_scale * 64.0;
+		
+		awesome_scale = 1.0 / 1280.0;
+		awesome_scale_64 = awesome_scale * 64.0;
 	}
 
 	private static class NoiseGenRunnable implements Runnable
@@ -191,6 +197,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 	public NoisePerlinFractal noise_temperature;
 	public NoisePerlinFractal noise_rainfall;
+	public NoisePerlinFractal noise_awesomeness;
 
 	/**
 	 * we love that NoiseGeneratorPerlin is actually fractal simplex noise.
@@ -210,6 +217,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		this.noise_temperature = (new NoisePerlinFractal(4, true)).initNoiseGens(rand);
 		this.noise_rainfall = (new NoisePerlinFractal(4, true)).initNoiseGens(rand);
+		this.noise_awesomeness = (new NoisePerlinFractal(4, true)).initNoiseGens(rand);
 
 		GenLayer glayer_main, glayer_river, glayer_biometype, glayer_species, glayer_landtype_unscaled;
 		NLayer nlayer1, nlayer2;
@@ -295,7 +303,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.genlayer_landtype = (GenLayerCached) glayer_main;
 
 		/* Biome types */
-		glayer_biometype = new GenLayerBiomeTypes(1000L, this.noise_temperature, this.noise_rainfall);
+		glayer_biometype = new GenLayerBiomeTypes(1000L, this.noise_temperature, this.noise_rainfall, this.noise_awesomeness);
 		for (int i = 0; i < 6; i++) {
 			glayer_biometype = new GenLayerZoom((long) (1010 + i), glayer_biometype);
 			glayer_biometype = new GenLayerSmooth((long) (1020 + i), glayer_biometype);
@@ -303,7 +311,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.genlayer_biometype = glayer_biometype;
 
 		/* Species (specific biomes of a type) */
-		glayer_species = new GenLayerRand(800L, 256);
+		glayer_species = new GenLayerRand(800L, Integer.MAX_VALUE);
 		for (int i = 0; i < 4; i++) {
 			glayer_species = new GenLayerZoom((long) (810 + i), glayer_species);
 			glayer_species = new GenLayerZoom((long) (820 + i), glayer_species);
@@ -363,7 +371,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.n_gen_lowlands = nlayer1;
 
 		/* Hills */
-		nlayer1 = new NLayer2DNoise(rand, 5, true, 1.0 / 50.0, 1.0 / 50.0);
+		nlayer1 = new NLayer2DNoise(rand, 5, true, 1.0 / 40.0, 1.0 / 40.0);
 		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.55, 1.30);
 		this.n_gen_hills = nlayer1;
 

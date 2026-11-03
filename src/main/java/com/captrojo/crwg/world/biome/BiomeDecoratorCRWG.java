@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world.biome;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Random;
 
 import com.captrojo.crwg.config.GeneralConfig;
@@ -25,10 +27,10 @@ public class BiomeDecoratorCRWG
 	private World _cur_world;
 	private Random _cur_rand;
 	private int _cur_x0;
-	private int _cur_z0;	
+	private int _cur_z0;
 
 	private final BiomeCRWGBase biome;
-	
+
 	private boolean initialized = false;
 
 	public WorldGenerator gen_underwater_sand = new WorldGenSeafloorBlockCircle(Blocks.sand, 7, false);
@@ -37,7 +39,7 @@ public class BiomeDecoratorCRWG
 	public int underwater_sand = 3;
 	public int underwater_gravel = 1;
 	public int underwater_clay = 1;
-	
+
 	public int boulders = 0;
 	public float boulder_chance = 0.0F;
 
@@ -81,12 +83,12 @@ public class BiomeDecoratorCRWG
 	public WorldGenerator gen_lapis;
 	public WorldGenerator gen_diamond;
 	public WorldGenerator gen_emerald;
-	
+
 	public int dirt_blob_amount = 40;
 	public int dirt_blob_size = 32;
 	public int dirt_blob_min_y = 0;
 	public int dirt_blob_max_y = 512;
-	
+
 	public int gravel_blob_amount = 20;
 	public int gravel_blob_size = 32;
 	public int gravel_blob_min_y = 0;
@@ -131,7 +133,26 @@ public class BiomeDecoratorCRWG
 	{
 		this.biome = biome;
 	}
-	
+
+	public void copyFrom(BiomeDecoratorCRWG that)
+	{
+		/* I don't want to copy every variable manually */
+		try {
+			Field[] fields = BiomeDecoratorCRWG.class.getFields();
+			for (Field field : fields) {
+				int mod = field.getModifiers();
+				if (Modifier.isFinal(mod) || Modifier.isPrivate(mod)) {
+					/* ignore the _cur_* variables and the biome */
+					continue;
+				}
+				Object val = field.get(that);
+				field.set(this, val);
+			}
+		} catch (Throwable t) {
+			throw new RuntimeException(t);
+		}
+	}
+
 	private ReportedException crash(int x0, int z0, Throwable t)
 	{
 		CrashReport crash = CrashReport.makeCrashReport(t, t.getMessage());
@@ -238,7 +259,7 @@ public class BiomeDecoratorCRWG
 				this.gen_underwater_gravel.generate(world, rand, x, y, z);
 			}
 		}
-		
+
 		for (int i = 0; i < this.boulders; i++) {
 			if (rand.nextFloat() < this.boulder_chance) {
 				continue;
@@ -274,7 +295,7 @@ public class BiomeDecoratorCRWG
 				WorldGenerator grass = this.biome.getGrassGen(world, x, y, z, rand);
 				grass.generate(world, rand, x, y, z);
 			}
-			
+
 			for (int i = 0; i < this.tall_grass; i++) {
 				if (rand.nextFloat() > this.tall_grass_chance) {
 					continue;

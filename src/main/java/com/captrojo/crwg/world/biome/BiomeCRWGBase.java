@@ -114,8 +114,8 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	{
 		return id + (BiomeConfig.id_page_a << 8);
 	}
-	
-	public BiomeDecoratorCRWG decorator_lowlands;
+
+	public BiomeDecoratorCRWG decorator;
 	public BiomeDecoratorCRWG decorator_hills;
 	public BiomeDecoratorCRWG decorator_highlands;
 
@@ -128,7 +128,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		this.setColor(color);
 		this.setTemperatureRainfall(temperature, rainfall);
 
-		this.decorator_lowlands = this.createCRWGBiomeDecorator();
+		this.decorator = this.createCRWGBiomeDecorator();
 		this.decorator_hills = this.createCRWGBiomeDecorator();
 		this.decorator_highlands = this.createCRWGBiomeDecorator();
 
@@ -140,7 +140,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 
 	public void initWithWorldSeed(long world_seed)
 	{
-		this.decorator_lowlands.init(world_seed);
+		this.decorator.init(world_seed);
 		this.decorator_hills.init(world_seed);
 		this.decorator_highlands.init(world_seed);
 	}
@@ -240,14 +240,14 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		}
 	}
 
-	protected BiomeDecoratorCRWG createCRWGBiomeDecorator()
+	public BiomeDecoratorCRWG createCRWGBiomeDecorator()
 	{
 		return new BiomeDecoratorCRWG(this);
 	}
 
 	public Soil getSoil(World world, int x, int y, int z, Random rand, int s_temp, int s_rain, int species_val)
 	{
-		return Soil.Soil_Map[s_temp][s_rain][species_val & 0x3];
+		return Soil.Soil_Map[s_temp][s_rain][(species_val >> 16) & 0x3];
 	}
 
 	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
@@ -336,6 +336,22 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		return BiomeCRWGBase.Gen_Liquid_Lava;
 	}
 	
+	public void decorate(World world, WorldCRWG world_crwg, Random rand, int x0, int z0)
+	{
+		LandType land_type = world_crwg.crwg$getLandType(x0 + 15, z0 + 15);
+		switch (land_type) {
+		case HILLS:
+			this.decorator_hills.decorate(world, rand, x0, z0);
+			break;
+		case HIGHLANDS:
+			this.decorator_highlands.decorate(world, rand, x0, z0);
+			break;
+		default:
+			this.decorator.decorate(world, rand, x0, z0);
+			break;
+		}
+	}
+	
 	@Override
 	public BiomeCRWGBase setDisableRain()
 	{
@@ -371,19 +387,6 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public void decorate(World world, Random rand, int x0, int z0)
 	{
 		WorldCRWG world_crwg = (WorldCRWG) (Object) world;
-		
-		LandType land_type = world_crwg.crwg$getLandType(x0 + 15, z0 + 15);
-		switch (land_type) {
-		default:
-		case LOWLANDS:
-			this.decorator_lowlands.decorate(world, rand, x0, z0);
-			break;
-		case HILLS:
-			this.decorator_hills.decorate(world, rand, x0, z0);
-			break;
-		case HIGHLANDS:
-			this.decorator_highlands.decorate(world, rand, x0, z0);
-			break;
-		}
+		this.decorate(world, world_crwg, rand, x0, z0);
 	}
 }

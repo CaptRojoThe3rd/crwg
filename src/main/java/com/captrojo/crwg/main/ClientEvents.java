@@ -8,6 +8,7 @@ import com.captrojo.crwg.world.WorldChunkManagerCRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
 import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.gen.data.GConst;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -35,6 +36,35 @@ public class ClientEvents
 		}
 
 		mc.mcProfiler.startSection("crwg_debug");
+		
+		if (PerformanceInfo.available) {
+			int i = event.right.indexOf(null);
+			if (i == -1) {
+				event.right.add(null);
+				i = event.right.size() - 1;
+			} else {
+				event.right.add(i, null);
+				i++;
+			}
+			
+			String mspt_str = String.format(
+				"mspt: [avg: %d, last: %d, worst: %d]",
+				PerformanceInfo.mspt_avg,
+				PerformanceInfo.mspt_last,
+				PerformanceInfo.mspt_worst
+			);
+			event.right.add(i, mspt_str);
+			i++;
+			
+			long since_last_tick = Minecraft.getSystemTime() - PerformanceInfo.tick_time_end;
+			
+			String tps_str = String.format(
+				"tps: %.2f, slt: %.1f",
+				((PerformanceInfo.mspt_avg < 50) ? 20D : (1000D / (double) PerformanceInfo.mspt_avg)),
+				((float) since_last_tick) / 1000f
+			);
+			event.right.add(i, tps_str);
+		}
 
 		World world = Minecraft.getMinecraft().theWorld;
 		WorldChunkManager wcm0 = world.provider.worldChunkMgr;
@@ -82,19 +112,25 @@ public class ClientEvents
 			event.left.add("biome: " + biome_str);
 
 			if (wcm0 instanceof WorldChunkManagerCRWG) {
-				LandType land_type = world_crwg.crwg$getLandType(x, z);
 				BiomeTypeCRWG biome_type = world_crwg.crwg$getBiomeType(x, z);
-				Soil soil_type = world_crwg.crwg$getSoilType(x, z);
 				String str = String.format(
-					"lt: %s, bt: %s, st: %s",
-					land_type.name,
+					"bt: %s (t: %s, r: %s, a: %s)",
 					biome_type.name,
-					soil_type.name
+					GConst.TEMPERATURE_NAMES[biome_type.s_temp],
+					GConst.RAINFALL_NAMES[biome_type.s_rain],
+					GConst.AWESOMENESS_NAMES[biome_type.s_awesome]
 				);
 				event.left.add(str);
-				
-				int species = world_crwg.crwg$getSpeciesVal(x, z);
-				str = String.format("sp: %d", species);
+
+				LandType land_type = world_crwg.crwg$getLandType(x, z);
+				Soil soil_type = world_crwg.crwg$getSoilType(x, z);
+				int species = world_crwg.crwg$getSubspeciesVal(x, z);
+				str = String.format(
+					"lt: %s, st: %s, sp: %d",
+					land_type.name,
+					soil_type.name,
+					species
+				);
 				event.left.add(str);
 			}
 		}

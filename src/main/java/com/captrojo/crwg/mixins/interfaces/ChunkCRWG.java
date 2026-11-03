@@ -24,9 +24,9 @@ public interface ChunkCRWG
 	
 	void crwg$setSoilType(int x, int z, Soil soil_type);
 	
-	int crwg$getSpeciesVal(int x, int z);
+	int crwg$getSubspeciesVal(int x, int z);
 	
-	void crwg$setSpeciesVal(int x, int z, int species);
+	void crwg$setSubspeciesVal(int x, int z, int species);
 	
 	/* GENERATION DATA */
 	

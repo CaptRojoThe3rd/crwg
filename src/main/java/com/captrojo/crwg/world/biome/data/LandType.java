@@ -15,8 +15,8 @@ public enum LandType
 	LOWLANDS("Lowlands"),
 	HILLS("Hills"),
 	HIGHLANDS("Highlands"),
-	MOUNTAINS("Mountains"),
 	
+	MOUNTAINS("Mountains"),
 	PLATEAUS("Plateaus"),
 	FOOTHILLS("Foothills"),
 	

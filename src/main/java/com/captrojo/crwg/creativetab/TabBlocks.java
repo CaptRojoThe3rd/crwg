@@ -42,22 +42,27 @@ public class TabBlocks extends CreativeTabs
 		this.addBlock(ModBlocks.silty_dirt, list);
 		this.addBlock(ModBlocks.coarse_silty_dirt, list);
 		this.addBlock(ModBlocks.silty_grass, list);
+		this.addBlock(ModBlocks.silty_mycelium, list);
 		this.addBlock(ModBlocks.silty_podzol, list);
 		this.addBlock(ModBlocks.silty_farmland, list);
 
 		this.addBlock(ModBlocks.loamy_dirt, list);
 		this.addBlock(ModBlocks.coarse_loamy_dirt, list);
 		this.addBlock(ModBlocks.loamy_grass, list);
+		this.addBlock(ModBlocks.loamy_mycelium, list);
 		this.addBlock(ModBlocks.loamy_podzol, list);
 		this.addBlock(ModBlocks.loamy_farmland, list);
 
 		this.addBlock(ModBlocks.clay_dirt, list);
 		this.addBlock(ModBlocks.coarse_clay_dirt, list);
 		this.addBlock(ModBlocks.clay_grass, list);
+		this.addBlock(ModBlocks.clay_mycelium, list);
 		this.addBlock(ModBlocks.clay_podzol, list);
 		this.addBlock(ModBlocks.clay_farmland, list);
 		
 		this.addBlock(ModBlocks.dry_short_grass, list);
+		
+		this.addBlock(ModBlocks.bush, list);
 		
 		this.addBlock(ModBlocks.flower_purple_owls_clover, list);
 		this.addBlock(ModBlocks.flower_clustered_tarweed, list);
@@ -66,10 +71,15 @@ public class TabBlocks extends CreativeTabs
 		this.addBlock(ModBlocks.flower_silver_lupine, list);
 		this.addBlock(ModBlocks.flower_sky_blue_lupine, list);
 		
+		this.addBlock(ModBlocks.flower_sage, list);
+		this.addBlock(ModBlocks.flower_woodland_sage, list);
+		
 		this.addBlock(ModBlocks.dflower_purple_nightshade, list);
 		
 		this.addBlock(ModBlocks.clover, list);
 		this.addBlock(ModBlocks.clover_large, list);
+		
+		this.addBlock(ModBlocks.leaf_pile, list);
 		
 		this.addBlock(ModBlocks.small_waterlily, list);
 		

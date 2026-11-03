@@ -17,15 +17,15 @@ public class BiomeFen extends BiomeAbstractSwamp
 
 		this.waterlily_chance = 0.05;
 		
-		this.decorator_lowlands.trees = 6;
+		this.decorator.trees = 6;
 
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.grass = 10;
-		this.decorator_lowlands.tall_grass = 30;
+		this.decorator.flowers = 0;
+		this.decorator.grass = 10;
+		this.decorator.tall_grass = 30;
 		
-		this.decorator_lowlands.reeds = 0;
-		this.decorator_lowlands.pumpkins = 1;
-		this.decorator_lowlands.pumpkin_chance = 0.01F;
+		this.decorator.reeds = 0;
+		this.decorator.pumpkins = 1;
+		this.decorator.pumpkin_chance = 0.01F;
 	}
 	
 	@Override

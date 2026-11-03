@@ -9,15 +9,15 @@ public class BiomeCRWGOcean extends BiomeCRWGBase
 		super(id, name, color, temperature, rainfall);
 		this.spawnableCreatureList.clear();
 		
-		this.decorator_lowlands.grass = 0;
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.reeds = 0;
-		this.decorator_lowlands.pumpkins = 0;
+		this.decorator.grass = 0;
+		this.decorator.flowers = 0;
+		this.decorator.reeds = 0;
+		this.decorator.pumpkins = 0;
 		
-		this.decorator_lowlands.dirt_blob_amount = 10;
-		this.decorator_lowlands.dirt_blob_max_y = 128;
-		this.decorator_lowlands.gravel_blob_amount = 5;
-		this.decorator_lowlands.gravel_blob_max_y = 128;
+		this.decorator.dirt_blob_amount = 10;
+		this.decorator.dirt_blob_max_y = 128;
+		this.decorator.gravel_blob_amount = 5;
+		this.decorator.gravel_blob_max_y = 128;
 	}
 
 	@Override

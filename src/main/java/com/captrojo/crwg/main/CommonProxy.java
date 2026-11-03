@@ -6,6 +6,7 @@ import com.captrojo.crwg.config.BiomeConfig;
 import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.config.ModConfig;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -28,6 +29,7 @@ public class CommonProxy
 	{
 		CommonEvents.instance = new CommonEvents();
 		MinecraftForge.EVENT_BUS.register(CommonEvents.instance);
+		FMLCommonHandler.instance().bus().register(CommonEvents.instance);
 	}
 
 	public void init(FMLInitializationEvent event)

@@ -61,4 +61,11 @@ public abstract class GConst
 	public static final int WET = 2;
 	
 	public static final String[] RAINFALL_NAMES = {"Dry", "Moderate", "Wet"};
+	
+	public static final int MUSHROOM = 0;
+	public static final int BASIC = 1;
+	public static final int SEMI_MAGICAL = 2;
+	public static final int MAGICAL = 3;
+	
+	public static final String[] AWESOMENESS_NAMES = {"Mushroom", "Basic", "Semi-Magical", "Magical"};
 }

@@ -15,13 +15,19 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 
-		this.decorator_lowlands.trees = 0; /* we will generate them ourselves */
-		this.decorator_lowlands.grass = 2;
+		this.decorator.trees = 0; /* we will generate them ourselves */
+		this.decorator.grass = 2;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override
 	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
 	{
+		if (rand.nextInt(3) == 0) {
+			return TreeGens.Birch;
+		}
 		return TreeGens.Dark_Oak;
 	}
 

@@ -36,10 +36,13 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		
 		this.old_growth = old_growth;
 
-		this.decorator_lowlands.boulders = 1;
-		this.decorator_lowlands.boulder_chance = 0.1f;
-		this.decorator_lowlands.trees = 4;
-		this.decorator_lowlands.extra_tree_chance = 0.0f;
+		this.decorator.boulders = 1;
+		this.decorator.boulder_chance = 0.1f;
+		this.decorator.trees = 4;
+		this.decorator.extra_tree_chance = 0.0f;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 	
 	@Override

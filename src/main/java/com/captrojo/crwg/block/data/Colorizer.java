@@ -11,6 +11,7 @@ import net.minecraft.world.IBlockAccess;
 public class Colorizer
 {
 	public static final Colorizer NONE = Colorizer.fixed(0xffffff);
+	public static final Colorizer PINE = Colorizer.fixed(ColorizerFoliage.getFoliageColorPine());
 	public static final Colorizer BIOME_FOLIAGE = new Colorizer(ColorType.BIOME_FOLIAGE);
 	public static final Colorizer BIOME_GRASS = new Colorizer(ColorType.BIOME_GRASS);
 

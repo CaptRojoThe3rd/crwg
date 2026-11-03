@@ -19,7 +19,7 @@ public class BiomeCRWGBeach extends BiomeCRWGBase
 		this.top_block = block;
 		
 		if (tropical) {
-			this.decorator_lowlands.extra_tree_chance = 0.75f;
+			this.decorator.extra_tree_chance = 0.75f;
 		}
 	}
 	

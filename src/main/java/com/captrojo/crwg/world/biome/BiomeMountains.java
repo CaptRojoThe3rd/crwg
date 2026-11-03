@@ -24,14 +24,14 @@ public class BiomeMountains extends BiomeCRWGBase
 		this.setEnableSnow();
 		this.frozen = (temperature <= 0.0f);
 
-		this.decorator_lowlands.trees = 0;
-		this.decorator_lowlands.grass = 0;
-		this.decorator_lowlands.flowers = 0;
+		this.decorator.trees = 0;
+		this.decorator.grass = 0;
+		this.decorator.flowers = 0;
 		
-		this.decorator_lowlands.liquid_waters = 0;
-		this.decorator_lowlands.liquid_lavas = 0;
+		this.decorator.liquid_waters = 0;
+		this.decorator.liquid_lavas = 0;
 
-		this.decorator_lowlands.emerald_amount = 3;
+		this.decorator.emerald_amount = 3;
 	}
 
 	@Override

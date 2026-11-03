@@ -15,19 +15,19 @@ public class RenderBlock2x2FloorPlant implements ISimpleBlockRenderingHandler
 	private void renderPiece(double x, double y, double z, IIcon icon, int color, int rot)
 	{
 		Tessellator ts = Tessellator.instance;
-		
+
 		rot = 1;
 
 		double u0 = (double) icon.getMinU();
 		double u1 = (double) icon.getMaxU();
 		double v0 = (double) icon.getMinV();
 		double v1 = (double) icon.getMaxV();
-		
+
 		double ux0z0, vx0z0;
 		double ux1z0, vx1z0;
 		double ux0z1, vx0z1;
 		double ux1z1, vx1z1;
-		
+
 		if (rot == 0) {
 			ux0z0 = u0;
 			vx0z0 = v0;
@@ -37,43 +37,43 @@ public class RenderBlock2x2FloorPlant implements ISimpleBlockRenderingHandler
 
 			ux0z1 = u0;
 			vx0z1 = v1;
-			
+
 			ux1z1 = u1;
 			vx1z1 = v1;
 		} else if (rot == 1) {
 			ux0z0 = u0;
 			vx0z0 = v1;
-			
+
 			ux1z0 = u0;
 			vx1z0 = v0;
-			
+
 			ux0z1 = u1;
 			vx0z1 = v1;
-			
+
 			ux1z1 = u1;
 			vx1z1 = v0;
 		} else if (rot == 2) {
 			ux0z0 = u1;
 			vx0z0 = v1;
-			
+
 			ux1z0 = u0;
 			vx1z0 = v1;
-			
+
 			ux0z1 = u1;
 			vx0z1 = v0;
-			
+
 			ux1z1 = u0;
 			vx1z1 = v0;
 		} else {
 			ux0z0 = u1;
 			vx0z0 = v0;
-			
+
 			ux1z0 = u1;
 			vx1z0 = v1;
-			
+
 			ux0z1 = u0;
 			vx0z1 = v0;
-			
+
 			ux1z1 = u0;
 			vx1z1 = v1;
 		}
@@ -114,7 +114,8 @@ public class RenderBlock2x2FloorPlant implements ISimpleBlockRenderingHandler
 
 		long rng = ((long) x * 3129871L) ^ ((long) z * 116129781L) ^ (long) y;
 		rng = (rng * rng * 42317861L) + (rng * 11L);
-		int rngi = (int) rng;
+		int rng0 = (int) rng;
+		int rng1 = (int) (rng >> 32);
 
 		Tessellator ts = Tessellator.instance;
 
@@ -125,7 +126,7 @@ public class RenderBlock2x2FloorPlant implements ISimpleBlockRenderingHandler
 		double xd = (double) x;
 		double yd = (double) y;
 		double zd = (double) z;
-		
+
 		if (blockplant.getPlantType(world, x, y, z) == EnumPlantType.Water) {
 			yd += 0.015625;
 		} else {
@@ -135,20 +136,20 @@ public class RenderBlock2x2FloorPlant implements ISimpleBlockRenderingHandler
 		IIcon icon;
 
 		if (tl) {
-			icon = blockplant.icons[rngi & 3];
-			this.renderPiece(xd, yd, zd, icon, color, (rngi >> 2) & 3);
+			icon = blockplant.getIconFromRNG(0, rng1);
+			this.renderPiece(xd, yd, zd, icon, color, rng0 & 3);
 		}
 		if (tr) {
-			icon = blockplant.icons[(rngi >> 4) & 3];
-			this.renderPiece(xd + 0.5, yd, zd, icon, color, (rngi >> 6) & 3);
+			icon = blockplant.getIconFromRNG(1, rng1);
+			this.renderPiece(xd + 0.5, yd, zd, icon, color, (rng0 >> 2) & 3);
 		}
 		if (bl) {
-			icon = blockplant.icons[(rngi >> 8) & 3];
-			this.renderPiece(xd, yd, zd + 0.5, icon, color, (rngi >> 10) & 3);
+			icon = blockplant.getIconFromRNG(2, rng1);
+			this.renderPiece(xd, yd, zd + 0.5, icon, color, (rng0 >> 4) & 3);
 		}
 		if (br) {
-			icon = blockplant.icons[(rngi >> 12) & 3];
-			this.renderPiece(xd + 0.5, yd, zd + 0.5, icon, color, (rngi >> 14) & 3);
+			icon = blockplant.getIconFromRNG(3, rng1);
+			this.renderPiece(xd + 0.5, yd, zd + 0.5, icon, color, (rng0 >> 6) & 3);
 		}
 
 		return true;

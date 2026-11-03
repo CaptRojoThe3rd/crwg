@@ -2,8 +2,8 @@ package com.captrojo.crwg.world.gen.genlayer;
 
 import com.captrojo.crwg.world.biome.BiomeCRWGBase;
 import com.captrojo.crwg.world.biome.ModBiomes;
-import com.captrojo.crwg.world.biome.data.BiomeGroup;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
+import com.captrojo.crwg.world.biome.data.LandType;
 import com.captrojo.crwg.world.gen.data.GConst;
 
 import net.minecraft.world.biome.BiomeGenBase;
@@ -45,14 +45,16 @@ public class GenLayerBiomesCRWG extends GenLayer
 
 		final int asize = aw * ah;
 		int[] n_arr = IntCache.getIntCache(asize);
+		
+		final LandType[] LT_ENUM = LandType.values();
 
 		for (int i = 0; i < asize; i++) {
 			int species = sp_arr[i];
 			BiomeTypeCRWG biome_type = BiomeTypeCRWG.values()[bt_arr[i]];
 			int land_type = lt_arr[i];
 
-			BiomeGenBase biome = ModBiomes.ocean;
-
+			BiomeGenBase biome;
+			
 			switch (land_type) {
 			case GConst.RIVERS:
 				if (biome_type.s_temp == GConst.HOT && biome_type.s_rain == GConst.WET) {
@@ -65,15 +67,9 @@ public class GenLayerBiomesCRWG extends GenLayer
 				break;
 
 			case GConst.SHALLOWOCEAN:
-				biome = GenLayerBiomesCRWG.ocean_biomes[biome_type.s_temp][2];
-				break;
-
 			case GConst.OCEAN:
-				biome = GenLayerBiomesCRWG.ocean_biomes[biome_type.s_temp][1];
-				break;
-
 			case GConst.DEEPOCEAN:
-				biome = GenLayerBiomesCRWG.ocean_biomes[biome_type.s_temp][0];
+				biome = GenLayerBiomesCRWG.ocean_biomes[biome_type.s_temp][biome_type.s_rain];
 				break;
 
 			case GConst.BEACH:
@@ -103,12 +99,10 @@ public class GenLayerBiomesCRWG extends GenLayer
 					biome = ModBiomes.fen_green;
 					break;
 				}
-				biome = ModBiomes.fen_green; /* TODO: DEBUG */
 				break;
 
 			default:
-				BiomeGroup group = biome_type.getFromSpecies(species);
-				biome = group.getFromHeightType(land_type);
+				biome = biome_type.getBiome(LT_ENUM[land_type], species);
 				break;
 			}
 

@@ -6,38 +6,30 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeGroup
 {
-	BiomeGenBase lowland;
-	BiomeGenBase hills;
-	BiomeGenBase highland;
+	BiomeGenBase plains;
 	BiomeGenBase mountain;
 	BiomeGenBase plateau;
 	
 	public BiomeGroup(
-		BiomeGenBase lowland,
-		BiomeGenBase hills,
-		BiomeGenBase highland,
+		BiomeGenBase plains,
 		BiomeGenBase mountain,
 		BiomeGenBase plateau
 	)
 	{
-		this.lowland = lowland;
-		this.hills = hills;
-		this.highland = highland;
+		this.plains = plains;
 		this.mountain = mountain;
 		this.plateau = plateau;
 	}
 	
-	public BiomeGenBase getFromHeightType(int type)
+	public BiomeGenBase getFromLandType(int type)
 	{
 		switch (type) {
 		default:
 		case GConst.LOWLANDS:
-			return this.lowland;
 		case GConst.HILLS:
-			return this.hills;
 		case GConst.HIGHLANDS:
 		case GConst.FOOTHILLS:
-			return this.highland;
+			return this.plains;
 		case GConst.MOUNTAINS:
 			return this.mountain;
 		case GConst.PLATEAUS:

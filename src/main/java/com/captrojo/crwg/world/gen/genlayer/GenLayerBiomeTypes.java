@@ -74,15 +74,23 @@ public class GenLayerBiomeTypes extends GenLayer
 
 	final NoisePerlinFractal temp_noise;
 	final NoisePerlinFractal rain_noise;
+	final NoisePerlinFractal awesome_noise;
 
 	double[] temperature;
 	double[] rainfall;
+	double[] awesomeness;
 
-	public GenLayerBiomeTypes(long base_seed, NoisePerlinFractal temp_noise, NoisePerlinFractal rain_noise)
+	public GenLayerBiomeTypes(
+		long base_seed,
+		NoisePerlinFractal temp_noise,
+		NoisePerlinFractal rain_noise,
+		NoisePerlinFractal awesome_noise
+	)
 	{
 		super(base_seed);
 		this.temp_noise = temp_noise;
 		this.rain_noise = rain_noise;
+		this.awesome_noise = awesome_noise;
 	}
 
 	private double fade(double t)
@@ -95,9 +103,11 @@ public class GenLayerBiomeTypes extends GenLayer
 	{
 		final double temp_scale = WorldChunkManagerCRWG.temp_scale_64;
 		final double rain_scale = WorldChunkManagerCRWG.rain_scale_64;
+		final double awesome_scale = WorldChunkManagerCRWG.awesome_scale_64;
 
 		this.temperature = this.temp_noise.calcArray(this.temperature, ax, ay, aw, ah, temp_scale, temp_scale);
 		this.rainfall = this.rain_noise.calcArray(this.rainfall, ax, ay, aw, ah, rain_scale, rain_scale);
+		this.awesomeness = this.awesome_noise.calcArray(this.awesomeness, ax, ay, aw, ah, awesome_scale, awesome_scale);
 
 		int[] array = IntCache.getIntCache(aw * ah);
 
@@ -106,9 +116,11 @@ public class GenLayerBiomeTypes extends GenLayer
 				int idx = x + (y * aw);
 				double t = this.temperature[idx];
 				double r = this.rainfall[idx];
+				double a = this.awesomeness[idx];
 
 				t = this.fade(t);
 				r = this.fade(r);
+				a = this.fade(a);
 
 				array[idx] = GenLayerBiomeTypes.getType(t, r);
 			}

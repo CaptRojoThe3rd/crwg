@@ -143,7 +143,7 @@ public abstract class WorldMixin implements WorldCRWG
 	
 	@Override
 	@Unique
-	public int crwg$getSpeciesVal(int x, int z)
+	public int crwg$getSubspeciesVal(int x, int z)
 	{
 		if (!CRWG.funcs.isWithinWorld(x, z)) {
 			return 0;
@@ -151,15 +151,15 @@ public abstract class WorldMixin implements WorldCRWG
 		ChunkCRWG chunk = null;
 		try {
 			chunk = this.crwg$getChunkFromBlockCoords(x, z);
-			return chunk.crwg$getSpeciesVal(x & 0xf, z & 0xf);
+			return chunk.crwg$getSubspeciesVal(x & 0xf, z & 0xf);
 		} catch (Throwable t) {
-			throw this.crwg$crash(t, "Exception getting species value in world", x, 0, z, chunk);
+			throw this.crwg$crash(t, "Exception getting subspecies value in world", x, 0, z, chunk);
 		}
 	}
 	
 	@Override
 	@Unique
-	public boolean crwg$setSpeciesVal(int x, int z, int species)
+	public boolean crwg$setSubspeciesVal(int x, int z, int species)
 	{
 		if (!CRWG.funcs.isWithinWorld(x, z)) {
 			return false;
@@ -167,10 +167,10 @@ public abstract class WorldMixin implements WorldCRWG
 		ChunkCRWG chunk = null;
 		try {
 			chunk = this.crwg$getChunkFromBlockCoords(x, z);
-			chunk.crwg$setSpeciesVal(x & 0xf, z & 0xf, species);
+			chunk.crwg$setSubspeciesVal(x & 0xf, z & 0xf, species);
 			return true;
 		} catch (Throwable t) {
-			throw this.crwg$crash(t, "Exception setting species value in world", x, 0, z, chunk);
+			throw this.crwg$crash(t, "Exception setting subspecies value in world", x, 0, z, chunk);
 		}
 	}
 

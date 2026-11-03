@@ -25,7 +25,7 @@ public abstract class ChunkMixin implements ChunkCRWG
 	 *          |||||||| |||||||| ||++++++-- Land type
 	 *          |||||||| ||||++++-++-------- Biome type
 	 *          |||||||| ++++--------------- Soil type
-	 *          ++++++++-------------------- Species
+	 *          ++++++++-------------------- Subspecies
 	 */
 
 	@Unique int[] crwg$surf_data_map_a;
@@ -120,21 +120,21 @@ public abstract class ChunkMixin implements ChunkCRWG
 	
 	@Override
 	@Unique
-	public int crwg$getSpeciesVal(int x, int z)
+	public int crwg$getSubspeciesVal(int x, int z)
 	{
 		int v = this.crwg$surf_data_map_a[x | (z << 4)];
-		v = (v & ChnkConst.MASK_SPECIES) >>> ChnkConst.SHIFT_SPECIES;
+		v = (v & ChnkConst.MASK_SPECIES) >>> ChnkConst.SHIFT_SUBSPECIES;
 		return v;
 	}
 	
 	@Override
 	@Unique
-	public void crwg$setSpeciesVal(int x, int z, int species)
+	public void crwg$setSubspeciesVal(int x, int z, int subspecies)
 	{
 		int idx = x | (z << 4);
 		int v = this.crwg$surf_data_map_a[idx];
 		v &= ~ChnkConst.MASK_SPECIES;
-		v |= (species << ChnkConst.SHIFT_SPECIES);
+		v |= (subspecies << ChnkConst.SHIFT_SUBSPECIES);
 		this.crwg$surf_data_map_a[idx] = v;
 	}
 	

@@ -36,7 +36,7 @@
 dependencies {
 	implementation("com.falsepattern:falsepatternlib-mc1.7.10:1.12.2")
 	implementation(deobf("https://github.com/CaptRojoThe3rd/ChunkAPI/releases/download/0.8.4-EHL/chunkapi-mc1.7.10-0.8.4-EHL.jar"))
-	implementation(deobf("https://github.com/CaptRojoThe3rd/EndlessIDs/releases/download/1.7.4-EHL/endlessids-mc1.7.10-1.7.4-EHL.jar"))
+	implementation(deobf("https://github.com/CaptRojoThe3rd/EndlessIDs/releases/download/1.7.4-EHL.1/endlessids-mc1.7.10-1.7.4-EHL.1.jar"))
 
 	implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev")
 }

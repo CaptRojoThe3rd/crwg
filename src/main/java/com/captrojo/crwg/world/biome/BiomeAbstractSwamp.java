@@ -22,19 +22,19 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 
 		this.waterColorMultiplier = 0xcbfc7b;
 
-		this.decorator_lowlands.underwater_gravel = 0;
-		this.decorator_lowlands.underwater_sand = 0;
-		this.decorator_lowlands.underwater_clay = 1;
+		this.decorator.underwater_gravel = 0;
+		this.decorator.underwater_sand = 0;
+		this.decorator.underwater_clay = 1;
 
-		this.decorator_lowlands.trees = 2;
+		this.decorator.trees = 2;
 		
-		this.decorator_lowlands.grass = 5;
-		this.decorator_lowlands.flowers = 1;
-		this.decorator_lowlands.dead_bushes = 1;
+		this.decorator.grass = 5;
+		this.decorator.flowers = 1;
+		this.decorator.dead_bushes = 1;
 		
-		this.decorator_lowlands.mushrooms = 8;
+		this.decorator.mushrooms = 8;
 		
-		this.decorator_lowlands.reeds = 10;
+		this.decorator.reeds = 10;
 	}
 
 	@Override

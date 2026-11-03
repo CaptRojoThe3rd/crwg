@@ -23,10 +23,13 @@ public class BiomeTundra extends BiomeCRWGBase
 		this.is_ice_spikes = ice_spikes;
 		this.is_very_snowy = ice_spikes || (temperature < -0.5f);
 		
-		this.decorator_lowlands.grass = 0;
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.reeds = 0;
-		this.decorator_lowlands.pumpkins = 0;
+		this.decorator.grass = 0;
+		this.decorator.flowers = 0;
+		this.decorator.reeds = 0;
+		this.decorator.pumpkins = 0;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 		
 		this.setEnableSnow();
 		this.spawnableCreatureList.clear();

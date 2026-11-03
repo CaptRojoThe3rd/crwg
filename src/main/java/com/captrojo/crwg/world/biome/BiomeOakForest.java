@@ -50,23 +50,23 @@ public class BiomeOakForest extends BiomeCRWGBase
 		this.chaparral = (type == CHAPARRAL || type == FLOWER_CHAPARRAL);
 		this.flower_forest = (type == FLOWER || type == FLOWER_CHAPARRAL);
 
-		this.decorator_lowlands.boulders = 1;
-		this.decorator_lowlands.boulder_chance = 0.05F;
+		this.decorator.boulders = 1;
+		this.decorator.boulder_chance = 0.05F;
 
 		if (type == NORMAL) {
-			this.decorator_lowlands.trees = 10;
-			this.decorator_lowlands.grass = 12;
-			this.decorator_lowlands.flowers = 3;
+			this.decorator.trees = 10;
+			this.decorator.grass = 12;
+			this.decorator.flowers = 3;
 
 			this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityWolf.class, 5, 4, 4));
 		} else if (type == CHAPARRAL) {
-			this.decorator_lowlands.trees = 1;
-			this.decorator_lowlands.grass = 8;
-			this.decorator_lowlands.flowers = 5;
+			this.decorator.trees = 1;
+			this.decorator.grass = 8;
+			this.decorator.flowers = 5;
 		} else if (type == FLOWER) {
-			this.decorator_lowlands.trees = 7;
-			this.decorator_lowlands.grass = 2;
-			this.decorator_lowlands.flowers = 60;
+			this.decorator.trees = 7;
+			this.decorator.grass = 2;
+			this.decorator.flowers = 60;
 
 			this.flowers.clear();
 			for (int i = 0; i < BlockFlower.field_149859_a.length; i++) {
@@ -75,15 +75,18 @@ public class BiomeOakForest extends BiomeCRWGBase
 
 			this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityWolf.class, 5, 2, 3));
 		} else if (type == FLOWER_CHAPARRAL) {
-			this.decorator_lowlands.trees = 1;
-			this.decorator_lowlands.grass = 2;
-			this.decorator_lowlands.flowers = 25;
+			this.decorator.trees = 1;
+			this.decorator.grass = 2;
+			this.decorator.flowers = 25;
 
 			this.flowers.clear();
 			for (int i = 0; i < BlockFlower.field_149859_a.length; i++) {
 				this.addFlower(Blocks.red_flower, i == 1 ? 0 : i, 10);
 			}
 		}
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override

@@ -18,8 +18,11 @@ public class BiomeGrassland extends BiomeCRWGBase
 
 		this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityHorse.class, 5, 2, 6));
 
-		this.decorator_lowlands.grass = 10;
-		this.decorator_lowlands.flowers = 4;
+		this.decorator.grass = 10;
+		this.decorator.flowers = 4;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 
 		this.flowers.clear();
 		this.addFlower(Blocks.red_flower, 4, 3);

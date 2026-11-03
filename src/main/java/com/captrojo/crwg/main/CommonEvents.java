@@ -4,7 +4,9 @@ import com.captrojo.crwg.block.ModBlocks;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.block.Block;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
@@ -69,6 +71,17 @@ public class CommonEvents
 			this.makeFarmland(world, x, y, z, ModBlocks.clay_dirt, 0);
 			event.setResult(Result.ALLOW);
 			return;
+		}
+	}
+	
+	@SubscribeEvent
+	public void onServerTickEvent(TickEvent.ServerTickEvent event)
+	{
+		long time_ms = MinecraftServer.getSystemTimeMillis();
+		if (event.phase == TickEvent.Phase.START) {
+			PerformanceInfo.onTickStart(time_ms);
+		} else if (event.phase == TickEvent.Phase.END) {
+			PerformanceInfo.onTickEnd(time_ms);
 		}
 	}
 }

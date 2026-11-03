@@ -34,15 +34,15 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	{
 		super(id, name, 0x607060, 0.6f, 0.5f);
 
-		this.decorator_lowlands.trees = 0;
-		this.decorator_lowlands.extra_tree_chance = 0.4f;
-		this.decorator_lowlands.grass = 5;
-		this.decorator_lowlands.flowers = 2;
+		this.decorator.trees = 0;
+		this.decorator.extra_tree_chance = 0.4f;
+		this.decorator.grass = 5;
+		this.decorator.flowers = 2;
 		
-		this.decorator_lowlands.liquid_waters = 0;
-		this.decorator_lowlands.liquid_lavas = 0;
+		this.decorator.liquid_waters = 0;
+		this.decorator.liquid_lavas = 0;
 		
-		this.decorator_lowlands.emerald_amount = 2;
+		this.decorator.emerald_amount = 2;
 	}
 
 	@Override

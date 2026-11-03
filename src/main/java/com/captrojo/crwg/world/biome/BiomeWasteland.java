@@ -13,10 +13,13 @@ public class BiomeWasteland extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 		
-		this.decorator_lowlands.grass = 0;
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.reeds = 0;
-		this.decorator_lowlands.pumpkins = 0;
+		this.decorator.grass = 0;
+		this.decorator.flowers = 0;
+		this.decorator.reeds = 0;
+		this.decorator.pumpkins = 0;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 		
 		this.spawnableCreatureList.clear();
 	}

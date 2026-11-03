@@ -17,9 +17,12 @@ public class BiomeCypressSwamp extends BiomeAbstractSwamp
 
 		this.waterColorMultiplier = 0x9ffc4e;
 
-		this.decorator_lowlands.trees = 4;
-		this.decorator_lowlands.grass = 6;
-		this.decorator_lowlands.flowers = 0;
+		this.decorator.trees = 4;
+		this.decorator.grass = 6;
+		this.decorator.flowers = 0;
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override

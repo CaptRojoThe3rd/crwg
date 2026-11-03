@@ -30,6 +30,7 @@ public class ClientProxy extends CommonProxy
 		super.init(event);
 
 		ClientCommandHandler.instance.registerCommand(new CommandFlightSpeed());
+		ClientCommandHandler.instance.registerCommand(new CommandResetPerformanceInfo());
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TESignCRWG.class, new RenderTESignCRWG());
 		

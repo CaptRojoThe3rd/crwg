@@ -9,14 +9,14 @@ import net.minecraftforge.common.EnumPlantType;
 
 public class BlockFloorPlant extends BlockBushCRWG
 {
-	public BlockFloorPlant(String name, int variants)
+	public BlockFloorPlant(String name)
 	{
-		this(name, Material.plants, EnumPlantType.Plains, variants);
+		this(name, Material.plants, EnumPlantType.Plains);
 	}
 	
-	public BlockFloorPlant(String name, Material material, EnumPlantType type, int variants)
+	public BlockFloorPlant(String name, Material material, EnumPlantType type)
 	{
-		super(name, material, type, variants);
+		super(name, material, type);
 	        this.setSize(1.0F, 0.03125F);
 	}
 	

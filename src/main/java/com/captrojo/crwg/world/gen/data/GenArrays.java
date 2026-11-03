@@ -104,10 +104,10 @@ public class GenArrays
 
 			int s_temp = this.s_temperatures[i];
 			int s_rain = this.s_rainfalls[i];
-			int soil = Soil.Soil_Map[s_temp][s_rain][this.species_array[i] & 3].ordinal();
+			int soil = Soil.Soil_Map[s_temp][s_rain][(this.species_array[i] >> 16) & 3].ordinal();
 			v |= (soil << ChnkConst.SHIFT_SOILTYPE);
 			
-			v |= (this.species_array[i] << ChnkConst.SHIFT_SPECIES);
+			v |= (((this.species_array[i] >> 23) & 0xff) << ChnkConst.SHIFT_SUBSPECIES);
 
 			surf_data_map_a[i] = v;
 		}

@@ -24,19 +24,22 @@ public class BiomeBirchForest extends BiomeCRWGBase
 
 		this.old_growth = (type == OLD_GROWTH);
 		
-		this.decorator_lowlands.boulders = 1;
-		this.decorator_lowlands.boulder_chance = 0.05f;
+		this.decorator.boulders = 1;
+		this.decorator.boulder_chance = 0.05f;
 
 		if (type == NORMAL || type == OLD_GROWTH) {
-			this.decorator_lowlands.trees = 8;
-			this.decorator_lowlands.grass = 3;
-			this.decorator_lowlands.flowers = 2;
+			this.decorator.trees = 8;
+			this.decorator.grass = 3;
+			this.decorator.flowers = 2;
 			this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityWolf.class, 5, 4, 4));
 		} else if (type == CHAPARRAL) {
-			this.decorator_lowlands.trees = 1;
-			this.decorator_lowlands.grass = 4;
-			this.decorator_lowlands.flowers = 3;
+			this.decorator.trees = 1;
+			this.decorator.grass = 4;
+			this.decorator.flowers = 3;
 		}
+		
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override

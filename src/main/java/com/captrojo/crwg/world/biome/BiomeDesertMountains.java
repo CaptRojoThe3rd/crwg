@@ -14,12 +14,12 @@ public class BiomeDesertMountains extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 
-		this.decorator_lowlands.grass = 1;
-		this.decorator_lowlands.grass_chance = 0.1f;
-		this.decorator_lowlands.flowers = 0;
-		this.decorator_lowlands.reeds = 3;
-		this.decorator_lowlands.cacti = 0;
-		this.decorator_lowlands.dead_bushes = 1;
+		this.decorator.grass = 1;
+		this.decorator.grass_chance = 0.1f;
+		this.decorator.flowers = 0;
+		this.decorator.reeds = 3;
+		this.decorator.cacti = 0;
+		this.decorator.dead_bushes = 1;
 
 		this.spawnableCreatureList.clear();
 	}
