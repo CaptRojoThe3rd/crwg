@@ -18,25 +18,25 @@ public class ItemLogCRWG extends ItemBlock
 		super(block);
 		this.setHasSubtypes(true);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced_tooltips)
 	{
 		I18nUtil.addItemDesc(stack, list);
 	}
-	
+
 	@Override
 	public int getMetadata(int meta)
 	{
 		return meta;
 	}
-	
+
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{
 		int meta = stack.getItemDamage() & 0xd;
-		
+
 		switch (meta) {
 		default:
 		case 0x0:

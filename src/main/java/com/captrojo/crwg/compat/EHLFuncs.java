@@ -52,13 +52,13 @@ public class EHLFuncs implements ICRWGFuncs
 		}
 
 		((ChunkBiomeHook) (Object) chunk).setBiomeShortArray(abiomeid);
-		
+
 		arrays.addDataToChunk((ChunkCRWG) (Object) chunk);
 
 		chunk.generateSkylightMap();
 		return chunk;
 	}
-	
+
 	@Override
 	public boolean isWithinWorld(int x, int y, int z)
 	{
@@ -70,7 +70,7 @@ public class EHLFuncs implements ICRWGFuncs
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean isWithinWorld(int x, int z)
 	{
@@ -88,13 +88,13 @@ public class EHLFuncs implements ICRWGFuncs
 	{
 		return 0;
 	}
-	
+
 	@Override
 	public int getMaxHeight()
 	{
 		return 511;
 	}
-	
+
 	@Override
 	public int getSeaLevel()
 	{

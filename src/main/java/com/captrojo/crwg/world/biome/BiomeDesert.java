@@ -16,7 +16,7 @@ public class BiomeDesert extends BiomeCRWGBase
 		BiomeCRWGBase.Gen_ShortGrass_Dry_C,
 		BiomeCRWGBase.Gen_ShortGrass_Dry_D
 	};
-	
+
 	public BiomeDesert(int id, String name, int color, float temperature, float rainfall)
 	{
 		super(id, name, color, temperature, rainfall);
@@ -29,7 +29,7 @@ public class BiomeDesert extends BiomeCRWGBase
 		this.decorator.dead_bushes = 2;
 
 		this.spawnableCreatureList.clear();
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 	}

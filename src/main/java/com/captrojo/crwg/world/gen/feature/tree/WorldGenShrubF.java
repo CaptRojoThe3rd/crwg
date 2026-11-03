@@ -15,7 +15,7 @@ public class WorldGenShrubF extends WorldGenShrub
 {
 	final Block log_block;
 	final Block leaf_block;
-	
+
 	public WorldGenShrubF(WoodBlocks wood)
 	{
 		this(wood.log, 0, wood.leaf, 0);

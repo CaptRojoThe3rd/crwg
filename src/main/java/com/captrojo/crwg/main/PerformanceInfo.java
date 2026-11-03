@@ -3,7 +3,7 @@ package com.captrojo.crwg.main;
 public abstract class PerformanceInfo
 {
 	public static boolean available = false;
-	
+
 	public static long tick_time_start;
 	public static long tick_time_end;
 	public static long[] mspt_avg_arr = new long[20];
@@ -11,7 +11,7 @@ public abstract class PerformanceInfo
 	public static long mspt_avg;
 	public static long mspt_last;
 	public static long mspt_worst;
-	
+
 	public static void resetInfo()
 	{
 		mspt_avg_arr = new long[20];

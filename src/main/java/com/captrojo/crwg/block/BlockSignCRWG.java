@@ -42,7 +42,7 @@ public class BlockSignCRWG extends BlockSign
 		this.sign = sign;
 		this.setBlockName(name);
 	}
-	
+
 	public BlockSignCRWG(String name, Sign sign, String item_name)
 	{
 		this(name, sign, true);

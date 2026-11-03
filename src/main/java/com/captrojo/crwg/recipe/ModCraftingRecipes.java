@@ -28,7 +28,7 @@ public abstract class ModCraftingRecipes
 			addShaped(new ItemStack(wood.trapdoor, 1), "aaa", "aaa", 'a', wood.planks);
 			addShapedOre(new ItemStack(wood.sign_standing, 1), "aaa", "aaa", " b ", 'a', wood.planks, 'b', "stickWood");
 		}
-		
+
 		addShaped(new ItemStack(ModBlocks.orange_sandstone, 1), "aa", "aa", 'a', ModBlocks.orange_sand);
 		addShaped(new ItemStack(ModBlocks.orange_cut_sandstone, 4), "aa", "aa", 'a', ModBlocks.orange_sandstone);
 		addShaped(new ItemStack(ModBlocks.orange_sandstone_slab, 6), "aaa", 'a', ModBlocks.orange_sandstone);
@@ -39,18 +39,18 @@ public abstract class ModCraftingRecipes
 		addShaped(new ItemStack(ModBlocks.orange_sandstone_stairs, 4), "a  ", "aa ", "aaa", 'a', ModBlocks.orange_cut_sandstone);
 		addShaped(new ItemStack(ModBlocks.orange_smooth_sandstone_stairs, 4), "a  ", "aa ", "aaa", 'a', ModBlocks.orange_smooth_sandstone);
 	}
-	
-	private static void addShaped(ItemStack result, Object...objs)
+
+	private static void addShaped(ItemStack result, Object... objs)
 	{
 		GameRegistry.addShapedRecipe(result, objs);
 	}
-	
-	private static void addShapedOre(ItemStack result, Object...objs)
+
+	private static void addShapedOre(ItemStack result, Object... objs)
 	{
 		GameRegistry.addRecipe(new ShapedOreRecipe(result, objs));
 	}
-	
-	private static void addShapeless(ItemStack result, Object...objs)
+
+	private static void addShapeless(ItemStack result, Object... objs)
 	{
 		GameRegistry.addShapelessRecipe(result, objs);
 	}

@@ -34,7 +34,7 @@ public class ItemDoorCRWG extends ItemBlockCRWG
 			stack.stackSize--;
 			return true;
 		}
-		
+
 		return false;
 	}
 }

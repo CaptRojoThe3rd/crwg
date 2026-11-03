@@ -6,7 +6,7 @@ import net.minecraft.world.gen.layer.IntCache;
 public class GenLayerRand extends GenLayer
 {
 	final int bound;
-	
+
 	public GenLayerRand(long base_seed, int bound)
 	{
 		super(base_seed);
@@ -18,7 +18,7 @@ public class GenLayerRand extends GenLayer
 	{
 		final int asize = aw * ah;
 		int[] array = IntCache.getIntCache(asize);
-		
+
 		for (int x = 0; x < aw; x++) {
 			for (int y = 0; y < ah; y++) {
 				int idx = x + (y * aw);
@@ -26,7 +26,7 @@ public class GenLayerRand extends GenLayer
 				array[idx] = this.nextInt(this.bound);
 			}
 		}
-		
+
 		return array;
 	}
 }

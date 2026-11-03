@@ -49,7 +49,7 @@ public class WorldGenBigMushroomF extends WorldGenBigMushroom
 		if (!(y >= (min_y + 1) && y + height + 1 < max_y)) {
 			return false;
 		}
-		
+
 		int type;
 		if (this.mushroomType >= 0) {
 			type = this.mushroomType;
@@ -58,7 +58,7 @@ public class WorldGenBigMushroomF extends WorldGenBigMushroom
 		}
 
 		final Block mushroom_block = (type == 0) ? Blocks.brown_mushroom_block : Blocks.red_mushroom_block;
-		
+
 		int x1, z1;
 
 		for (int y1 = y; y1 <= y + 1 + height; ++y1) {

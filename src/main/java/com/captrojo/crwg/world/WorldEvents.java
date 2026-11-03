@@ -58,7 +58,7 @@ public class WorldEvents
 			}
 			return;
 		}
-		
+
 		/* jungle */
 		if (event.biome == ModBiomes.jungle_plateau) {
 			event.setResult(Result.DENY);
@@ -112,7 +112,7 @@ public class WorldEvents
 			}
 			return;
 		}
-		
+
 		/* jungle */
 		if (event.biome == ModBiomes.jungle_plateau) {
 			event.setResult(Result.DENY);

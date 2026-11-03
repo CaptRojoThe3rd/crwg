@@ -17,7 +17,7 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 
 		this.decorator.trees = 0; /* we will generate them ourselves */
 		this.decorator.grass = 2;
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 	}

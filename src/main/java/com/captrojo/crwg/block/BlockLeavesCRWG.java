@@ -5,7 +5,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.block.data.Colorizer;
 import com.captrojo.crwg.main.CRWG;
-import com.captrojo.crwg.util.MathUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

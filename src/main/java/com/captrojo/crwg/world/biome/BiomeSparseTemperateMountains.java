@@ -23,7 +23,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	static final SoilIdx[] FILL_BLOCKS = {SoilIdx.DIRT, SoilIdx.DIRT, SoilIdx.COARSE_DIRT, null};
 
 	GenLayer genlayer_soil;
-	
+
 	{
 		this.genlayer_soil = new GenLayerRand(100L, TOP_BLOCKS.length);
 		this.genlayer_soil = GenLayerZoom.magnify(110L, this.genlayer_soil, 4);
@@ -38,10 +38,10 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 		this.decorator.extra_tree_chance = 0.4f;
 		this.decorator.grass = 5;
 		this.decorator.flowers = 2;
-		
+
 		this.decorator.liquid_waters = 0;
 		this.decorator.liquid_lavas = 0;
-		
+
 		this.decorator.emerald_amount = 2;
 	}
 

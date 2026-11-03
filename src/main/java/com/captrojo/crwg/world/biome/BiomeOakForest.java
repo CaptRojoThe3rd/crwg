@@ -84,7 +84,7 @@ public class BiomeOakForest extends BiomeCRWGBase
 				this.addFlower(Blocks.red_flower, i == 1 ? 0 : i, 10);
 			}
 		}
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 	}

@@ -38,7 +38,6 @@ import com.captrojo.crwg.world.biome.ModBiomes;
 import com.captrojo.crwg.world.chunk.ChunkDataMgr;
 import com.falsepattern.chunk.api.DataRegistry;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -60,14 +59,14 @@ public class CRWG
 {
 	public static final String MOD_ID = "crwg";
 	public static final String NAME = "CaptRojo's World Gen";
-	
+
 	public static final String VERSION = "0.0.0";
 	public static final String VERSIONS_ACCEPTED = "0.0.0";
-	
+
 	public static final String DATA_VERSION = "0.0";
 
 	public static final Logger log = LogManager.getLogger(MOD_ID);
-	
+
 	public static ICRWGFuncs funcs;
 
 	@SidedProxy(
@@ -75,11 +74,11 @@ public class CRWG
 		serverSide = "com.captrojo.crwg.main.CommonProxy"
 	)
 	public static CommonProxy proxy;
-	
+
 	public static String dir_config;
-	
+
 	public static CreativeTabs tab_blocks = new TabBlocks();
-	
+
 	public static String ident(String s)
 	{
 		if (s.contains(":")) {
@@ -87,7 +86,7 @@ public class CRWG
 		}
 		return MOD_ID + ":" + s;
 	}
-	
+
 	public static ResourceLocation resource(String s)
 	{
 		return new ResourceLocation(ident(s));
@@ -109,7 +108,7 @@ public class CRWG
 		ModBlocks.registerBlocks();
 		ModItems.initItems();
 		ModItems.registerItems();
-		
+
 		ModTileEntities.registerTileEntities();
 
 		WorldEvents.instance = new WorldEvents();
@@ -122,17 +121,17 @@ public class CRWG
 	public void init(FMLInitializationEvent event)
 	{
 		BlockState.initPreMade();
-		
+
 		ModCraftingRecipes.registerRecipes();
 		ModSmeltingRecipes.registerRecipes();
-		
+
 		ModBiomes.registerBiomes();
 		ModBiomes.initBiomeTypes();
-		
+
 		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG();
-		
+
 		DataRegistry.registerDataManager(new ChunkDataMgr(), 0);
-		
+
 		proxy.init(event);
 	}
 
@@ -140,7 +139,7 @@ public class CRWG
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		ModBiomes.initBiomeTypes();
-		
+
 		proxy.postInit(event);
 	}
 

@@ -21,21 +21,21 @@ public class ItemDoublePlantCRWG extends ItemDoublePlant
 	{
 		super(block, (BlockDoublePlant) block, null);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced_tooltips)
 	{
 		I18nUtil.addItemDesc(stack, list);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta)
 	{
 		return ((BlockDoublePlant) this.field_150939_a).func_149888_a(true, meta);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int par1)
@@ -45,7 +45,7 @@ public class ItemDoublePlantCRWG extends ItemDoublePlant
 		}
 		return 0xffffff;
 	}
-	
+
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{

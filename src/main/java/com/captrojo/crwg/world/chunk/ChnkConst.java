@@ -6,7 +6,7 @@ package com.captrojo.crwg.world.chunk;
 public abstract class ChnkConst
 {
 	/* ChunkMixin.crwg$surf_data_map_a */
-	
+
 	public static final int SHIFT_BIOMETYPE = 6;
 	public static final int SHIFT_SOILTYPE = 12;
 	public static final int SHIFT_SUBSPECIES = 16;

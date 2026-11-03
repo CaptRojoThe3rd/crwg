@@ -82,7 +82,7 @@ public enum BiomeTypeCRWG
 		BiomeGroup group = this.biomes_groups[species % this.biomes_groups.length];
 		return group.getFromLandType(land_type.ordinal());
 	}
-	
+
 	public void add(BiomeGroup group)
 	{
 		if (this.biomes_groups == null) {
@@ -92,7 +92,7 @@ public enum BiomeTypeCRWG
 		}
 		this.biomes_groups[this.biomes_groups.length - 1] = group;
 	}
-	
+
 	public void addGroupOf(BiomeGenBase plains, BiomeGenBase mountains, BiomeGenBase plateau)
 	{
 		this.add(new BiomeGroup(plains, mountains, plateau));

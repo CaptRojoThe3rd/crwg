@@ -17,14 +17,14 @@ public class ItemBlockCRWG extends ItemBlock
 	{
 		super(block);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass)
 	{
 		return this.field_150939_a.getRenderColor(stack.getItemDamage());
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced_tooltips)

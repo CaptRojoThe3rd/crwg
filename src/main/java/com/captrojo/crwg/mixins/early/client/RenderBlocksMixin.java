@@ -21,31 +21,19 @@ import net.minecraft.util.IIcon;
 @Mixin(RenderBlocks.class)
 public abstract class RenderBlocksMixin
 {
-	@Shadow
-	public float colorRedTopLeft;
-	@Shadow
-	public float colorRedBottomLeft;
-	@Shadow
-	public float colorRedBottomRight;
-	@Shadow
-	public float colorRedTopRight;
-	@Shadow
-	public float colorGreenTopLeft;
-	@Shadow
-	public float colorGreenBottomLeft;
-	@Shadow
-	public float colorGreenBottomRight;
-	@Shadow
-	public float colorGreenTopRight;
-	@Shadow
-	public float colorBlueTopLeft;
-	@Shadow
-	public float colorBlueBottomLeft;
-	@Shadow
-	public float colorBlueBottomRight;
-	@Shadow
-	public float colorBlueTopRight;
-	
+	@Shadow public float colorRedTopLeft;
+	@Shadow public float colorRedBottomLeft;
+	@Shadow public float colorRedBottomRight;
+	@Shadow public float colorRedTopRight;
+	@Shadow public float colorGreenTopLeft;
+	@Shadow public float colorGreenBottomLeft;
+	@Shadow public float colorGreenBottomRight;
+	@Shadow public float colorGreenTopRight;
+	@Shadow public float colorBlueTopLeft;
+	@Shadow public float colorBlueBottomLeft;
+	@Shadow public float colorBlueBottomRight;
+	@Shadow public float colorBlueTopRight;
+
 	@Shadow
 	public abstract void renderFaceZNeg(Block block, double x, double y, double z, IIcon icon);
 
@@ -85,7 +73,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -98,10 +86,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceZNeg(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusion",
 		at = @At(
@@ -129,7 +117,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -142,10 +130,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceZPos(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusion",
 		at = @At(
@@ -173,7 +161,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -186,10 +174,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceXNeg(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusion",
 		at = @At(
@@ -217,7 +205,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -230,10 +218,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceXPos(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusionPartial",
 		at = @At(
@@ -261,7 +249,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -274,10 +262,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceZNeg(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusionPartial",
 		at = @At(
@@ -305,7 +293,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -318,10 +306,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceZPos(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusionPartial",
 		at = @At(
@@ -349,7 +337,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -362,10 +350,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceXNeg(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusionPartial",
 		at = @At(
@@ -393,7 +381,7 @@ public abstract class RenderBlocksMixin
 		if (!(block instanceof BlockGrassCRWG grass)) {
 			return;
 		}
-		
+
 		this.colorRedTopLeft *= r;
                 this.colorRedBottomLeft *= r;
                 this.colorRedBottomRight *= r;
@@ -406,10 +394,10 @@ public abstract class RenderBlocksMixin
                 this.colorBlueBottomLeft *= b;
                 this.colorBlueBottomRight *= b;
                 this.colorBlueTopRight *= b;
-                
+
                 this.renderFaceXPos(block, x, y, z, grass.getSideOverlayIcon());
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusion",
 		at = @At(
@@ -435,7 +423,7 @@ public abstract class RenderBlocksMixin
 			flag1.set(false);
 		}
 	}
-	
+
 	@Inject(
 		method = "renderStandardBlockWithAmbientOcclusionPartial",
 		at = @At(
@@ -461,7 +449,7 @@ public abstract class RenderBlocksMixin
 			flag1.set(false);
 		}
 	}
-	
+
 	@Definition(id = "grass", field = "Lnet/minecraft/init/Blocks;grass:Lnet/minecraft/block/BlockGrass;")
 	@Expression(value = "? != grass")
 	@ModifyExpressionValue(
@@ -472,7 +460,7 @@ public abstract class RenderBlocksMixin
 	{
 		return original && !ModBlocks.isModGrassBlock(block);
 	}
-	
+
 	@Definition(id = "grass", field = "Lnet/minecraft/init/Blocks;grass:Lnet/minecraft/block/BlockGrass;")
 	@Expression(value = "? == grass")
 	@ModifyExpressionValue(

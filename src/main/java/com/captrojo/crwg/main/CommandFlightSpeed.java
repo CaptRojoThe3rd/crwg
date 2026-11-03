@@ -10,7 +10,6 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 
 public class CommandFlightSpeed extends CommandBase
 {
@@ -49,7 +48,8 @@ public class CommandFlightSpeed extends CommandBase
 		float speed = 0.05f;
 		try {
 			speed = Float.parseFloat(args[args.length - 1]);
-		} catch (NumberFormatException e) {}
+		} catch (NumberFormatException e) {
+		}
 
 		if (player.worldObj.isRemote) {
 			this.setFS(speed);
@@ -57,7 +57,7 @@ public class CommandFlightSpeed extends CommandBase
 	}
 
 	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args)
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args)
 	{
 		List<String> list = null;
 		if (args.length == 1) {

@@ -9,7 +9,7 @@ public class BiomeGroup
 	BiomeGenBase plains;
 	BiomeGenBase mountain;
 	BiomeGenBase plateau;
-	
+
 	public BiomeGroup(
 		BiomeGenBase plains,
 		BiomeGenBase mountain,
@@ -20,7 +20,7 @@ public class BiomeGroup
 		this.mountain = mountain;
 		this.plateau = plateau;
 	}
-	
+
 	public BiomeGenBase getFromLandType(int type)
 	{
 		switch (type) {

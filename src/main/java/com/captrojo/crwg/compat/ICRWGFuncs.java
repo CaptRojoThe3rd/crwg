@@ -28,22 +28,22 @@ public interface ICRWGFuncs
 		short[] abiomeid,
 		GenArrays arrays
 	);
-	
+
 	/**
 	 * Check if a coordinate is within the world border (within 30 million from (0, 0), and
 	 * not outside min/max height limits)
 	 */
 	boolean isWithinWorld(int x, int y, int z);
-	
+
 	boolean isWithinWorld(int x, int z);
-	
+
 	/**
 	 * Get the bottom height limit of the world. Used for things like world gen checks.
 	 * Also used to calculate indices into `ablock` and `ameta` arrays. This is an actual
 	 * Y coordinate.
 	 */
 	int getMinHeight();
-	
+
 	/**
 	 * Get the top height limit of the world. Used for things like world gen checks. This is
 	 * an actual Y coordinate.

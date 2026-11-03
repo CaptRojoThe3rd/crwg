@@ -11,13 +11,13 @@ public class BlockFenceCRWG extends BlockFence
 {
 	public int flammability = 0;
 	public int fire_spread_speed = 0;
-	
+
 	public BlockFenceCRWG(String name, BlockCRWG parent)
 	{
 		super(parent.textureName, parent.getMaterial());
 		this.setBlockName(name);
 		this.setCreativeTab(null);
-		
+
 		this.flammability = parent.flammability;
 		this.fire_spread_speed = parent.fire_spread_speed;
 		this.textureName = parent.textureName;
@@ -25,7 +25,7 @@ public class BlockFenceCRWG extends BlockFence
 		this.blockResistance = parent.blockResistance;
 		this.stepSound = parent.stepSound;
 	}
-	
+
 	@Override
 	public boolean canConnectFenceTo(IBlockAccess world, int x, int y, int z)
 	{

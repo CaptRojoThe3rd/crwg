@@ -11,13 +11,13 @@ import net.minecraft.world.gen.feature.WorldGenDoublePlant;
 public class WorldGenDoublePlantF extends WorldGenDoublePlant
 {
 	BlockDoublePlant block;
-	
+
 	public WorldGenDoublePlantF(int meta)
 	{
 		this.block = Blocks.double_plant;
 		this.field_150549_a = meta;
 	}
-	
+
 	public WorldGenDoublePlantF(Block block, int meta)
 	{
 		this.block = (BlockDoublePlant) block;
@@ -33,7 +33,7 @@ public class WorldGenDoublePlantF extends WorldGenDoublePlant
 			if (rand.nextInt(7) != 0) {
 				continue;
 			}
-			
+
 			int x = x0 + rand.nextInt(8) - rand.nextInt(8);
 			int z = z0 + rand.nextInt(8) - rand.nextInt(8);
 			int y = world.getHeightValue(x, z);

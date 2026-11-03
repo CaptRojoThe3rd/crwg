@@ -41,7 +41,7 @@ public abstract class ModBlocks
 	public static Block clay_farmland;
 
 	public static Block dry_short_grass;
-	
+
 	public static Block bush;
 
 	public static Block flower_purple_owls_clover;
@@ -58,9 +58,9 @@ public abstract class ModBlocks
 
 	public static Block clover;
 	public static Block clover_large;
-	
+
 	public static Block leaf_pile;
-	
+
 	public static Block small_waterlily;
 
 	public static Block orange_sand;
@@ -174,7 +174,7 @@ public abstract class ModBlocks
 			.setSize(0.8F, 0.6F)
 			.setBlockTextureName(CRWG.ident("plants/dry_short_grass"))
 			.setStepSound(Block.soundTypeGrass);
-		
+
 		bush = (new BlockBushCRWG("bush", Material.plants, EnumPlantType.Plains))
 			.setSize(0.8F, 0.7F)
 			.setColorizer(Colorizer.BIOME_GRASS)
@@ -207,7 +207,7 @@ public abstract class ModBlocks
 		clover_large = (new BlockFloorPlant("large_clover"))
 			.setColorizer(Colorizer.BIOME_GRASS)
 			.setBlockTextureName(CRWG.ident("plants/large_clover"));
-		
+
 		leaf_pile = (new Block2x2FloorPlant("leaf_pile"))
 			.setColorizer(Colorizer.BIOME_FOLIAGE)
 			.setBlockTextureName(CRWG.ident("plants/leaf_pile"));
@@ -288,7 +288,7 @@ public abstract class ModBlocks
 		registerBlock(clay_farmland);
 
 		registerBlock(dry_short_grass, new ItemBlockWithMetadata(dry_short_grass, dry_short_grass));
-		
+
 		registerBlock(bush);
 
 		registerBlock(flower_purple_owls_clover);
@@ -305,7 +305,7 @@ public abstract class ModBlocks
 
 		registerBlock(clover, new Item2x2FloorPlant(clover, false));
 		registerBlock(clover_large);
-		
+
 		registerBlock(leaf_pile, new Item2x2FloorPlant(leaf_pile, false));
 
 		registerBlock(small_waterlily, new Item2x2FloorPlant(small_waterlily, true));

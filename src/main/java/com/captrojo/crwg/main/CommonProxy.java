@@ -18,13 +18,13 @@ public class CommonProxy
 	public void loadConfig()
 	{
 		ModConfig.load(new File(CRWG.dir_config + File.separator + "common.cfg"));
-		
+
 		BiomeConfig.init();
 		GeneralConfig.init();
-		
+
 		ModConfig.save();
 	}
-	
+
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		CommonEvents.instance = new CommonEvents();

@@ -15,10 +15,10 @@ public class GenLayerFixXZ extends GenLayer
 	public int[] getInts(int ax, int ay, int aw, int ah)
 	{
 		final int asize = aw * ah;
-		
+
 		int[] old_arr = this.parent.getInts(ax, ay, aw, ah);
 		int[] new_arr = IntCache.getIntCache(asize);
-		
+
 		for (int x = 0; x < aw; x++) {
 			for (int z = 0; z < ah; z++) {
 				int old_idx = z + (x * ah);
@@ -26,7 +26,7 @@ public class GenLayerFixXZ extends GenLayer
 				new_arr[new_idx] = old_arr[old_idx];
 			}
 		}
-		
+
 		return new_arr;
 	}
 }

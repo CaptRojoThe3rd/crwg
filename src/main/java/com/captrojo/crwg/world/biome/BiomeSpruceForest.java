@@ -13,7 +13,7 @@ public class BiomeSpruceForest extends BiomeAbstractConiferous
 	{
 		super(id, name, color, temperature, rainfall, old_growth);
 	}
-	
+
 	@Override
 	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
 	{

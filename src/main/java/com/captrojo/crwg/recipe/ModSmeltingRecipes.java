@@ -12,7 +12,7 @@ public abstract class ModSmeltingRecipes
 	{
 		add(ModBlocks.orange_sandstone, new ItemStack(ModBlocks.orange_smooth_sandstone, 1), 0.1F);
 	}
-	
+
 	private static void add(Block input, ItemStack output, float xp)
 	{
 		GameRegistry.addSmelting(input, output, xp);

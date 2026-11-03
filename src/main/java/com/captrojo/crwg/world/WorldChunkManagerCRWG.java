@@ -60,7 +60,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 	public static double rain_scale;
 	public static double rain_scale_64;
-	
+
 	public static double awesome_scale;
 	public static double awesome_scale_64;
 
@@ -70,7 +70,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		rain_scale = 1.0 / 640.0;
 		rain_scale_64 = rain_scale * 64.0;
-		
+
 		awesome_scale = 1.0 / 1280.0;
 		awesome_scale_64 = awesome_scale * 64.0;
 	}
@@ -99,7 +99,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 			this.wcm.gen_arrays.plateau_noise = this.wcm.n_gen_plateaus.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
 			this.wcm.gen_arrays.foothill_noise = this.wcm.n_gen_foothills.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			
+
 			this.wcm.gen_arrays.river_noise = this.wcm.n_gen_rivers.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
 			this.wcm.gen_arrays.lake_noise = this.wcm.n_gen_lakes.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
 			this.wcm.gen_arrays.wetlands_noise = this.wcm.n_gen_wetlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
@@ -256,7 +256,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		glayer_main = new GenLayerLakes(370L, glayer_main);
 		glayer_main = new GenLayerLTInfect(375L, glayer_main, GConst.LAKES, 2, 3);
-		
+
 		glayer_main = new GenLayerWetlands(1100L, glayer_main);
 		glayer_main = new GenLayerLTInfectChecked(1110L, glayer_main, GConst.WETLANDS, 2, 3, GConst.LAKES);
 
@@ -280,7 +280,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_river = new GenLayerSmooth(480L, glayer_river);
 		glayer_river = new GenLayerRiverCRWG(490L, glayer_river);
 		glayer_main = new GenLayerRiverMixCRWG(500L, glayer_main, glayer_river);
-		
+
 		glayer_main = new GenLayerTuneUp(550L, glayer_main);
 		glayer_main = new GenLayerLTInfectAlways(560L, glayer_main, GConst.FOOTHILLS, GConst.MOUNTAINS);
 		glayer_main = new GenLayerLTInfectAlways(561L, glayer_main, GConst.FOOTHILLS, GConst.MOUNTAINS);
@@ -404,7 +404,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		nlayer2 = new NLayerMultiplyAdd(nlayer2, 0.40, 0.00);
 		nlayer1 = new NLayerAdd(nlayer1, nlayer2);
 		this.n_gen_plateaus = nlayer1;
-		
+
 		/* Foothills */
 		nlayer1 = new NLayer2DNoise(rand, 4, true, 1.0 / 100.0, 1.0 / 100.0);
 		nlayer1 = new NLayerRidge(nlayer1);
@@ -431,7 +431,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		nlayer1 = new NLayer2DNoise(rand, 4, true, 1.0 / 25.0, 1.0 / 25.0);
 		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.15, 0.90);
 		this.n_gen_lakes = nlayer1;
-		
+
 		/* Wetlands */
 		nlayer1 = new NLayer2DNoise(rand, 3, true, 1.0 / 24.0, 1.0 / 24.0);
 		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.24, 1.16);
@@ -451,7 +451,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	{
 		this.exec_svc.shutdown();
 	}
-	
+
 	public void resetArrays()
 	{
 		IntCache.resetIntCache();
@@ -546,7 +546,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public float[] getRainfall(float[] array, int ax, int az, int aw, int ah)
 	{
 		this.resetArrays();
-		
+
 		int size = aw * ah;
 		if (array == null || array.length < size) {
 			array = new float[size];
@@ -568,7 +568,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] array, int ax, int az, int aw, int ah)
 	{
 		this.resetArrays();
-		
+
 		int size = aw * ah;
 		if (array == null || array.length < size) {
 			array = new BiomeGenBase[size];
@@ -588,7 +588,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] array, int ax, int az, int aw, int ah, boolean use_cache)
 	{
 		this.resetArrays();
-		
+
 		if (array == null || array.length < aw * ah) {
 			array = new BiomeGenBase[aw * ah];
 		}
@@ -611,7 +611,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public boolean areBiomesViable(int x, int z, int size, List<BiomeGenBase> biome_list)
 	{
 		this.resetArrays();
-		
+
 		int ax = x - size;
 		int az = z - size;
 		int ax2 = x + size;
@@ -633,7 +633,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public ChunkPosition findBiomePosition(int x, int z, int size, List<BiomeGenBase> biome_list, Random rand)
 	{
 		this.resetArrays();
-		
+
 		int ax = x - size;
 		int az = z - size;
 		int ax2 = x + size;

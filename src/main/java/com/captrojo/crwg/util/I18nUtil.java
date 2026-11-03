@@ -15,35 +15,35 @@ public abstract class I18nUtil
 	{
 		String key = stack.getUnlocalizedName() + ".desc";
 		String val = I18nUtil.get(key);
-		
+
 		if (key.equals(val)) {
 			return;
 		}
-		
+
 		String[] lines = val.split("\\n");
 		for (String str : lines) {
 			list.add(str);
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public static String get(String key)
 	{
 		return I18n.format(key);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	public static String getf(String key, Object...data)
+	public static String getf(String key, Object... data)
 	{
 		return I18n.format(key, data);
 	}
-	
+
 	public static ChatComponentTranslation chat(String key)
 	{
 		return new ChatComponentTranslation(key);
 	}
-	
-	public static ChatComponentTranslation chatf(String key, Object...data)
+
+	public static ChatComponentTranslation chatf(String key, Object... data)
 	{
 		return new ChatComponentTranslation(key, data);
 	}

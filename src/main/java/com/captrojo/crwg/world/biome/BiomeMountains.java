@@ -27,7 +27,7 @@ public class BiomeMountains extends BiomeCRWGBase
 		this.decorator.trees = 0;
 		this.decorator.grass = 0;
 		this.decorator.flowers = 0;
-		
+
 		this.decorator.liquid_waters = 0;
 		this.decorator.liquid_lavas = 0;
 
@@ -55,7 +55,7 @@ public class BiomeMountains extends BiomeCRWGBase
 	{
 		double sn = this.snow_noise.calcPoint((double) x / 50.0, (double) z / 50.0);
 		int snb = (int) (sn * 20.0);
-		
+
 		if (this.frozen) {
 			double in = this.ice_noise.calcPoint((double) x / 50.0, (double) z / 50.0);
 			double inb = (int) (in * 20.0);
@@ -67,7 +67,7 @@ public class BiomeMountains extends BiomeCRWGBase
 			}
 			return BlockState.STONE;
 		}
-		
+
 		if (y > (ChunkProviderCRWG.SEA_LVL_Y + 192 + snb)) {
 			return BlockState.SNOW_BLOCK;
 		}

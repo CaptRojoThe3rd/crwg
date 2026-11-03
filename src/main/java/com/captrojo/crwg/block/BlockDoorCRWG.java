@@ -15,12 +15,12 @@ public class BlockDoorCRWG extends BlockDoor
 {
 	public int flammability = 0;
 	public int fire_spread_speed = 0;
-	
+
 	public BlockDoorCRWG(String name, Material material)
 	{
 		super(material);
 		this.setBlockName(name);
-		
+
 		if (material == Material.wood) {
 			this.flammability = 5;
 			this.fire_spread_speed = 20;
@@ -33,7 +33,7 @@ public class BlockDoorCRWG extends BlockDoor
 	{
 		return Item.getItemFromBlock(this);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemIconName()

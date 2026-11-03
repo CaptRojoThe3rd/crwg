@@ -19,14 +19,14 @@ public class WorldGenSeafloorBlockCircle extends WorldGenerator
 	protected final Block block;
 	protected final int size;
 	protected final boolean clay;
-	
+
 	public WorldGenSeafloorBlockCircle(Block block, int size, boolean clay)
 	{
 		this.block = block;
 		this.size = size;
 		this.clay = clay;
 	}
-	
+
 	boolean isValidBlock(Block block)
 	{
 		if (BlockChks.isDirt(block)) {
@@ -34,7 +34,7 @@ public class WorldGenSeafloorBlockCircle extends WorldGenerator
 		}
 		return this.clay ? (block == Blocks.clay) : (block instanceof BlockGrass);
 	}
-	
+
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{

@@ -70,7 +70,7 @@ public class ChunkDataMgr implements DataManager.ChunkDataManager, DataManager.P
 			map_a = new int[256];
 		}
 		chunk_crwg.crwg$setSurfDataMapA(map_a);
-		
+
 		int[] gnd_height_map = nbt.getIntArray("GndHeightMap");
 		if (gnd_height_map == null || gnd_height_map.length == 0) {
 			gnd_height_map = new int[256];
@@ -99,7 +99,7 @@ public class ChunkDataMgr implements DataManager.ChunkDataManager, DataManager.P
 	{
 		ChunkCRWG chunk_crwg = (ChunkCRWG) (Object) chunk;
 		int[] surf_data_map_a = chunk_crwg.crwg$getSurfDataMapA();
-		
+
 		for (int i = 0; i < 256; i++) {
 			buf.putInt(surf_data_map_a[i]);
 		}
@@ -110,7 +110,7 @@ public class ChunkDataMgr implements DataManager.ChunkDataManager, DataManager.P
 	{
 		ChunkCRWG chunk_crwg = (ChunkCRWG) (Object) chunk;
 		int[] surf_data_map_a = chunk_crwg.crwg$getSurfDataMapA();
-		
+
 		for (int i = 0; i < 256; i++) {
 			surf_data_map_a[i] = buf.getInt();
 		}

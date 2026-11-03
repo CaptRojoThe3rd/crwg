@@ -20,7 +20,7 @@ public class RenderBlockFloorPlant implements ISimpleBlockRenderingHandler
 		long rng = ((long) x * 3129871L) ^ ((long) z * 116129781L) ^ (long) y;
 		rng = (rng * rng * 42317861L) + (rng * 11L);
 		int rng0 = (int) rng;
-		
+
 		IIcon icon = block.getIcon(world, x, y, z, 1);
 		double u0 = (double) icon.getMinU();
 		double u1 = (double) icon.getMaxU();
@@ -79,7 +79,7 @@ public class RenderBlockFloorPlant implements ISimpleBlockRenderingHandler
 
 		Tessellator ts = Tessellator.instance;
 		ts.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-		
+
 		ts.setColorOpaque_I(color);
 		ts.addVertexWithUV(xd + 1.0, yd, zd + 1.0, ux1z1, vx1z1);
 		ts.addVertexWithUV(xd + 1.0, yd, zd, ux1z0, vx1z0);

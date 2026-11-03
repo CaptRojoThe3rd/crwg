@@ -7,7 +7,7 @@ public class GenLayerLTValue extends GenLayer
 {
 	final int land_type;
 	final int value;
-	
+
 	public GenLayerLTValue(long base_seed, GenLayer parent, int land_type, int value)
 	{
 		super(base_seed);
@@ -23,7 +23,7 @@ public class GenLayerLTValue extends GenLayer
 
 		final int asize = aw * ah;
 		int[] n_arr = IntCache.getIntCache(asize);
-		
+
 		for (int i = 0; i < asize; i++) {
 			if (p_arr[i] != this.land_type) {
 				n_arr[i] = 0;
@@ -31,7 +31,7 @@ public class GenLayerLTValue extends GenLayer
 			}
 			n_arr[i] = this.value;
 		}
-		
+
 		return n_arr;
 	}
 }

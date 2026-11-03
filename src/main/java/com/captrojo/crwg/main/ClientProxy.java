@@ -19,7 +19,7 @@ public class ClientProxy extends CommonProxy
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
-		
+
 		ClientEvents.instance = new ClientEvents();
 		MinecraftForge.EVENT_BUS.register(ClientEvents.instance);
 	}
@@ -31,9 +31,9 @@ public class ClientProxy extends CommonProxy
 
 		ClientCommandHandler.instance.registerCommand(new CommandFlightSpeed());
 		ClientCommandHandler.instance.registerCommand(new CommandResetPerformanceInfo());
-		
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TESignCRWG.class, new RenderTESignCRWG());
-		
+
 		RenderingRegistry.registerBlockHandler(new RenderBlockDoublePlant());
 		RenderingRegistry.registerBlockHandler(new RenderBlockFloorPlant());
 		RenderingRegistry.registerBlockHandler(new RenderBlock2x2FloorPlant());

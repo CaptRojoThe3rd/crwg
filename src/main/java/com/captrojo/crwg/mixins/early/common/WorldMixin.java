@@ -140,7 +140,7 @@ public abstract class WorldMixin implements WorldCRWG
 			throw this.crwg$crash(t, "Exception setting soil type in world", x, 0, z, chunk);
 		}
 	}
-	
+
 	@Override
 	@Unique
 	public int crwg$getSubspeciesVal(int x, int z)
@@ -156,7 +156,7 @@ public abstract class WorldMixin implements WorldCRWG
 			throw this.crwg$crash(t, "Exception getting subspecies value in world", x, 0, z, chunk);
 		}
 	}
-	
+
 	@Override
 	@Unique
 	public boolean crwg$setSubspeciesVal(int x, int z, int species)

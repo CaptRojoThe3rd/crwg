@@ -14,7 +14,7 @@ import net.minecraft.world.gen.MapGenCaves;
 public class MapGenCavesCRWG extends MapGenCaves
 {
 	private Random rand2 = new Random();
-	
+
 	@Override
 	protected void func_151541_a(long seed, int chunk_x, int chunk_z, Block[] ablock, double d0x, double d0y, double d0z, float fa, float fb, float fc, int ia, int ib, double dhv)
 	{
@@ -176,7 +176,7 @@ public class MapGenCavesCRWG extends MapGenCaves
 		if (this.rand.nextInt(7) != 0) {
 			i1 = 0;
 		}
-		
+
 		final int min = CRWG.funcs.getMinCaveHeight() + 8;
 		final int max = CRWG.funcs.getMaxCaveHeight();
 

@@ -18,12 +18,12 @@ public class WorldGenTaiga2F extends WorldGenTaiga2
 	final int log_meta;
 	final Block leaf_block;
 	final int leaf_meta;
-	
+
 	public WorldGenTaiga2F(boolean notify, WoodBlocks wood)
 	{
 		this(notify, wood.log, 0, wood.leaf, 0);
 	}
-	
+
 	public WorldGenTaiga2F(boolean notify, Block log, int log_meta, Block leaf, int leaf_meta)
 	{
 		super(notify);

@@ -10,7 +10,7 @@ public class CommandResetPerformanceInfo extends CommandBase
 	{
 		return 0;
 	}
-	
+
 	@Override
 	public String getCommandName()
 	{

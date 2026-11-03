@@ -58,7 +58,7 @@ public enum WoodBlocks
 	)
 	{
 		this.name = name;
-		
+
 		this.log = (BlockLogCRWG) (new BlockLogCRWG(name + "_log"))
 			.setHarvestTool("axe", 0)
 			.setFlammable(5, 5)

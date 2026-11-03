@@ -21,7 +21,7 @@ public class WorldGenFlowersF extends WorldGenFlowers
 			if (rand.nextInt(7) != 0) {
 				continue;
 			}
-			
+
 			int x = x0 + rand.nextInt(8) - rand.nextInt(8);
 			int z = z0 + rand.nextInt(8) - rand.nextInt(8);
 			int y = world.getHeightValue(x, z);

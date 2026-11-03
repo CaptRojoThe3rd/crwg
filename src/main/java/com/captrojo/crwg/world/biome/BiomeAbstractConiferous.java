@@ -29,22 +29,22 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 	}
 
 	protected final boolean old_growth;
-	
+
 	public BiomeAbstractConiferous(int id, String name, int color, float temperature, float rainfall, boolean old_growth)
 	{
 		super(id, name, color, temperature, rainfall);
-		
+
 		this.old_growth = old_growth;
 
 		this.decorator.boulders = 1;
 		this.decorator.boulder_chance = 0.1f;
 		this.decorator.trees = 4;
 		this.decorator.extra_tree_chance = 0.0f;
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 	}
-	
+
 	@Override
 	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
 	{
@@ -73,7 +73,7 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		BlockState block = soil.get(FILL_BLOCKS[a]);
 		return block;
 	}
-	
+
 	@Override
 	public abstract WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand);
 }

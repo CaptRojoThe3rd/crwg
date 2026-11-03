@@ -21,7 +21,7 @@ public class Item2x2FloorPlant extends ItemBlock
 		super(block);
 		this.is_surface_water_plant = is_surface_water_plant;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass)
@@ -73,7 +73,7 @@ public class Item2x2FloorPlant extends ItemBlock
 				return true;
 			}
 		}
-		
+
 		int old_meta = meta;
 		if (hz < 0.5F) {
 			if (hx < 0.5F) {
@@ -115,7 +115,7 @@ public class Item2x2FloorPlant extends ItemBlock
 		if (!this.is_surface_water_plant) {
 			return super.onItemRightClick(stack, world, player);
 		}
-		
+
 		MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, true);
 
 		if (mop == null) {
@@ -142,11 +142,11 @@ public class Item2x2FloorPlant extends ItemBlock
 			if (!world.isAirBlock(x, y + 1, z)) {
 				return stack;
 			}
-			
+
 			float hx = (float) (mop.hitVec.xCoord - (double) x);
 			float hy = (float) (mop.hitVec.yCoord - (double) y);
 			float hz = (float) (mop.hitVec.zCoord - (double) z);
-			
+
 			if (world.isRemote) {
 				player.swingItem();
 			}

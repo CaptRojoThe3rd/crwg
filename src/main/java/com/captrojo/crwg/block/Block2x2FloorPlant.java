@@ -19,7 +19,7 @@ import net.minecraftforge.common.EnumPlantType;
 public class Block2x2FloorPlant extends BlockBushCRWG
 {
 	private static final Random RAND = new Random();
-	
+
 	public Block2x2FloorPlant(String name)
 	{
 		this(name, Material.plants, EnumPlantType.Plains);
@@ -88,7 +88,7 @@ public class Block2x2FloorPlant extends BlockBushCRWG
 	{
 		return ground == this;
 	}
-	
+
 	@Override
 	public ArrayList<ItemStack> onSheared(ItemStack stack, IBlockAccess world, int x, int y, int z, int fortune)
 	{

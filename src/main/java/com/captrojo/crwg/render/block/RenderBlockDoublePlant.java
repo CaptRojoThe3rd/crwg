@@ -20,10 +20,10 @@ public class RenderBlockDoublePlant implements ISimpleBlockRenderingHandler
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int model_id, RenderBlocks rb)
 	{
 		BlockDoublePlant blockplant = (BlockDoublePlant) block;
-		
+
 		Tessellator ts = Tessellator.instance;
 		ts.setBrightness(blockplant.getMixedBrightnessForBlock(world, x, y, z));
-		
+
 		int color = blockplant.colorMultiplier(world, x, y, z);
 		float red = (float) (color >> 16 & 255) / 255.0F;
 		float green = (float) (color >> 8 & 255) / 255.0F;
@@ -39,18 +39,18 @@ public class RenderBlockDoublePlant implements ISimpleBlockRenderingHandler
 		}
 
 		ts.setColorOpaque_F(red, green, blue);
-		
+
 		long rng = (long) (x * 3129871) ^ (long) z * 116129781L;
 		rng = rng * rng * 42317861L + rng * 11L;
-		
+
 		double xd = (double) x;
 		double yd = (double) y;
 		double zd = (double) z;
 		xd += ((double) ((float) (rng >> 16 & 15L) / 15.0F) - 0.5D) * 0.3D;
 		zd += ((double) ((float) (rng >> 24 & 15L) / 15.0F) - 0.5D) * 0.3D;
-		
+
 		int meta = world.getBlockMetadata(x, y, z);
-		
+
 		boolean is_upper = BlockDoublePlant.func_149887_c(meta);
 		int meta_lo;
 

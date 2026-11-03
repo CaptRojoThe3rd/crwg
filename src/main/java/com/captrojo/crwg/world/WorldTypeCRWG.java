@@ -38,7 +38,7 @@ public class WorldTypeCRWG extends WorldType
 	{
 		return super.getBiomeLayer(seed, parent);
 	}
-	
+
 	@Override
 	public float getCloudHeight()
 	{

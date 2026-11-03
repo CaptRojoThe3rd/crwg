@@ -8,12 +8,12 @@ public class BiomeCRWGOcean extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 		this.spawnableCreatureList.clear();
-		
+
 		this.decorator.grass = 0;
 		this.decorator.flowers = 0;
 		this.decorator.reeds = 0;
 		this.decorator.pumpkins = 0;
-		
+
 		this.decorator.dirt_blob_amount = 10;
 		this.decorator.dirt_blob_max_y = 128;
 		this.decorator.gravel_blob_amount = 5;

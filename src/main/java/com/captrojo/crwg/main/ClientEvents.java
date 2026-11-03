@@ -36,7 +36,7 @@ public class ClientEvents
 		}
 
 		mc.mcProfiler.startSection("crwg_debug");
-		
+
 		if (PerformanceInfo.available) {
 			int i = event.right.indexOf(null);
 			if (i == -1) {
@@ -46,7 +46,7 @@ public class ClientEvents
 				event.right.add(i, null);
 				i++;
 			}
-			
+
 			String mspt_str = String.format(
 				"mspt: [avg: %d, last: %d, worst: %d]",
 				PerformanceInfo.mspt_avg,
@@ -55,9 +55,9 @@ public class ClientEvents
 			);
 			event.right.add(i, mspt_str);
 			i++;
-			
+
 			long since_last_tick = Minecraft.getSystemTime() - PerformanceInfo.tick_time_end;
-			
+
 			String tps_str = String.format(
 				"tps: %.2f, slt: %.1f",
 				((PerformanceInfo.mspt_avg < 50) ? 20D : (1000D / (double) PerformanceInfo.mspt_avg)),

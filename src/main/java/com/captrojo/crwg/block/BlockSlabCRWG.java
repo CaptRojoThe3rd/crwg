@@ -48,9 +48,9 @@ public class BlockSlabCRWG extends BlockSlab
 	{
 		super(false, parent_block.getMaterial());
 		this.setBlockName(name);
-		
+
 		this.parent_block = parent_block;
-		
+
 		this.setHarvestLevel(parent_block.getHarvestTool(0), parent_block.getHarvestLevel(0));
 
 		this.flammability = parent_block.flammability;
@@ -64,9 +64,9 @@ public class BlockSlabCRWG extends BlockSlab
 	{
 		super(true, single_slab.getMaterial());
 		this.setBlockName(name);
-		
+
 		this.single_slab = single_slab;
-		
+
 		this.setHarvestLevel(single_slab.getHarvestTool(0), single_slab.getHarvestLevel(0));
 
 		this.flammability = single_slab.flammability;
@@ -75,7 +75,7 @@ public class BlockSlabCRWG extends BlockSlab
 		this.blockResistance = single_slab.blockResistance;
 		this.stepSound = single_slab.stepSound;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg)
@@ -84,7 +84,7 @@ public class BlockSlabCRWG extends BlockSlab
 			super.registerBlockIcons(reg);
 		}
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)

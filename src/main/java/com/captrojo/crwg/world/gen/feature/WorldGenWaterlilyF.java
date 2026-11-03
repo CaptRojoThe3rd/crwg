@@ -15,7 +15,7 @@ public class WorldGenWaterlilyF extends WorldGenWaterlily
 			if (rand.nextInt(7) != 0) {
 				continue;
 			}
-			
+
 			int x1 = x + rand.nextInt(8) - rand.nextInt(8);
 			int z1 = z + rand.nextInt(8) - rand.nextInt(8);
 			int y1 = world.getHeightValue(x1, z1);

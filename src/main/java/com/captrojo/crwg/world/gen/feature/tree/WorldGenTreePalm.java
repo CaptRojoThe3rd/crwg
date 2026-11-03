@@ -13,19 +13,19 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class WorldGenTreePalm extends WorldGenAbstractTree
 {
 	private final int min_height, add_height;
-	
+
 	public WorldGenTreePalm(boolean notify)
 	{
 		this(notify, 9, 14);
 	}
-	
+
 	public WorldGenTreePalm(boolean notify, int min_height, int max_height)
 	{
 		super(notify);
 		this.min_height = min_height;
 		this.add_height = max_height - min_height;
 	}
-	
+
 	private void placeBlock(World world, int x, int y, int z, Block block, int meta)
 	{
 		Block existing = world.getBlock(x, y, z);
@@ -38,16 +38,16 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
 		final int height = rand.nextInt(this.add_height) + this.min_height;
-		
+
 		if (y < CRWG.funcs.getMinHeight() && (y + height) > CRWG.funcs.getMaxHeight()) {
 			return false;
 		}
-		
+
 		Block ground = world.getBlock(x, y - 1, z);
 		if (!ground.canSustainPlant(world, x, y, z, ForgeDirection.UP, WoodBlocks.PALM.sapling)) {
 			return false;
 		}
-		
+
 		for (int x1 = -1; x1 <= 1; x1++) {
 			for (int z1 = -1; z1 <= 1; z1++) {
 				for (int y1 = 0; y1 < height; y1++) {
@@ -57,12 +57,12 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 				}
 			}
 		}
-		
+
 		ground.onPlantGrow(world, x, y - 1, z, x, y, z);
-		
+
 		final Block log = WoodBlocks.PALM.log;
 		final Block leaf = WoodBlocks.PALM.leaf;
-		
+
 		float f = -0.1f, fa = 0.2f;
 		int t = -1;
 		for (int y1 = 0; y1 < (height - 2); y1++) {
@@ -90,7 +90,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 			}
 			f += fa;
 		}
-		
+
 		y += height - 2;
 		this.placeBlock(world, x, y, z, leaf, 0);
 		this.placeBlock(world, x - 1, y, z, leaf, 0);
@@ -98,7 +98,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 		this.placeBlock(world, x + 1, y, z, leaf, 0);
 		this.placeBlock(world, x, y, z + 1, leaf, 0);
 		y++;
-		
+
 		boolean b = true;
 		final int dc = (height > 11) ? 4 : 3;
 		final int dm = (height > 11) ? 7 : 6;
@@ -121,7 +121,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 				y--;
 			}
 		}
-		
+
 		return true;
 	}
 }

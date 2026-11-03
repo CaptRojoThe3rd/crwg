@@ -45,7 +45,7 @@ public class GenLayerBiomesCRWG extends GenLayer
 
 		final int asize = aw * ah;
 		int[] n_arr = IntCache.getIntCache(asize);
-		
+
 		final LandType[] LT_ENUM = LandType.values();
 
 		for (int i = 0; i < asize; i++) {
@@ -54,7 +54,7 @@ public class GenLayerBiomesCRWG extends GenLayer
 			int land_type = lt_arr[i];
 
 			BiomeGenBase biome;
-			
+
 			switch (land_type) {
 			case GConst.RIVERS:
 				if (biome_type.s_temp == GConst.HOT && biome_type.s_rain == GConst.WET) {

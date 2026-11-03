@@ -32,7 +32,7 @@ public class BiomeJungle extends BiomeCRWGBase
 			this.decorator.flowers = 2;
 		}
 		this.decorator.pumpkin_chance = 0.0625F;
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 

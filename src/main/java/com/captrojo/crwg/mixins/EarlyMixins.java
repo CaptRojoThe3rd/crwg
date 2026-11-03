@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 {
 	public static final MixinEnvironment.Side SIDE = MixinEnvironment.getCurrentEnvironment().getSide();
-	
+
 	@Override
 	public String[] getASMTransformerClass()
 	{
@@ -58,7 +58,7 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 	{
 		this.loadConfig("early_mixins");
 		List<String> mixins = new ArrayList<>();
-		
+
 		boolean angelica = false;
 		for (String mod : loaded_core_mods) {
 			if (mod.contains("com.gtnewhorizons.angelica")) {
@@ -66,24 +66,24 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 				break;
 			}
 		}
-		
+
 		this.addMixin(mixins, "common.BlockDeadBushMixin");
-		
+
 		this.addMixin(mixins, "common.ChunkMixin");
 		this.addMixin(mixins, "common.WorldMixin");
-		
+
 		this.addMixin(mixins, "common.joke.MapGenVillageMixin");
-		
+
 		if (SIDE == MixinEnvironment.Side.CLIENT) {
 			this.addMixin(mixins, "client.BlockMyceliumMixin");
-			
+
 			if (!angelica) {
 				this.addMixin(mixins, "client.RenderBlocksMixin");
 			}
 		}
-		
+
 		this.saveConfig();
-		
+
 		return mixins;
 	}
 }

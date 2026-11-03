@@ -11,7 +11,7 @@ public class BlockDirtCRWG extends BlockCRWG
 	{
 		super(name, material);
 	}
-	
+
 	@Override
 	public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable)
 	{

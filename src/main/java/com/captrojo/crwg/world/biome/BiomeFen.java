@@ -16,18 +16,18 @@ public class BiomeFen extends BiomeAbstractSwamp
 		super(id, name, color, temperature, rainfall);
 
 		this.waterlily_chance = 0.05;
-		
+
 		this.decorator.trees = 6;
 
 		this.decorator.flowers = 0;
 		this.decorator.grass = 10;
 		this.decorator.tall_grass = 30;
-		
+
 		this.decorator.reeds = 0;
 		this.decorator.pumpkins = 1;
 		this.decorator.pumpkin_chance = 0.01F;
 	}
-	
+
 	@Override
 	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
 	{
@@ -46,7 +46,7 @@ public class BiomeFen extends BiomeAbstractSwamp
 	{
 		return 0xabb759;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getBiomeFoliageColor(int x, int y, int z)

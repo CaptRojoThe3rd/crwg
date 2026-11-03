@@ -33,12 +33,12 @@ public class TESignCRWG extends TileEntitySign
 		}
 		return this.blockType;
 	}
-	
+
 	@Override
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		super.writeToNBT(nbt);
-		
+
 		nbt.setByte("S", (byte) this.sign.ordinal());
 	}
 
@@ -46,7 +46,7 @@ public class TESignCRWG extends TileEntitySign
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 		super.readFromNBT(nbt);
-		
+
 		byte b = nbt.getByte("S");
 		if (b >= 0 && b < Sign.values().length) {
 			this.sign = Sign.values()[b];

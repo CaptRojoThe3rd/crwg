@@ -18,39 +18,39 @@ public class BlockLogCRWG extends BlockLog
 {
 	private int flammability = 5;
 	private int fire_spread_speed = 5;
-	
+
 	public BlockLogCRWG(String name)
 	{
 		super();
 		this.setBlockName(name);
 		this.setCreativeTab(null);
 	}
-	
+
 	public BlockLogCRWG setFlammable(int fire_spread_speed, int flammability)
 	{
 		this.flammability = flammability;
 		this.fire_spread_speed = fire_spread_speed;
 		return this;
 	}
-	
+
 	public BlockLogCRWG setHarvestTool(String tool, int level)
 	{
 		this.setHarvestLevel(tool, level);
 		return this;
 	}
-	
+
 	@Override
 	public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face)
 	{
 		return this.flammability;
 	}
-	
+
 	@Override
 	public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face)
 	{
 		return this.fire_spread_speed;
 	}
-	
+
 	@Override
 	public int damageDropped(int meta)
 	{
@@ -59,7 +59,7 @@ public class BlockLogCRWG extends BlockLog
 		}
 		return meta & 0x1;
 	}
-	
+
 	@Override
 	public int onBlockPlaced(World world, int x, int y, int z, int side, float sx, float sy, float sz, int meta)
 	{
@@ -68,7 +68,7 @@ public class BlockLogCRWG extends BlockLog
 		}
 		return super.onBlockPlaced(world, x, y, z, side, sx, sy, sz, meta);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list)

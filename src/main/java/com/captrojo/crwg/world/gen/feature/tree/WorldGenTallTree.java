@@ -104,7 +104,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 	{
 		this(notify, 10, 20, false, false, Blocks.log, 1, Blocks.leaves, 1);
 	}
-	
+
 	public WorldGenTallTree(
 		boolean notify,
 		int min_height,
@@ -453,7 +453,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 				increased_radius_last = true;
 			}
 		}
-		
+
 		if (this.podzol) {
 			this.generatePodzol(world, rand, x, y, z);
 		}

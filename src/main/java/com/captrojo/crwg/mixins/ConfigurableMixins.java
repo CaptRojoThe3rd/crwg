@@ -9,19 +9,19 @@ import net.minecraftforge.common.config.Configuration;
 public abstract class ConfigurableMixins
 {
 	Configuration config;
-	
+
 	void loadConfig(String name)
 	{
 		File config_dir = new File(Launch.minecraftHome, "config" + File.separator + "crwg");
 		File config_file = new File(config_dir, name + ".cfg");
 		this.config = new Configuration(config_file);
 	}
-	
+
 	void saveConfig()
 	{
 		this.config.save();
 	}
-	
+
 	void addMixin(List<String> mixins, String name)
 	{
 		String category = "";

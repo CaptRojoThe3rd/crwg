@@ -8,7 +8,7 @@ public abstract class GConst
 
 	/* Terrain types */
 	public static final int NULL = 0;
-	
+
 	public static final int DEEPOCEAN = 1;
 	public static final int OCEAN = 2;
 	public static final int SHALLOWOCEAN = 3;
@@ -28,7 +28,7 @@ public abstract class GConst
 
 	public static final String[] LT_NAMES = {
 		"Null",
-		
+
 		"Deep Ocean",
 		"Ocean",
 		"Shallow Ocean",
@@ -53,19 +53,19 @@ public abstract class GConst
 	public static final int TEMPERATE = 2;
 	public static final int WARM = 3;
 	public static final int HOT = 4;
-	
+
 	public static final String[] TEMPERATURE_NAMES = {"Frozen", "Cold", "Temperate", "Warm", "Hot"};
 
 	public static final int DRY = 0;
 	public static final int MODERATE = 1;
 	public static final int WET = 2;
-	
+
 	public static final String[] RAINFALL_NAMES = {"Dry", "Moderate", "Wet"};
-	
+
 	public static final int MUSHROOM = 0;
 	public static final int BASIC = 1;
 	public static final int SEMI_MAGICAL = 2;
 	public static final int MAGICAL = 3;
-	
+
 	public static final String[] AWESOMENESS_NAMES = {"Mushroom", "Basic", "Semi-Magical", "Magical"};
 }

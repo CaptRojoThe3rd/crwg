@@ -19,7 +19,7 @@ public class GenLayerLakes extends GenLayer
 		final int asize = aw * ah;
 		int[] p_arr = this.parent.getInts(ax, ay, aw, ah);
 		int[] n_arr = IntCache.getIntCache(asize);
-		
+
 		for (int x = 0; x < aw; x++) {
 			for (int y = 0; y < ah; y++) {
 				int i = x + (y * aw);
@@ -33,7 +33,7 @@ public class GenLayerLakes extends GenLayer
 				}
 			}
 		}
-		
+
 		return n_arr;
 	}
 }

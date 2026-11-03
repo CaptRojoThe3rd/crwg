@@ -23,7 +23,7 @@ public class BiomeBirchForest extends BiomeCRWGBase
 		super(id, name, color, temperature, rainfall);
 
 		this.old_growth = (type == OLD_GROWTH);
-		
+
 		this.decorator.boulders = 1;
 		this.decorator.boulder_chance = 0.05f;
 
@@ -37,7 +37,7 @@ public class BiomeBirchForest extends BiomeCRWGBase
 			this.decorator.grass = 4;
 			this.decorator.flowers = 3;
 		}
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 	}

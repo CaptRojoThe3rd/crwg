@@ -20,7 +20,7 @@ public class BiomeGrassland extends BiomeCRWGBase
 
 		this.decorator.grass = 10;
 		this.decorator.flowers = 4;
-		
+
 		this.decorator_hills.copyFrom(this.decorator);
 		this.decorator_highlands.copyFrom(this.decorator);
 

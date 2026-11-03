@@ -24,7 +24,7 @@ public class BiomeDarkSwamp extends BiomeAbstractSwamp
 		this.flowers.clear();
 		this.addFlower(Blocks.red_flower, 1, 10);
 	}
-	
+
 	@Override
 	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
 	{
@@ -36,12 +36,12 @@ public class BiomeDarkSwamp extends BiomeAbstractSwamp
 	{
 		return BiomeCRWGBase.Gen_Flower_BlueOrchid;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getBiomeGrassColor(int x, int y, int z)
 	{
-		double d0 = plantNoise.func_151601_a((double) x * 0.0225, (double) z * 0.0225);
+		double d0 = BiomeGenBase.plantNoise.func_151601_a((double) x * 0.0225, (double) z * 0.0225);
 		return (d0 < -0.1) ? 0x4c763c : 0x6a7039;
 	}
 

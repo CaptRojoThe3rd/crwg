@@ -10,41 +10,41 @@ public class BlockWTopBottom extends BlockCRWG
 {
 	protected IIcon top_icon;
 	protected IIcon bottom_icon;
-	
+
 	private String top_icon_name;
 	private String bottom_icon_name;
-	
+
 	public BlockWTopBottom(String name, Material material)
 	{
 		super(name, material);
 	}
-	
+
 	public BlockWTopBottom setTopIconName(String name)
 	{
 		this.top_icon_name = name;
 		return this;
 	}
-	
+
 	public BlockWTopBottom setBottomIconName(String name)
 	{
 		this.bottom_icon_name = name;
 		return this;
 	}
-	
+
 	@Override
 	public BlockWTopBottom setHarvestTool(String tool, int level)
 	{
 		super.setHarvestTool(tool, level);
 		return this;
 	}
-	
+
 	@Override
 	public BlockWTopBottom setHardness(float hardness)
 	{
 		super.setHardness(hardness);
 		return this;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
@@ -57,7 +57,7 @@ public class BlockWTopBottom extends BlockCRWG
 		}
 		return super.getIcon(side, meta);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg)

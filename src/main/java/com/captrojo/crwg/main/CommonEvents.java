@@ -13,13 +13,13 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 public class CommonEvents
 {
 	public static CommonEvents instance;
-	
+
 	private void makeFarmland(World world, int x, int y, int z, Block farmland, int meta)
 	{
 		world.playSoundEffect(
 			(double) x + 0.5,
 			(double) y + 0.5,
-			(double) z + 0.5, 
+			(double) z + 0.5,
 			farmland.stepSound.getStepResourcePath(),
 			(farmland.stepSound.getVolume() + 1.0f) / 2.0f,
 			farmland.stepSound.getPitch() * 0.8f
@@ -28,15 +28,15 @@ public class CommonEvents
 			world.setBlock(x, y, z, farmland, meta, 3);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onHoeUse(UseHoeEvent event)
 	{
 		final World world = event.world;
 		final int x = event.x, y = event.y, z = event.z;
-		
+
 		final Block block = world.getBlock(event.x, event.y, event.z);
-		
+
 		if (block == ModBlocks.silty_dirt || block == ModBlocks.silty_grass || block == ModBlocks.silty_podzol) {
 			this.makeFarmland(world, x, y, z, ModBlocks.silty_farmland, 0);
 			event.setResult(Result.ALLOW);
@@ -73,7 +73,7 @@ public class CommonEvents
 			return;
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onServerTickEvent(TickEvent.ServerTickEvent event)
 	{

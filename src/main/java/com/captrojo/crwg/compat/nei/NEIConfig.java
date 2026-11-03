@@ -18,11 +18,11 @@ public class NEIConfig implements IConfigureNEI
 	public void loadConfig()
 	{
 		final int WILD = OreDictionary.WILDCARD_VALUE;
-		
+
 		for (WoodBlocks wood : WoodBlocks.values()) {
 			API.hideItem(new ItemStack(wood.double_slab, 1, WILD));
 		}
-		
+
 		API.hideItem(new ItemStack(ModBlocks.orange_sandstone_double_slab, 1, WILD));
 		API.hideItem(new ItemStack(ModBlocks.orange_smooth_sandstone_double_slab, 1, WILD));
 	}

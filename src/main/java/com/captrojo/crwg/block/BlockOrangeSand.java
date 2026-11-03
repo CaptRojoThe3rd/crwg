@@ -21,10 +21,12 @@ public class BlockOrangeSand extends BlockFalling
 		case Desert:
 			return true;
 		case Beach:
-			boolean hasWater = (world.getBlock(x - 1, y, z).getMaterial() == Material.water ||
+			boolean hasWater = (
+				world.getBlock(x - 1, y, z).getMaterial() == Material.water ||
 				world.getBlock(x + 1, y, z).getMaterial() == Material.water ||
 				world.getBlock(x, y, z - 1).getMaterial() == Material.water ||
-				world.getBlock(x, y, z + 1).getMaterial() == Material.water);
+				world.getBlock(x, y, z + 1).getMaterial() == Material.water
+			);
 			return hasWater;
 		default:
 			return super.canSustainPlant(world, x, y, z, direction, plantable);

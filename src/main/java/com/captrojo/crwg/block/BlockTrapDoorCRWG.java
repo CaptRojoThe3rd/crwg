@@ -9,13 +9,13 @@ public class BlockTrapDoorCRWG extends BlockTrapDoor
 {
 	public int flammability = 0;
 	public int fire_spread_speed = 0;
-	
+
 	public BlockTrapDoorCRWG(String name, Material material)
 	{
 		super(material);
 		this.setBlockName(name);
 		this.setCreativeTab(null);
-		
+
 		if (material == Material.wood) {
 			this.flammability = 5;
 			this.fire_spread_speed = 20;

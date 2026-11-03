@@ -8,8 +8,7 @@ public abstract class CircleR16
 	public static int[] arr_x;
 	public static int[] arr_y;
 
-	static
-	{
+	static {
 		List<Pos> list = new ArrayList<>();
 
 		for (int x = -16; x <= 16; x++) {

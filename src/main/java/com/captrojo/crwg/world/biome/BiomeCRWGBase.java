@@ -51,7 +51,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenBlockBlob Gen_Boulder_MossyCobble = new WorldGenBlockBlobF(Blocks.mossy_cobblestone, 0);
 
 	public static final WorldGenCactus Gen_Cactus = new WorldGenCactusF();
-	
+
 	public static final WorldGenerator Gen_Clover = new WorldGenTallGrassF(ModBlocks.clover, 15, 1);
 	public static final WorldGenerator Gen_Clover_Large = new WorldGenTallGrassF(ModBlocks.clover_large, 0);
 
@@ -63,7 +63,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenDoublePlant Gen_DPlant_LargeFern = new WorldGenDoublePlantF(3);
 	public static final WorldGenDoublePlant Gen_DPlant_RoseBush = new WorldGenDoublePlantF(4);
 	public static final WorldGenDoublePlant Gen_DPlant_Peony = new WorldGenDoublePlantF(5);
-	
+
 	public static final WorldGenDoublePlant Gen_DPlant_PurpleNightshade = new WorldGenDoublePlantF(ModBlocks.dflower_purple_nightshade, 0);
 
 	public static final WorldGenFlowers Gen_Flower_Dandelion = new WorldGenFlowersF(Blocks.yellow_flower, 0);
@@ -76,13 +76,13 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenFlowers Gen_Flower_TulipWhite = new WorldGenFlowersF(Blocks.red_flower, 6);
 	public static final WorldGenFlowers Gen_Flower_TulipPink = new WorldGenFlowersF(Blocks.red_flower, 7);
 	public static final WorldGenFlowers Gen_Flower_OxeyeDaisy = new WorldGenFlowersF(Blocks.red_flower, 8);
-	
+
 	public static final WorldGenFlowers Gen_Flower_Sage = new WorldGenFlowersF(ModBlocks.flower_sage, 0);
 	public static final WorldGenFlowers Gen_Flower_WoodlandSage = new WorldGenFlowersF(ModBlocks.flower_woodland_sage, 0);
 
 	public static final WorldGenLiquids Gen_Liquid_Water = new WorldGenLiquids(Blocks.flowing_water);
 	public static final WorldGenLiquids Gen_Liquid_Lava = new WorldGenLiquids(Blocks.flowing_lava);
-	
+
 	public static final WorldGenerator Gen_Melon = new WorldGenMelonF();
 
 	public static final WorldGenFlowers Gen_Mushroom_Brown = new WorldGenFlowersF(Blocks.brown_mushroom, 0);
@@ -98,7 +98,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenerator Gen_Sugarcane = new WorldGenReed();
 
 	public static final WorldGenerator Gen_TallGrass = new WorldGenTallGrassF(Blocks.tallgrass, 1);
-	
+
 	public static final WorldGenerator Gen_Vines = new WorldGenVines();
 
 	public static final WorldGenerator Gen_Waterlily = new WorldGenWaterlilyF();
@@ -148,7 +148,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public void genTerrainExt(
 		World world,
 		Random rand,
-		Block[]ablock,
+		Block[] ablock,
 		short[] ameta,
 		int x,
 		int z,
@@ -170,7 +170,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		Block ext_fill_blk = null;
 		short ext_fill_meta = 0;
 		int ext_fill_remain = 0;
-		
+
 		boolean sea_gnd_lockout = false;
 
 		int xc = x & 0xf;
@@ -285,7 +285,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	{
 		return BiomeCRWGBase.Gen_TallGrass;
 	}
-	
+
 	public WorldGenerator getTallGrassGen(World world, int x, int y, int z, Random rand)
 	{
 		return BiomeCRWGBase.Gen_DPlant_TallGrass;
@@ -335,7 +335,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	{
 		return BiomeCRWGBase.Gen_Liquid_Lava;
 	}
-	
+
 	public void decorate(World world, WorldCRWG world_crwg, Random rand, int x0, int z0)
 	{
 		LandType land_type = world_crwg.crwg$getLandType(x0 + 15, z0 + 15);
@@ -351,7 +351,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 			break;
 		}
 	}
-	
+
 	@Override
 	public BiomeCRWGBase setDisableRain()
 	{

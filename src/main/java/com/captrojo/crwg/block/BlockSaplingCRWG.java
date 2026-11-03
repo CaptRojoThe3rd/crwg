@@ -127,7 +127,7 @@ public class BlockSaplingCRWG extends BlockSapling
 			this.arrangement.unclear(world, x, y, z, this);
 		}
 	}
-	
+
 	@Override
 	protected boolean canPlaceBlockOn(Block ground)
 	{

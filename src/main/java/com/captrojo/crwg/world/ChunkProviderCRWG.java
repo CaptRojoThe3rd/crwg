@@ -48,7 +48,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 	public static int SEA_LVL_Y;
 	/** Sea level index */
 	public static int SEA_LVL_I;
-	
+
 	private static class InitBlockArrCallable implements Callable<Block[]>
 	{
 		final ChunkProviderCRWG prov;
@@ -117,17 +117,17 @@ public class ChunkProviderCRWG implements IChunkProvider
 	{
 		this.mapgen_stronghold = new MapGenStronghold();
 		this.mapgen_stronghold = (MapGenStronghold) TerrainGen.getModdedMapGen(this.mapgen_stronghold, STRONGHOLD);
-		
+
 		Map<String, String> village_config = new HashMap<String, String>();
 		village_config.put("size", "4");
 		this.mapgen_village = new MapGenVillage(village_config);
 		this.mapgen_village = (MapGenVillage) TerrainGen.getModdedMapGen(this.mapgen_village, VILLAGE);
 		this.mapgen_village.field_82666_h = 24;
 		this.mapgen_village.field_82665_g = 48;
-		
+
 		this.mapgen_mineshaft = new MapGenMineshaft();
 		this.mapgen_mineshaft = (MapGenMineshaft) TerrainGen.getModdedMapGen(this.mapgen_mineshaft, MINESHAFT);
-		
+
 		this.mapgen_scattered_feature = new MapGenScatteredFeature();
 		this.mapgen_scattered_feature = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(this.mapgen_scattered_feature, SCATTERED_FEATURE);
 	}
@@ -278,7 +278,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 				}
 				noise_sum /= sel_sum;
 				int h = (int) (noise_sum * 100.0);
-				
+
 				arrays.gnd_height_map[xz] = h + 1;
 
 				/* fill in blocks */
@@ -355,7 +355,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		if (CRWG.funcs.shouldGenerateRavines()) {
 			this.ravine_generator.func_151539_a(this, this.world, chunk_x, chunk_z, ablock);
 		}
-		
+
 		if (this.map_features_enabled) {
 			this.mapgen_mineshaft.func_151539_a(this, world, chunk_x, chunk_z, ablock);
 			this.mapgen_village.func_151539_a(this, world, chunk_x, chunk_z, ablock);
@@ -401,8 +401,8 @@ public class ChunkProviderCRWG implements IChunkProvider
 			this.mapgen_scattered_feature.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
 		}
 
-		boolean do_gen;
-		int i;
+//		boolean do_gen;
+//		int i;
 		int x, y, z;
 
 //		if (

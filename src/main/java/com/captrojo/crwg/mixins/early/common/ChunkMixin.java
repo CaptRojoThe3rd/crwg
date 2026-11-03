@@ -29,7 +29,7 @@ public abstract class ChunkMixin implements ChunkCRWG
 	 */
 
 	@Unique int[] crwg$surf_data_map_a;
-	
+
 	@Unique int[] crwg$gnd_height_map;
 
 	@Override
@@ -117,7 +117,7 @@ public abstract class ChunkMixin implements ChunkCRWG
 		v |= (soil_type.ordinal() << ChnkConst.SHIFT_SOILTYPE);
 		this.crwg$surf_data_map_a[idx] = v;
 	}
-	
+
 	@Override
 	@Unique
 	public int crwg$getSubspeciesVal(int x, int z)
@@ -126,7 +126,7 @@ public abstract class ChunkMixin implements ChunkCRWG
 		v = (v & ChnkConst.MASK_SPECIES) >>> ChnkConst.SHIFT_SUBSPECIES;
 		return v;
 	}
-	
+
 	@Override
 	@Unique
 	public void crwg$setSubspeciesVal(int x, int z, int subspecies)
@@ -137,35 +137,35 @@ public abstract class ChunkMixin implements ChunkCRWG
 		v |= (subspecies << ChnkConst.SHIFT_SUBSPECIES);
 		this.crwg$surf_data_map_a[idx] = v;
 	}
-	
+
 	@Override
 	@Unique
 	public int[] crwg$getGndHeightMap()
 	{
 		return this.crwg$gnd_height_map;
 	}
-	
+
 	@Override
 	@Unique
 	public void crwg$setGndHeightMap(int[] gnd_height_map)
 	{
 		this.crwg$gnd_height_map = gnd_height_map;
 	}
-	
+
 	@Override
 	@Unique
 	public int crwg$getGndHeight(int x, int z)
 	{
 		return this.crwg$gnd_height_map[x | (z << 4)];
 	}
-	
+
 	@Override
 	@Unique
 	public void crwg$setGndHeight(int x, int z, int height)
 	{
 		this.crwg$gnd_height_map[x | (z << 4)] = height;
 	}
-	
+
 	@Inject(method = "<init>(Lnet/minecraft/world/World;II)V", at = @At(value = "RETURN"), require = 1)
 	private void init(World world, int chunk_x, int chunk_z, CallbackInfo ci)
 	{

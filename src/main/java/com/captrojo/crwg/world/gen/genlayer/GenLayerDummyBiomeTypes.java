@@ -17,11 +17,11 @@ public class GenLayerDummyBiomeTypes extends GenLayer
 	{
 		int asize = aw * ah;
 		int[] n_arr = IntCache.getIntCache(asize);
-		
+
 		for (int i = 0; i < asize; i++) {
 			n_arr[i] = BiomeTypeCRWG.DECIDUOUS_FOREST.ordinal();
 		}
-		
+
 		return n_arr;
 	}
 }

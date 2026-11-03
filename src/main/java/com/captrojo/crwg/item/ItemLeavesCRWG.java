@@ -17,14 +17,14 @@ public class ItemLeavesCRWG extends ItemLeaves
 	{
 		super(block);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced_tooltips)
 	{
 		I18nUtil.addItemDesc(stack, list);
 	}
-	
+
 	@Override
 	public String getUnlocalizedName(ItemStack stack)
 	{

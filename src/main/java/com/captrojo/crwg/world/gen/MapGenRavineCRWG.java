@@ -167,12 +167,12 @@ public class MapGenRavineCRWG extends MapGenRavine
 		if (this.rand.nextInt(50) == 0) {
 			double d0 = (double) (start_chunk_x * 16 + this.rand.nextInt(16));
 			double d2 = (double) (start_chunk_z * 16 + this.rand.nextInt(16));
-			
+
 			final int h1 = CRWG.funcs.getRavineHeight1();
 			final int h2 = CRWG.funcs.getRavineHeight2();
 			final int h3 = CRWG.funcs.getRavineHeight3();
 			double d1 = (double) (this.rand.nextInt(this.rand.nextInt(h1) + h2) + h3);
-			
+
 			byte b0 = 1;
 
 			for (int i1 = 0; i1 < b0; ++i1) {

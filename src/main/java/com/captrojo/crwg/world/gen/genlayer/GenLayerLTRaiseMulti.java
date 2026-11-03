@@ -47,11 +47,11 @@ public class GenLayerLTRaiseMulti extends GenLayer
 				this.initChunkSeed((long) (x + ax), (long) (y + ay));
 				for (int i = 0; i < this.old_types.length; i++) {
 					if (
-						this.old_types[i] == top
-						&& top == bottom
-						&& bottom == left
-						&& left == right
-						&& right == center
+						this.old_types[i] == top &&
+						top == bottom &&
+						bottom == left &&
+						left == right &&
+						right == center
 					) {
 						if (this.nextInt(this.rdens[i]) < this.rnums[i]) {
 							n_arr[n_idx] = this.new_types[i];

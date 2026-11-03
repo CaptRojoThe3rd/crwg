@@ -60,7 +60,7 @@ public enum Soil
 	}
 
 	public final String name;
-	
+
 	public final BlockState dirt;
 	public final BlockState coarse_dirt;
 	public final BlockState grass;
@@ -70,14 +70,14 @@ public enum Soil
 	private Soil(String name, BlockState dirt, BlockState coarse_dirt, BlockState grass, BlockState podzol, BlockState farmland)
 	{
 		this.name = name;
-		
+
 		this.dirt = dirt;
 		this.coarse_dirt = coarse_dirt;
 		this.grass = grass;
 		this.podzol = podzol;
 		this.farmland = farmland;
 	}
-	
+
 	public @Nullable BlockState get(@Nullable SoilIdx idx)
 	{
 		if (idx == null) {

@@ -27,13 +27,13 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 		this.decorator.underwater_clay = 1;
 
 		this.decorator.trees = 2;
-		
+
 		this.decorator.grass = 5;
 		this.decorator.flowers = 1;
 		this.decorator.dead_bushes = 1;
-		
+
 		this.decorator.mushrooms = 8;
-		
+
 		this.decorator.reeds = 10;
 	}
 

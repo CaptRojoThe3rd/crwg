@@ -20,14 +20,14 @@ public class ItemDebug extends Item
 		this.setTextureName(CRWG.ident("debug_item"));
 		this.setMaxStackSize(1);
 	}
-	
+
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hx, float hy, float hz)
 	{
 		if (world.isRemote) {
 			return true;
 		}
-		
+
 		(new WorldGenTallTree(true)).generate(world, world.rand, x + Facing.offsetsXForSide[side], y + Facing.offsetsYForSide[side], z + Facing.offsetsZForSide[side]);
 		return true;
 	}

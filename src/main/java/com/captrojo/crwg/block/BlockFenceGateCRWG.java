@@ -12,12 +12,12 @@ public class BlockFenceGateCRWG extends BlockFenceGate
 {
 	public int flammability = 0;
 	public int fire_spread_speed = 0;
-	
+
 	public BlockFenceGateCRWG(String name, BlockCRWG parent)
 	{
 		this.setBlockName(name);
 		this.setCreativeTab(null);
-		
+
 		this.textureName = parent.textureName;
 		this.flammability = parent.flammability;
 		this.fire_spread_speed = parent.fire_spread_speed;
@@ -25,21 +25,21 @@ public class BlockFenceGateCRWG extends BlockFenceGate
 		this.blockResistance = parent.blockResistance;
 		this.stepSound = parent.stepSound;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
 		return this.blockIcon;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg)
 	{
 		this.blockIcon = reg.registerIcon(this.textureName);
 	}
-	
+
 	@Override
 	public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face)
 	{
