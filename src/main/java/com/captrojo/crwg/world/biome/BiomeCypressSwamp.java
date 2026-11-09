@@ -21,9 +21,6 @@ public class BiomeCypressSwamp extends BiomeAbstractSwamp
 		this.decorator.trees = 4;
 		this.decorator.grass = 6;
 		this.decorator.flowers = 0;
-
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	@Override

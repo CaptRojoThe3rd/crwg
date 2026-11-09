@@ -5,6 +5,7 @@ public enum SoilIdx
 	DIRT,
 	COARSE_DIRT,
 	GRASS,
+	MYCELIUM,
 	PODZOL,
 	FARMLAND;
 }

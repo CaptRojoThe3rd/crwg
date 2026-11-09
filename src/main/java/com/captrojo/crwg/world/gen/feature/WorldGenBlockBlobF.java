@@ -21,7 +21,7 @@ public class WorldGenBlockBlobF extends WorldGenBlockBlob
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		final int min_y = CRWG.funcs.getMinHeight() + 3;
+		final int min_y = CRWG.funcs.getMinYLevel() + 3;
 		while (y > min_y) {
 			if (!world.isAirBlock(x, y - 1, z)) {
 				Block block = world.getBlock(x, y - 1, z);

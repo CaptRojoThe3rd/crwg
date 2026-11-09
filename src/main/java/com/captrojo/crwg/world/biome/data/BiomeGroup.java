@@ -1,7 +1,5 @@
 package com.captrojo.crwg.world.biome.data;
 
-import com.captrojo.crwg.world.gen.data.GConst;
-
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeGroup
@@ -21,18 +19,18 @@ public class BiomeGroup
 		this.plateau = plateau;
 	}
 
-	public BiomeGenBase getFromLandType(int type)
+	public BiomeGenBase getFromLandType(LandType type)
 	{
 		switch (type) {
 		default:
-		case GConst.LOWLANDS:
-		case GConst.HILLS:
-		case GConst.HIGHLANDS:
-		case GConst.FOOTHILLS:
+		case LOWLANDS:
+		case HILLS:
+		case HIGHLANDS:
+		case FOOTHILLS:
 			return this.plains;
-		case GConst.MOUNTAINS:
+		case MOUNTAINS:
 			return this.mountain;
-		case GConst.PLATEAUS:
+		case PLATEAUS:
 			return this.plateau;
 		}
 	}

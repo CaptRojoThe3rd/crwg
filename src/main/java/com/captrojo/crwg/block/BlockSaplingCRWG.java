@@ -3,6 +3,7 @@ package com.captrojo.crwg.block;
 import java.util.List;
 import java.util.Random;
 
+import com.captrojo.crwg.block.data.SaplingArrangement;
 import com.captrojo.crwg.util.WorldFunction;
 
 import cpw.mods.fml.relauncher.Side;
@@ -21,59 +22,10 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class BlockSaplingCRWG extends BlockSapling
 {
-	public static enum Arrangement
-	{
-		SINGLE(0, 0),
-		TWOBYTWO(-1, -1);
-
-		/** offsets for finding saplings */
-		final int xo, zo;
-		/** size of area of saplings */
-		final int xs, zs;
-
-		Arrangement(int xo, int zo)
-		{
-			this.xo = xo;
-			this.zo = zo;
-			this.xs = 1 - xo;
-			this.zs = 1 - zo;
-		}
-
-		boolean check(World world, int x, int y, int z, BlockSaplingCRWG sapling)
-		{
-			for (int x1 = 0; x1 < this.xs; x1++) {
-				for (int z1 = 0; z1 < this.zs; z1++) {
-					if (!sapling.func_149880_a(world, x + x1, y, z1 + z, 0)) {
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-
-		void clear(World world, int x, int y, int z)
-		{
-			for (int x1 = 0; x1 < this.xs; x1++) {
-				for (int z1 = 0; z1 < this.zs; z1++) {
-					world.setBlock(x + x1, y, z + z1, Blocks.air, 0, 4);
-				}
-			}
-		}
-
-		void unclear(World world, int x, int y, int z, BlockSaplingCRWG sapling)
-		{
-			for (int x1 = 0; x1 < this.xs; x1++) {
-				for (int z1 = 0; z1 < this.zs; z1++) {
-					world.setBlock(x + x1, y, z + z1, sapling, 8, 4);
-				}
-			}
-		}
-	}
-
 	final WorldFunction<WorldGenerator> func_gen;
-	final Arrangement arrangement;
+	final SaplingArrangement arrangement;
 
-	public BlockSaplingCRWG(String name, WorldFunction<WorldGenerator> func_gen, Arrangement arrangement)
+	public BlockSaplingCRWG(String name, WorldFunction<WorldGenerator> func_gen, SaplingArrangement arrangement)
 	{
 		this.setBlockName(name);
 		this.setCreativeTab(null);
@@ -94,7 +46,7 @@ public class BlockSaplingCRWG extends BlockSapling
 		/* Check saplings and get offset to top-left sapling (if applicable) for generation */
 		/* func_149880_a checks if the correct sapling is present */
 		int x_offs = 0, z_offs = 0;
-		if (this.arrangement == Arrangement.SINGLE) {
+		if (this.arrangement == SaplingArrangement.SINGLE) {
 			if (!this.func_149880_a(world, x, y, z, 0)) {
 				return;
 			}

@@ -2,8 +2,9 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
+import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.block.WoodBlocks;
-import com.captrojo.crwg.world.ChunkProviderCRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -46,7 +47,8 @@ public class WorldGenBaldCypress extends WorldGenAbstractTree
 			existing.isAir(world, x, y, z) ||
 			existing.isLeaves(world, x, y, z) ||
 			existing.getMaterial() == Material.water ||
-			existing == Blocks.waterlily
+			existing == Blocks.waterlily ||
+			existing == ModBlocks.small_waterlily
 		) {
 			this.setBlockAndNotifyAdequately(world, x, y, z, block, meta);
 		}
@@ -112,7 +114,7 @@ public class WorldGenBaldCypress extends WorldGenAbstractTree
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		final int MIN_Y = ChunkProviderCRWG.SEA_LVL_Y - 10;
+		final int MIN_Y = YConst.SEA_LVL_Y - 10;
 
 		Block gnd = world.getBlock(x, y - 1, z);
 		while (gnd.getMaterial() == Material.water && y > MIN_Y) {
@@ -126,6 +128,7 @@ public class WorldGenBaldCypress extends WorldGenAbstractTree
 		for (int i = 0; i < 4; i++) {
 			int x1 = x + SOIL_X_OFFS[i];
 			int z1 = z + SOIL_Z_OFFS[i];
+			gnd = world.getBlock(x1, y - 1, z1);
 			if (!gnd.canSustainPlant(world, x1, y - 1, z1, ForgeDirection.UP, WoodBlocks.BALD_CYPRESS.sapling)) {
 				return false;
 			}

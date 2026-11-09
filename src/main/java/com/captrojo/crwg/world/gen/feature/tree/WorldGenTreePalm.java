@@ -39,7 +39,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 	{
 		final int height = rand.nextInt(this.add_height) + this.min_height;
 
-		if (y < CRWG.funcs.getMinHeight() && (y + height) > CRWG.funcs.getMaxHeight()) {
+		if (y < CRWG.funcs.getMinYLevel() && (y + height) > CRWG.funcs.getMaxYLevel()) {
 			return false;
 		}
 

@@ -5,7 +5,7 @@ import java.util.Random;
 import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.util.World1IFunction;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -366,7 +366,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 			Block existing = world.getBlock(x, ya, z);
 
 			if (existing.canSustainPlant(world, x, ya, z, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
-				BlockState podzol = Soil.getPodzolFor(existing);
+				BlockState podzol = SoilType.getPodzolFor(existing);
 				this.setBlockAndNotifyAdequately(world, x, ya, z, podzol.block, podzol.meta);
 				break;
 			}

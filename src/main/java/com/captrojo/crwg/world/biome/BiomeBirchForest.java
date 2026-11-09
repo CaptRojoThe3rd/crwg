@@ -38,8 +38,7 @@ public class BiomeBirchForest extends BiomeCRWGBase
 			this.decorator.flowers = 3;
 		}
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 	}
 
 	@Override

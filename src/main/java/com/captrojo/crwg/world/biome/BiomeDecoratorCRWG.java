@@ -49,8 +49,8 @@ public class BiomeDecoratorCRWG
 	public float grass_chance = 0.5F;
 	public int tall_grass = 0;
 	public float tall_grass_chance = 0.5F;
-	public int dead_bushes = 0;
-	public float dead_bush_chance = 0.2F;
+	public int shrubs = 0;
+	public float shrub_chance = 0.2F;
 	public int waterlilies = 0;
 	public float waterlily_chance = 0.2F;
 
@@ -183,6 +183,7 @@ public class BiomeDecoratorCRWG
 	{
 		if (this._cur_world != null) {
 			CRWG.log.error("Already decorating! Chunk: {}, {} (Pos: {}, {})", x0 >> 4, z0 >> 4, x0, z0);
+			Thread.dumpStack();
 			if (!GeneralConfig.yeet_decorator_crash) {
 				throw this.crash(x0, z0, new RuntimeException("Already decorating!!"));
 			}
@@ -279,8 +280,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator flower = this.biome.getFlowerGen(world, x, y, z, rand);
-				flower.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getFlowerGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -292,8 +293,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator grass = this.biome.getGrassGen(world, x, y, z, rand);
-				grass.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getGrassGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 
 			for (int i = 0; i < this.tall_grass; i++) {
@@ -303,21 +304,21 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator tall_grass = this.biome.getTallGrassGen(world, x, y, z, rand);
-				tall_grass.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getTallGrassGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
 		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.DEAD_BUSH)) {
-			for (int i = 0; i < this.dead_bushes; i++) {
-				if (rand.nextFloat() > this.dead_bush_chance) {
+			for (int i = 0; i < this.shrubs; i++) {
+				if (rand.nextFloat() > this.shrub_chance) {
 					continue;
 				}
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator deadbush = this.biome.getDeadBushGen(world, x, y, z, rand);
-				deadbush.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getBushGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -329,8 +330,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator waterlily = this.biome.getWaterlilyGen(world, x, y, z, rand);
-				waterlily.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getWaterlilyGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -374,8 +375,8 @@ public class BiomeDecoratorCRWG
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
 
-				WorldGenerator shroom = this.biome.getBigMushroomGen(world, x, y, z, rand);
-				shroom.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getBigMushroomGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -387,8 +388,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator reeds = this.biome.getReedGen(world, x, y, z, rand);
-				reeds.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getReedGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -400,8 +401,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator pumpkin = this.biome.getPumpkinGen(world, x, y, z, rand);
-				pumpkin.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getPumpkinGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -413,8 +414,8 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = world.getHeightValue(x, z);
-				WorldGenerator cactus = this.biome.getCactusGen(world, x, y, z, rand);
-				cactus.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getCactusGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 
@@ -425,15 +426,15 @@ public class BiomeDecoratorCRWG
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = rand.nextInt(world.getHeight() - 8) + 8;
-				WorldGenerator liquid = this.biome.getLiquidWaterGen(world, x, y, z, rand);
-				liquid.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getLiquidWaterGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 			for (int i = 0; i < this.liquid_lavas; i++) {
 				x = this.randCoord(rand, x0);
 				z = this.randCoord(rand, z0);
 				y = rand.nextInt(world.getHeight() - 8) + 8;
-				WorldGenerator liquid = this.biome.getLiquidLavaGen(world, x, y, z, rand);
-				liquid.generate(world, rand, x, y, z);
+				WorldGenerator gen = this.biome.getLiquidLavaGen(world, x, y, z, rand);
+				gen.generate(world, rand, x, y, z);
 			}
 		}
 	}
@@ -456,15 +457,15 @@ public class BiomeDecoratorCRWG
 			x = this.randCoord(rand, x0);
 			z = this.randCoord(rand, z0);
 			y = rand.nextInt(world.getHeightValue(x, z) * 2);
-			WorldGenerator shroom = this.biome.getBrownMushroomGen(world, x, y, z, rand, always);
-			shroom.generate(world, rand, x, y, z);
+			WorldGenerator gen = this.biome.getBrownMushroomGen(world, x, y, z, rand, always);
+			gen.generate(world, rand, x, y, z);
 		}
 		if (rand.nextFloat() < this.red_mushroom_chance) {
 			x = this.randCoord(rand, x0);
 			z = this.randCoord(rand, z0);
 			y = rand.nextInt(world.getHeightValue(x, z) * 2);
-			WorldGenerator shroom = this.biome.getRedMushroomGen(world, x, y, z, rand, always);
-			shroom.generate(world, rand, x, y, z);
+			WorldGenerator gen = this.biome.getRedMushroomGen(world, x, y, z, rand, always);
+			gen.generate(world, rand, x, y, z);
 		}
 	}
 

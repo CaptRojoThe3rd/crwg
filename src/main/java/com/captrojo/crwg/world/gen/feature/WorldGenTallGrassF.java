@@ -36,7 +36,7 @@ public class WorldGenTallGrassF extends WorldGenerator
 			int z1 = z + rand.nextInt(8) - rand.nextInt(8);
 			int y1 = world.getHeightValue(x1, z1);
 
-			if (this.block.canBlockStay(world, x1, y1, z1)) {
+			if (world.isAirBlock(x1, y1, z1) && this.block.canBlockStay(world, x1, y1, z1)) {
 				int meta;
 				if (this.rng_min_meta == -1) {
 					meta = this.meta;

@@ -20,7 +20,7 @@ public abstract class I18nUtil
 			return;
 		}
 
-		String[] lines = val.split("\\n");
+		String[] lines = val.split("\\\\n"); /* thanks Java */
 		for (String str : lines) {
 			list.add(str);
 		}

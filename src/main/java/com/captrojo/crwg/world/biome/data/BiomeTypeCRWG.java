@@ -16,6 +16,8 @@ public enum BiomeTypeCRWG
 
 	/* BASIC BIOME TYPES */
 
+	MESA("Mesa", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
+
 	DESERT("Desert", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
 	SAVANNA("Savanna", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
 	SCRUBLAND("Scrubland", GConst.WARM, GConst.MODERATE, GConst.BASIC, WetlandType.MARSH),
@@ -44,6 +46,8 @@ public enum BiomeTypeCRWG
 	LANAYRU("Coral Land", GConst.WARM, GConst.WET, GConst.MAGICAL, WetlandType.MARSH),
 	COLORFUL_RAINFOREST("Colorful Rainforest", GConst.WARM, GConst.WET, GConst.MAGICAL, WetlandType.SWAMP),
 
+	VIBRANT_FOREST("Vibrant Forest", GConst.TEMPERATE, GConst.WET, GConst.SEMI_MAGICAL, WetlandType.SWAMP),
+
 	COLORFUL_BOREAL_FOREST("Colorful Boreal Forest", GConst.COLD, GConst.MODERATE, GConst.MAGICAL, WetlandType.FEN),
 	COLORFUL_DENSE_BOREAL_FOREST("Colorful Dense Boreal Forest", GConst.COLD, GConst.WET, GConst.MAGICAL, WetlandType.FEN),
 
@@ -55,7 +59,8 @@ public enum BiomeTypeCRWG
 	/* MUSHROOM BIOME TYPES */
 
 	MUSHROOM_DESERT("Mushroom Desert", GConst.HOT, GConst.DRY, GConst.MUSHROOM, WetlandType.MUSHSHROOM),
-	MUSHROOM_FIELD("Mushroom Field", GConst.TEMPERATE, GConst.DRY, GConst.MUSHROOM, WetlandType.MUSHSHROOM);
+	MUSHROOM_FIELD("Mushroom Field", GConst.TEMPERATE, GConst.DRY, GConst.MUSHROOM, WetlandType.MUSHSHROOM),
+	MUSHROOM_TUNDRA("Mushroom Tundra", GConst.COLD, GConst.MODERATE, GConst.MUSHROOM, WetlandType.MUSHSHROOM);
 
 	public final String name;
 	public final int s_temp;
@@ -80,7 +85,7 @@ public enum BiomeTypeCRWG
 			return ModBiomes.ocean;
 		}
 		BiomeGroup group = this.biomes_groups[species % this.biomes_groups.length];
-		return group.getFromLandType(land_type.ordinal());
+		return group.getFromLandType(land_type);
 	}
 
 	public void add(BiomeGroup group)

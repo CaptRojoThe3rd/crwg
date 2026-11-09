@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.captrojo.crwg.mixins.interfaces.ChunkCRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.chunk.ChnkConst;
 
 import net.minecraft.world.World;
@@ -96,11 +96,11 @@ public abstract class ChunkMixin implements ChunkCRWG
 
 	@Override
 	@Unique
-	public Soil crwg$getSoilType(int x, int z)
+	public SoilType crwg$getSoilType(int x, int z)
 	{
 		int v = this.crwg$surf_data_map_a[x | (z << 4)];
 		v = (v & ChnkConst.MASK_SOILTYPE) >>> ChnkConst.SHIFT_SOILTYPE;
-		Soil[] enum_vals = Soil.values();
+		SoilType[] enum_vals = SoilType.values();
 		if (v >= enum_vals.length) {
 			v = 0;
 		}
@@ -109,7 +109,7 @@ public abstract class ChunkMixin implements ChunkCRWG
 
 	@Override
 	@Unique
-	public void crwg$setSoilType(int x, int z, Soil soil_type)
+	public void crwg$setSoilType(int x, int z, SoilType soil_type)
 	{
 		int idx = x | (z << 4);
 		int v = this.crwg$surf_data_map_a[idx];

@@ -1,8 +1,5 @@
 package com.captrojo.crwg.world.biome.data;
 
-/**
- * Replacement for GConst.LOWLANDS, GConst.HILLS, etc.
- */
 public enum LandType
 {
 	NULL("Null"),

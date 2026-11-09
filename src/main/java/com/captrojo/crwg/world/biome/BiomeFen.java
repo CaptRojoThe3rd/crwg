@@ -11,9 +11,29 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class BiomeFen extends BiomeAbstractSwamp
 {
-	public BiomeFen(int id, String name, int color, float temperature, float rainfall)
+	final WorldGenAbstractTree tree_1;
+	final WorldGenAbstractTree tree_2;
+	final WorldGenAbstractTree shrub;
+	final int grass_color;
+	final int foliage_color;
+
+	public BiomeFen(int id, String name, int color, float temperature, float rainfall, int type)
 	{
 		super(id, name, color, temperature, rainfall);
+
+		if (type == 0) {
+			this.tree_1 = TreeGens.Spruce_Tiny;
+			this.tree_2 = TreeGens.Cedar_Tiny;
+			this.shrub = TreeGens.Cedar_Shrub;
+			this.grass_color = 0x9bb759;
+			this.foliage_color = 0x88b759;
+		} else {
+			this.tree_1 = TreeGens.Tamarack_Tiny;
+			this.tree_2 = TreeGens.Pine_Tiny;
+			this.shrub = TreeGens.Pine_Shrub;
+			this.grass_color = 0xb7b459;
+			this.foliage_color = 0xabb759;
+		}
 
 		this.waterlily_chance = 0.05;
 
@@ -32,25 +52,25 @@ public class BiomeFen extends BiomeAbstractSwamp
 	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
 	{
 		if (rand.nextInt(12) == 0) {
-			return TreeGens.Spruce_Tiny;
+			return this.tree_1;
 		}
 		if (rand.nextInt(6) == 0) {
-			return TreeGens.Cedar_Tiny;
+			return this.tree_2;
 		}
-		return TreeGens.Cedar_Shrub;
+		return this.shrub;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getBiomeGrassColor(int x, int y, int z)
 	{
-		return 0xabb759;
+		return this.grass_color;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getBiomeFoliageColor(int x, int y, int z)
 	{
-		return 0x98b759;
+		return this.foliage_color;
 	}
 }

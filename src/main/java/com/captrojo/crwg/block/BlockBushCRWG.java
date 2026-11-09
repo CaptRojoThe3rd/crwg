@@ -29,14 +29,13 @@ public class BlockBushCRWG extends BlockBush implements IShearable
 
 	public int variants = 1;
 	public boolean render_only_variants = false;
-
 	boolean shears_required = false;
 	Colorizer colorizer = Colorizer.NONE;
 
 	@SideOnly(Side.CLIENT)
 	public IIcon[] icons;
 
-	public BlockBushCRWG(String name, int variants)
+	public BlockBushCRWG(String name)
 	{
 		this(name, Material.plants, EnumPlantType.Plains);
 	}

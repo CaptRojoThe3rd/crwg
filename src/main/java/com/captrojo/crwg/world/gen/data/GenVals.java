@@ -2,6 +2,12 @@ package com.captrojo.crwg.world.gen.data;
 
 public class GenVals
 {
+	public static final GenVals DUMMY = new GenVals();
+
+	static {
+		DUMMY.gnd_height = 128;
+	}
+
 	public int species;
 
 	public int s_temp;

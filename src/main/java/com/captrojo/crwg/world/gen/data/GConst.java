@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world.gen.data;
 
+import com.captrojo.crwg.world.biome.data.LandType;
+
 public abstract class GConst
 {
 	/* Land/water */
@@ -7,45 +9,24 @@ public abstract class GConst
 	public static final int LAND = 1;
 
 	/* Terrain types */
-	public static final int NULL = 0;
+	public static final int NULL = LandType.NULL.ordinal();
 
-	public static final int DEEPOCEAN = 1;
-	public static final int OCEAN = 2;
-	public static final int SHALLOWOCEAN = 3;
-	public static final int BEACH = 4;
+	public static final int DEEPOCEAN = LandType.DEEP_OCEAN.ordinal();
+	public static final int OCEAN = LandType.OCEAN.ordinal();
+	public static final int SHALLOWOCEAN = LandType.SHALLOW_OCEAN.ordinal();
+	public static final int BEACH = LandType.BEACH.ordinal();
 
-	public static final int LOWLANDS = 5;
-	public static final int HILLS = 6;
-	public static final int HIGHLANDS = 7;
-	public static final int MOUNTAINS = 8;
+	public static final int LOWLANDS = LandType.LOWLANDS.ordinal();
+	public static final int HILLS = LandType.HILLS.ordinal();
+	public static final int HIGHLANDS = LandType.HIGHLANDS.ordinal();
+	public static final int MOUNTAINS = LandType.MOUNTAINS.ordinal();
 
-	public static final int PLATEAUS = 9;
-	public static final int FOOTHILLS = 10;
+	public static final int PLATEAUS = LandType.PLATEAUS.ordinal();
+	public static final int FOOTHILLS = LandType.FOOTHILLS.ordinal();
 
-	public static final int RIVERS = 11;
-	public static final int LAKES = 12;
-	public static final int WETLANDS = 13;
-
-	public static final String[] LT_NAMES = {
-		"Null",
-
-		"Deep Ocean",
-		"Ocean",
-		"Shallow Ocean",
-		"Beach",
-
-		"Lowlands",
-		"Hills",
-		"Highlands",
-		"Mountains",
-
-		"Plateau",
-		"Foothills",
-
-		"River",
-		"Lake",
-		"Wetlands"
-	};
+	public static final int RIVERS = LandType.RIVER.ordinal();
+	public static final int LAKES = LandType.LAKE.ordinal();
+	public static final int WETLANDS = LandType.WETLANDS.ordinal();
 
 	/* Temperature + rainfall */
 	public static final int FROZEN = 0;

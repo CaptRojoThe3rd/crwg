@@ -7,7 +7,7 @@ import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.WorldChunkManagerCRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.gen.data.GConst;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -123,7 +123,7 @@ public class ClientEvents
 				event.left.add(str);
 
 				LandType land_type = world_crwg.crwg$getLandType(x, z);
-				Soil soil_type = world_crwg.crwg$getSoilType(x, z);
+				SoilType soil_type = world_crwg.crwg$getSoilType(x, z);
 				int species = world_crwg.crwg$getSubspeciesVal(x, z);
 				str = String.format(
 					"lt: %s, st: %s, sp: %d",

@@ -43,8 +43,8 @@ public class WorldGenBigMushroomF extends WorldGenBigMushroom
 	{
 		int height = rand.nextInt(3) + 4;
 
-		final int min_y = CRWG.funcs.getMinHeight();
-		final int max_y = CRWG.funcs.getMaxHeight();
+		final int min_y = CRWG.funcs.getMinYLevel();
+		final int max_y = CRWG.funcs.getMaxYLevel();
 
 		if (!(y >= (min_y + 1) && y + height + 1 < max_y)) {
 			return false;

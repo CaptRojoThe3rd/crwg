@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.tileentity.TESignCRWG;
+import com.captrojo.crwg.tileentity.TESignCRWG.Sign;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -11,26 +12,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSign;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class BlockSignCRWG extends BlockSign
 {
-	public static enum Sign
-	{
-		BALD_CYPRESS("bald_cypress_sign"),
-		CEDAR("cedar_sign"),
-		PALM("palm_sign"),
-		PINE("pine_sign");
-
-		public final ResourceLocation resource;
-
-		Sign(String texture_name)
-		{
-			this.resource = CRWG.resource("textures/tile_entities/" + texture_name + ".png");
-		}
-	}
-
 	public final Sign sign;
 	private String item_texture_name;
 

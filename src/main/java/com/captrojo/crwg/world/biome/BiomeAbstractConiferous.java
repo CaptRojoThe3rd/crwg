@@ -3,10 +3,10 @@ package com.captrojo.crwg.world.biome;
 import java.util.Random;
 
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.biome.data.SoilIdx;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerRand;
+import com.captrojo.crwg.world.gen.layer.GenLayerRand;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -37,12 +37,11 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		this.old_growth = old_growth;
 
 		this.decorator.boulders = 1;
-		this.decorator.boulder_chance = 0.1f;
+		this.decorator.boulder_chance = 0.1F;
 		this.decorator.trees = 4;
-		this.decorator.extra_tree_chance = 0.0f;
+		this.decorator.extra_tree_chance = 0.0F;
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		if (!this.old_growth) {
 			return super.getTopBlock(world, x, y, z, rand, vals);
 		}
-		Soil soil = this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		IntCache.resetIntCache();
 		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
 		BlockState block = soil.get(TOP_BLOCKS[a]);
@@ -64,7 +63,7 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		if (!this.old_growth) {
 			return super.getFillerBlock(world, x, y, z, rand, vals, low);
 		}
-		Soil soil = this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		if (low) {
 			return soil.get(SoilIdx.COARSE_DIRT);
 		}

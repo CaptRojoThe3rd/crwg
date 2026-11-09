@@ -60,9 +60,12 @@ public class CRWG
 	public static final String MOD_ID = "crwg";
 	public static final String NAME = "CaptRojo's World Gen";
 
-	public static final String VERSION = "0.0.0";
-	public static final String VERSIONS_ACCEPTED = "0.0.0";
+//	public static final String VERSION = "0.0.0";
+//	public static final String VERSIONS_ACCEPTED = "0.0.*";
+	public static final String VERSION = "B0000";
+	public static final String VERSIONS_ACCEPTED = "B0000";
 
+	/* Given to ChunkAPI */
 	public static final String DATA_VERSION = "0.0";
 
 	public static final Logger log = LogManager.getLogger(MOD_ID);

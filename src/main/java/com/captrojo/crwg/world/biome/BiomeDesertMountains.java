@@ -19,7 +19,7 @@ public class BiomeDesertMountains extends BiomeCRWGBase
 		this.decorator.flowers = 0;
 		this.decorator.reeds = 3;
 		this.decorator.cacti = 0;
-		this.decorator.dead_bushes = 1;
+		this.decorator.shrubs = 1;
 
 		this.spawnableCreatureList.clear();
 	}
@@ -40,5 +40,11 @@ public class BiomeDesertMountains extends BiomeCRWGBase
 	public WorldGenerator getGrassGen(World world, int x, int y, int z, Random rand)
 	{
 		return BiomeDesert.GRASS_GENS[rand.nextInt(BiomeDesert.GRASS_GENS.length)];
+	}
+
+	@Override
+	public WorldGenerator getBushGen(World world, int x, int y, int z, Random rand)
+	{
+		return BiomeCRWGBase.Gen_Bush_Dead;
 	}
 }

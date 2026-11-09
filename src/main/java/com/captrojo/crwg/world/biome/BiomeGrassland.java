@@ -6,6 +6,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeGrassland extends BiomeCRWGBase
 {
@@ -18,11 +19,11 @@ public class BiomeGrassland extends BiomeCRWGBase
 
 		this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityHorse.class, 5, 2, 6));
 
-		this.decorator.grass = 10;
 		this.decorator.flowers = 4;
+		this.decorator.grass = 10;
+		this.decorator.shrubs = 1;
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 
 		this.flowers.clear();
 		this.addFlower(Blocks.red_flower, 4, 3);
@@ -33,6 +34,15 @@ public class BiomeGrassland extends BiomeCRWGBase
 		this.addFlower(Blocks.red_flower, 3, 20);
 		this.addFlower(Blocks.red_flower, 8, 20);
 		this.addFlower(Blocks.yellow_flower, 0, 30);
+	}
+	
+	@Override
+	public WorldGenerator getGrassGen(World world, int x, int y, int z, Random rand)
+	{
+		if (rand.nextInt(5) == 0) {
+			return BiomeCRWGBase.Gen_Clover;
+		}
+		return BiomeCRWGBase.Gen_TallGrass;
 	}
 
 	@Override

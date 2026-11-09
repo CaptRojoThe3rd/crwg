@@ -3,18 +3,26 @@ package com.captrojo.crwg.world.biome;
 import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
+import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
+import com.captrojo.crwg.world.gen.feature.WorldGenDoublePlantF;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeAbstractSwamp extends BiomeCRWGBase
 {
-	protected boolean generate_waterlilies = true;
-	protected double waterlily_chance = 0.1;
+	static final WorldGenerator Gen_Cattail = new WorldGenDoublePlantF(ModBlocks.dplant_cattail, 0);
+	
+	boolean generate_waterlilies = true;
+	double waterlily_chance = 0.1;
+	
+	int cattails = 5;
+	float cattail_chance = 0.5F;
 
 	public BiomeAbstractSwamp(int id, String name, int color, float temperature, float rainfall)
 	{
@@ -30,7 +38,7 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 
 		this.decorator.grass = 5;
 		this.decorator.flowers = 1;
-		this.decorator.dead_bushes = 1;
+		this.decorator.shrubs = 1;
 
 		this.decorator.mushrooms = 8;
 
@@ -71,5 +79,24 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 		}
 
 		super.genTerrainExt(world, rand, ablock, ameta, x, z, arrays, vals);
+	}
+	
+	@Override
+	public void decorate(World world, WorldCRWG world_crwg, Random rand, int x0, int z0)
+	{
+		for (int i = 0; i < this.cattails; i++) {
+			if (rand.nextFloat() > this.cattail_chance) {
+				continue;
+			}
+			int x = x0 + 8 + rand.nextInt(16);
+			int z = z0 + 8 + rand.nextInt(16);
+			int y = world_crwg.crwg$getGndHeight(x, z);
+			if (y != 128) {
+				continue;
+			}
+			Gen_Cattail.generate(world, rand, x, y, z);
+		}
+		
+		super.decorate(world, world_crwg, rand, x0, z0);
 	}
 }

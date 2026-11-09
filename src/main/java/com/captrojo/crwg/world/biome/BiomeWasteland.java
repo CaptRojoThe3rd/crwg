@@ -18,8 +18,7 @@ public class BiomeWasteland extends BiomeCRWGBase
 		this.decorator.reeds = 0;
 		this.decorator.pumpkins = 0;
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 
 		this.spawnableCreatureList.clear();
 	}

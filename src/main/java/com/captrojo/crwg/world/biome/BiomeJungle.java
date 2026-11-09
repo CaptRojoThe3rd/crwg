@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.world.ChunkProviderCRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import net.minecraft.entity.passive.EntityChicken;
@@ -33,8 +33,7 @@ public class BiomeJungle extends BiomeCRWGBase
 		}
 		this.decorator.pumpkin_chance = 0.0625F;
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 
 		if (sparseness < 1) {
 			this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityOcelot.class, 2, 1, 1));
@@ -68,7 +67,7 @@ public class BiomeJungle extends BiomeCRWGBase
 	{
 		super.decorate(world, rand, x0, z0);
 
-		final int y = ChunkProviderCRWG.SEA_LVL_Y + 64;
+		final int y = YConst.SEA_LVL_Y + 64;
 		final int x1 = x0 + 8;
 		final int z1 = z0 + 8;
 		for (int i = 0; i < 50; i++) {

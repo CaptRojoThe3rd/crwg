@@ -3,6 +3,10 @@ package com.captrojo.crwg.world.gen;
 import java.util.Random;
 
 import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.YConst;
+import com.captrojo.crwg.world.biome.BiomeCRWGBase;
+import com.captrojo.crwg.world.gen.data.GenVals;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -15,109 +19,113 @@ public class MapGenCavesCRWG extends MapGenCaves
 {
 	private Random rand2 = new Random();
 
-	@Override
-	protected void func_151541_a(long seed, int chunk_x, int chunk_z, Block[] ablock, double d0x, double d0y, double d0z, float fa, float fb, float fc, int ia, int ib, double dhv)
+	protected void func_151542_a(long seed, int chunk_x, int chunk_z, Block[] ablock, double dw_x, double dw_y, double dw_z)
 	{
-		double d4 = (double) (chunk_x * 16 + 8);
-		double d5 = (double) (chunk_z * 16 + 8);
-		float f3 = 0.0F;
-		float f4 = 0.0F;
-		Random random = this.rand2;
-		random.setSeed(seed);
+		this.func_151541_a(seed, chunk_x, chunk_z, ablock, dw_x, dw_y, dw_z, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
+	}
+
+	@Override
+	protected void func_151541_a(long seed, int chunk_x, int chunk_z, Block[] ablock, double dw_x, double dw_y, double dw_z, float fa, float a_horz, float a_vert, int ia, int ib, double d_vert_mult)
+	{
+		double d_x8 = (double) (chunk_x * 16 + 8);
+		double d_z8 = (double) (chunk_z * 16 + 8);
+		float a_horz_d = 0.0F;
+		float a_vert_d = 0.0F;
+
+		Random rand = this.rand2;
+		rand.setSeed(seed);
 
 		if (ib <= 0) {
 			int j1 = this.range * 16 - 16;
-			ib = j1 - random.nextInt(j1 / 4);
+			ib = j1 - rand.nextInt(j1 / 4);
 		}
 
-		boolean flag2 = false;
-
+		boolean ia_init_flag = false;
 		if (ia == -1) {
 			ia = ib / 2;
-			flag2 = true;
+			ia_init_flag = true;
 		}
 
-		int k1 = random.nextInt(ib / 2) + ib / 4;
+		int k1 = rand.nextInt(ib / 2) + ib / 4;
 
-		for (boolean flag = random.nextInt(6) == 0; ia < ib; ++ia) {
-			double dhorz = 1.5D + (double) (MathHelper.sin((float) ia * (float) Math.PI / (float) ib) * fa * 1.0F);
-			double dvert = dhorz * dhv;
-			float f5 = MathHelper.cos(fc);
-			float f6 = MathHelper.sin(fc);
-			d0x += (double) (MathHelper.cos(fb) * f5);
-			d0y += (double) f6;
-			d0z += (double) (MathHelper.sin(fb) * f5);
+		for (boolean r6_flag = (rand.nextInt(6) == 0); ia < ib; ia++) {
+			double d_horz = 1.5D + (double) (MathHelper.sin((float) ia * (float) Math.PI / (float) ib) * fa * 1.0F);
+			double d_vert = d_horz * d_vert_mult;
+			float ch_horz = MathHelper.cos(a_vert);
+			float ch_vert = MathHelper.sin(a_vert);
+			/* xyz of the worm */
+			dw_x += (double) (MathHelper.cos(a_horz) * ch_horz);
+			dw_y += (double) ch_vert;
+			dw_z += (double) (MathHelper.sin(a_horz) * ch_horz);
 
-			if (flag) {
-				fc *= 0.92F;
+			if (r6_flag) {
+				a_vert *= 0.92F;
 			} else {
-				fc *= 0.7F;
+				a_vert *= 0.7F;
 			}
 
-			fc += f4 * 0.1F;
-			fb += f3 * 0.1F;
-			f4 *= 0.9F;
-			f3 *= 0.75F;
-			f4 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
-			f3 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
+			a_vert += a_vert_d * 0.1F;
+			a_horz += a_horz_d * 0.1F;
+			a_vert_d *= 0.9F;
+			a_horz_d *= 0.75F;
+			a_vert_d += (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 2.0F;
+			a_horz_d += (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 4.0F;
 
-			if (!flag2 && ia == k1 && fa > 1.0F && ib > 0) {
-				this.func_151541_a(random.nextLong(), chunk_x, chunk_z, ablock, d0x, d0y, d0z, random.nextFloat() * 0.5F + 0.5F, fb - ((float) Math.PI / 2F), fc / 3.0F, ia, ib, 1.0D);
-				this.func_151541_a(random.nextLong(), chunk_x, chunk_z, ablock, d0x, d0y, d0z, random.nextFloat() * 0.5F + 0.5F, fb + ((float) Math.PI / 2F), fc / 3.0F, ia, ib, 1.0D);
+			if (!ia_init_flag && ia == k1 && fa > 1.0F && ib > 0) {
+				this.func_151541_a(rand.nextLong(), chunk_x, chunk_z, ablock, dw_x, dw_y, dw_z, rand.nextFloat() * 0.5F + 0.5F, a_horz - ((float) Math.PI / 2F), a_vert / 3.0F, ia, ib, 1.0D);
+				this.func_151541_a(rand.nextLong(), chunk_x, chunk_z, ablock, dw_x, dw_y, dw_z, rand.nextFloat() * 0.5F + 0.5F, a_horz + ((float) Math.PI / 2F), a_vert / 3.0F, ia, ib, 1.0D);
 				return;
 			}
 
-			if (flag2 || random.nextInt(4) != 0) {
-				double d8 = d0x - d4;
-				double d9 = d0z - d5;
+			if (ia_init_flag || rand.nextInt(4) != 0) {
+				double dc_x = dw_x - d_x8;
+				double dc_z = dw_z - d_z8;
 				double d10 = (double) (ib - ia);
 				double d11 = (double) (fa + 2.0F + 16.0F);
 
-				if (d8 * d8 + d9 * d9 - d10 * d10 > d11 * d11) {
+				if ((dc_x * dc_x + dc_z * dc_z - d10 * d10) > (d11 * d11)) {
 					return;
 				}
 
 				if (
-					(d0x >= (d4 - 16.0D - dhorz * 2.0D)) &&
-					(d0z >= (d5 - 16.0D - dhorz * 2.0D)) &&
-					(d0x <= (d4 + 16.0D + dhorz * 2.0D)) &&
-					(d0z <= (d5 + 16.0D + dhorz * 2.0D))
+					(dw_x >= (d_x8 - 16.0D - d_horz * 2.0D)) &&
+						(dw_x <= (d_x8 + 16.0D + d_horz * 2.0D)) &&
+						(dw_z >= (d_z8 - 16.0D - d_horz * 2.0D)) &&
+						(dw_z <= (d_z8 + 16.0D + d_horz * 2.0D))
 				) {
-					int ax_n = MathHelper.floor_double(d0x - dhorz) - chunk_x * 16 - 1;
-					int ax_p = MathHelper.floor_double(d0x + dhorz) - chunk_x * 16 + 1;
-					int ay_n = MathHelper.floor_double(d0y - dvert) - 1;
-					int ay_p = MathHelper.floor_double(d0y + dvert) + 1;
-					int az_n = MathHelper.floor_double(d0z - dhorz) - chunk_z * 16 - 1;
-					int az_p = MathHelper.floor_double(d0z + dhorz) - chunk_z * 16 + 1;
+					int xl = MathHelper.floor_double(dw_x - d_horz) - chunk_x * 16 - 1;
+					int xh = MathHelper.floor_double(dw_x + d_horz) - chunk_x * 16 + 1;
+					int yl = MathHelper.floor_double(dw_y - d_vert) - 1;
+					int yh = MathHelper.floor_double(dw_y + d_vert) + 1;
+					int zl = MathHelper.floor_double(dw_z - d_horz) - chunk_z * 16 - 1;
+					int zh = MathHelper.floor_double(dw_z + d_horz) - chunk_z * 16 + 1;
 
-					if (ax_n < 0) {
-						ax_n = 0;
+					if (xl < 0) {
+						xl = 0;
 					}
-					if (ax_p > 16) {
-						ax_p = 16;
-					}
-
-					if (ay_n < 1) {
-						ay_n = 1;
-					}
-					if (ay_p > 504) {
-						ay_p = 504;
+					if (xh > 16) {
+						xh = 16;
 					}
 
-					if (az_n < 0) {
-						az_n = 0;
+					if (yl < (YConst.MIN_Y_LVL + 1)) {
+						yl = (YConst.MIN_Y_LVL + 1);
 					}
-					if (az_p > 16) {
-						az_p = 16;
+					if (yh > (YConst.MAX_Y_LVL - 8)) {
+						yh = (YConst.MAX_Y_LVL - 8);
+					}
+
+					if (zl < 0) {
+						zl = 0;
+					}
+					if (zh > 16) {
+						zh = 16;
 					}
 
 					boolean ocean_flag = false;
-					int x1;
-					int z1;
 
-					for (x1 = ax_n; !ocean_flag && x1 < ax_p; ++x1) {
-						for (z1 = az_n; !ocean_flag && z1 < az_p; ++z1) {
-							for (int y1 = ay_p + 1; !ocean_flag && y1 >= ay_n - 1; --y1) {
+					for (int x1 = xl; !ocean_flag && x1 < xh; x1++) {
+						for (int z1 = zl; !ocean_flag && z1 < zh; z1++) {
+							for (int y1 = yh + 1; !ocean_flag && y1 >= yl - 1; y1--) {
 								int idx = x1 | (z1 << 4) | (y1 << 8);
 
 								if (y1 >= 0 && y1 < 512) {
@@ -125,8 +133,14 @@ public class MapGenCavesCRWG extends MapGenCaves
 										ocean_flag = true;
 									}
 
-									if (y1 != ay_n - 1 && x1 != ax_n && x1 != ax_p - 1 && z1 != az_n && z1 != az_p - 1) {
-										y1 = ay_n;
+									if (
+										y1 != (yl - 1)
+											&& x1 != xl
+											&& x1 != (xh - 1)
+											&& z1 != zl
+											&& z1 != (zh - 1)
+									) {
+										y1 = yl;
 									}
 								}
 							}
@@ -134,19 +148,19 @@ public class MapGenCavesCRWG extends MapGenCaves
 					}
 
 					if (!ocean_flag) {
-						for (x1 = ax_n; x1 < ax_p; ++x1) {
-							double d13 = ((double) (x1 + chunk_x * 16) + 0.5D - d0x) / dhorz;
+						for (int x1 = xl; x1 < xh; x1++) {
+							double xdist = ((double) (x1 + chunk_x * 16) + 0.5D - dw_x) / d_horz;
 
-							for (z1 = az_n; z1 < az_p; ++z1) {
-								double d14 = ((double) (z1 + chunk_z * 16) + 0.5D - d0z) / dhorz;
-								int idx = x1 | (z1 << 4) | (ay_p << 8);
+							for (int z1 = zl; z1 < zh; z1++) {
+								double zdist = ((double) (z1 + chunk_z * 16) + 0.5D - dw_z) / d_horz;
+								int idx = x1 | (z1 << 4) | (yh << 8);
 								boolean top_flag = false;
 
-								if (d13 * d13 + d14 * d14 < 1.0D) {
-									for (int y1 = ay_p - 1; y1 >= ay_n; --y1) {
-										double d12 = ((double) y1 + 0.5D - d0y) / dvert;
+								if ((xdist * xdist + zdist * zdist) < 1.0) {
+									for (int y1 = yh - 1; y1 >= yl; y1--) {
+										double ydist = ((double) y1 + 0.5D - dw_y) / d_vert;
 
-										if (d12 > -0.7D && d13 * d13 + d12 * d12 + d14 * d14 < 1.0D) {
+										if (ydist > -0.7D && xdist * xdist + ydist * ydist + zdist * zdist < 1.0D) {
 											if (this.isTopBlock(ablock, idx, x1, y1, z1, chunk_x, chunk_z)) {
 												top_flag = true;
 											}
@@ -159,7 +173,7 @@ public class MapGenCavesCRWG extends MapGenCaves
 							}
 						}
 
-						if (flag2) {
+						if (ia_init_flag) {
 							break;
 						}
 					}
@@ -169,58 +183,75 @@ public class MapGenCavesCRWG extends MapGenCaves
 	}
 
 	@Override
-	protected void func_151538_a(World world, int p_151538_2_, int p_151538_3_, int chunk_x, int chunk_z, Block[] ablock)
+	protected void func_151538_a(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, Block[] ablock)
 	{
-		int i1 = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(31) + 1) + 1);
-
+		int im = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(31) + 1) + 1);
 		if (this.rand.nextInt(7) != 0) {
-			i1 = 0;
+			im = 0;
 		}
 
 		final int min = CRWG.funcs.getMinCaveHeight() + 8;
 		final int max = CRWG.funcs.getMaxCaveHeight();
 
-		for (int j1 = 0; j1 < i1; ++j1) {
-			double d0 = (double) (p_151538_2_ * 16 + this.rand.nextInt(16));
-			double d1 = (double) this.rand.nextInt(this.rand.nextInt(max - min) + min);
-			double d2 = (double) (p_151538_3_ * 16 + this.rand.nextInt(16));
-			int k1 = 1;
+		for (int i = 0; i < im; i++) {
+			double d_xa = (double) (r_chunk_x * 16 + this.rand.nextInt(16));
+			double d_ya = (double) this.rand.nextInt(this.rand.nextInt(max - min) + min);
+			double d_za = (double) (r_chunk_z * 16 + this.rand.nextInt(16));
 
+			int jm = 1;
 			if (this.rand.nextInt(4) == 0) {
-				this.func_151542_a(this.rand.nextLong(), chunk_x, chunk_z, ablock, d0, d1, d2);
-				k1 += this.rand.nextInt(4);
+				this.func_151542_a(this.rand.nextLong(), chunk_x, chunk_z, ablock, d_xa, d_ya, d_za);
+				jm += this.rand.nextInt(4);
 			}
 
-			for (int l1 = 0; l1 < k1; ++l1) {
-				float f = this.rand.nextFloat() * (float) Math.PI * 2.0F;
-				float f1 = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
-				float f2 = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
+			for (int j = 0; j < jm; j++) {
+				float a_horz = this.rand.nextFloat() * (float) Math.PI * 2.0F;
+				float a_vert = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
+				float fa = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
 
 				if (this.rand.nextInt(10) == 0) {
-					f2 *= this.rand.nextFloat() * this.rand.nextFloat() * 3.0F + 1.0F;
+					fa *= this.rand.nextFloat() * this.rand.nextFloat() * 3.0F + 1.0F;
 				}
 
-				this.func_151541_a(this.rand.nextLong(), chunk_x, chunk_z, ablock, d0, d1, d2, f2, f, f1, 0, 0, 1.0D);
+				this.func_151541_a(this.rand.nextLong(), chunk_x, chunk_z, ablock, d_xa, d_ya, d_za, fa, a_horz, a_vert, 0, 0, 1.0D);
 			}
 		}
 	}
 
 	@Override
-	protected void digBlock(Block[] ablock, int index, int x, int y, int z, int chunk_x, int chunk_z, boolean found_top)
+	public boolean isTopBlock(Block[] ablock, int idx, int x, int y, int z, int chunk_x, int chunk_z)
 	{
-		BiomeGenBase biome = worldObj.getBiomeGenForCoords(x + chunk_x * 16, z + chunk_z * 16);
-		Block top = (this.isExceptionBiome(biome) ? Blocks.grass : biome.topBlock);
-		Block filler = (this.isExceptionBiome(biome) ? Blocks.dirt : biome.fillerBlock);
-		Block block = ablock[index];
+		BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x + chunk_x * 16, z + chunk_z * 16);
+		if (biome instanceof BiomeCRWGBase biome_crwg) {
+			BlockState b = biome_crwg.getTopBlock(this.worldObj, x, y, z, this.rand2, GenVals.DUMMY);
+			return (ablock[idx] == b.block);
+		}
+		return super.isTopBlock(ablock, idx, x, y, z, chunk_x, chunk_z);
+	}
 
-		if (block == Blocks.stone || block == filler || block == top) {
-			if (y < 10) {
-				ablock[index] = Blocks.lava;
+	@Override
+	protected void digBlock(Block[] ablock, int idx, int x, int y, int z, int chunk_x, int chunk_z, boolean found_top)
+	{
+		BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(x + chunk_x * 16, z + chunk_z * 16);
+		Block top, filler;
+		if (biome instanceof BiomeCRWGBase biome_crwg) {
+			top = biome_crwg.getTopBlock(this.worldObj, x, y, z, this.rand2, GenVals.DUMMY).block;
+			filler = biome_crwg.getFillerBlock(this.worldObj, x, y, z, this.rand2, GenVals.DUMMY, false).block;
+		} else {
+			top = (this.isExceptionBiome(biome) ? Blocks.grass : biome.topBlock);
+			filler = (this.isExceptionBiome(biome) ? Blocks.dirt : biome.fillerBlock);
+		}
+
+		Block existing = ablock[idx];
+
+		if (existing == Blocks.stone || existing == filler || existing == top) {
+			if (y < (YConst.MIN_Y_LVL + 20)) {
+				ablock[idx] = Blocks.lava;
 			} else {
-				ablock[index] = null;
+				ablock[idx] = Blocks.air;
 
-				if (found_top && ablock[index - 256] == filler) {
-					ablock[index - 256] = top;
+				if (found_top && ablock[idx - 256] == filler) {
+					ablock[idx - 256] = top;
 				}
 			}
 		}

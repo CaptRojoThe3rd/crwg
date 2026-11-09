@@ -36,8 +36,8 @@ public class WorldGenTaiga2F extends WorldGenTaiga2
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		final int MIN_Y = CRWG.funcs.getMinHeight();
-		final int MAX_Y = CRWG.funcs.getMaxHeight();
+		final int MIN_Y = CRWG.funcs.getMinYLevel();
+		final int MAX_Y = CRWG.funcs.getMaxYLevel();
 
 		int height = rand.nextInt(4) + 6;
 		int adj = 1 + rand.nextInt(2);

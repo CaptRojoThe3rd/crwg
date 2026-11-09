@@ -7,27 +7,31 @@ import net.minecraft.init.Blocks;
 
 public class BlockState
 {
-	public static BlockState GRASS;
 	public static BlockState DIRT;
 	public static BlockState COARSE_DIRT;
+	public static BlockState GRASS;
+	public static BlockState MYCELIUM;
 	public static BlockState PODZOL;
 	public static BlockState FARMLAND;
 
 	public static BlockState SILTY_DIRT;
 	public static BlockState COARSE_SILTY_DIRT;
 	public static BlockState SILTY_GRASS;
+	public static BlockState SILTY_MYCELIUM;
 	public static BlockState SILTY_PODZOL;
 	public static BlockState SILTY_FARMLAND;
 
 	public static BlockState LOAMY_DIRT;
 	public static BlockState COARSE_LOAMY_DIRT;
 	public static BlockState LOAMY_GRASS;
+	public static BlockState LOAMY_MYCELIUM;
 	public static BlockState LOAMY_PODZOL;
 	public static BlockState LOAMY_FARMLAND;
 
 	public static BlockState CLAY_DIRT;
 	public static BlockState COARSE_CLAY_DIRT;
 	public static BlockState CLAY_GRASS;
+	public static BlockState CLAY_MYCELIUM;
 	public static BlockState CLAY_PODZOL;
 	public static BlockState CLAY_FARMLAND;
 
@@ -38,6 +42,7 @@ public class BlockState
 	public static BlockState RED_SAND;
 	public static BlockState ORANGE_SAND;
 
+	public static BlockState SANDSTONE;
 	public static BlockState ORANGE_SANDSTONE;
 
 	public static BlockState WATER;
@@ -47,27 +52,31 @@ public class BlockState
 
 	public static void initPreMade()
 	{
-		GRASS = new BlockState(Blocks.grass, 0);
 		DIRT = new BlockState(Blocks.dirt, 0);
 		COARSE_DIRT = new BlockState(Blocks.dirt, 1);
+		GRASS = new BlockState(Blocks.grass);
+		MYCELIUM = new BlockState(Blocks.mycelium);
 		PODZOL = new BlockState(Blocks.dirt, 2);
-		FARMLAND = new BlockState(Blocks.farmland, 0);
+		FARMLAND = new BlockState(Blocks.farmland);
 
 		SILTY_DIRT = new BlockState(ModBlocks.silty_dirt);
 		COARSE_SILTY_DIRT = new BlockState(ModBlocks.coarse_silty_dirt);
 		SILTY_GRASS = new BlockState(ModBlocks.silty_grass);
+		SILTY_MYCELIUM = new BlockState(ModBlocks.silty_mycelium);
 		SILTY_PODZOL = new BlockState(ModBlocks.silty_podzol);
 		SILTY_FARMLAND = new BlockState(ModBlocks.silty_farmland);
 
 		LOAMY_DIRT = new BlockState(ModBlocks.loamy_dirt);
 		COARSE_LOAMY_DIRT = new BlockState(ModBlocks.coarse_loamy_dirt);
 		LOAMY_GRASS = new BlockState(ModBlocks.loamy_grass);
+		LOAMY_MYCELIUM = new BlockState(ModBlocks.loamy_mycelium);
 		LOAMY_PODZOL = new BlockState(ModBlocks.loamy_podzol);
 		LOAMY_FARMLAND = new BlockState(ModBlocks.loamy_farmland);
 
 		CLAY_DIRT = new BlockState(ModBlocks.clay_dirt);
 		COARSE_CLAY_DIRT = new BlockState(ModBlocks.coarse_clay_dirt);
 		CLAY_GRASS = new BlockState(ModBlocks.clay_grass);
+		CLAY_MYCELIUM = new BlockState(ModBlocks.clay_mycelium);
 		CLAY_PODZOL = new BlockState(ModBlocks.clay_podzol);
 		CLAY_FARMLAND = new BlockState(ModBlocks.clay_farmland);
 
@@ -78,6 +87,7 @@ public class BlockState
 		RED_SAND = new BlockState(Blocks.sand, 1);
 		ORANGE_SAND = new BlockState(ModBlocks.orange_sand);
 
+		SANDSTONE = new BlockState(Blocks.sandstone, 0);
 		ORANGE_SANDSTONE = new BlockState(ModBlocks.orange_sandstone);
 
 		WATER = new BlockState(Blocks.water, 0);

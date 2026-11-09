@@ -42,13 +42,13 @@ public interface ICRWGFuncs
 	 * Also used to calculate indices into `ablock` and `ameta` arrays. This is an actual
 	 * Y coordinate.
 	 */
-	int getMinHeight();
+	int getMinYLevel();
 
 	/**
 	 * Get the top height limit of the world. Used for things like world gen checks. This is
 	 * an actual Y coordinate.
 	 */
-	int getMaxHeight();
+	int getMaxYLevel();
 
 	/**
 	 * Get actual sea level of the world. This is an actual Y coordinate, NOT an index into
@@ -82,7 +82,7 @@ public interface ICRWGFuncs
 	 * NOT an actual Y coordinate.
 	 */
 	int getMaxCaveHeight();
-
+	
 	/**
 	 * Get whether vanilla-style ravines should generate or not
 	 */

@@ -7,19 +7,20 @@ import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.config.BiomeConfig;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.ChunkProviderCRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
 import com.captrojo.crwg.world.gen.feature.WorldGenBigMushroomF;
 import com.captrojo.crwg.world.gen.feature.WorldGenBlockBlobF;
+import com.captrojo.crwg.world.gen.feature.WorldGenBush;
 import com.captrojo.crwg.world.gen.feature.WorldGenCactusF;
-import com.captrojo.crwg.world.gen.feature.WorldGenDeadBushF;
 import com.captrojo.crwg.world.gen.feature.WorldGenDoublePlantF;
 import com.captrojo.crwg.world.gen.feature.WorldGenFlowersF;
 import com.captrojo.crwg.world.gen.feature.WorldGenMelonF;
 import com.captrojo.crwg.world.gen.feature.WorldGenPumpkinF;
+import com.captrojo.crwg.world.gen.feature.WorldGenShallowPond;
 import com.captrojo.crwg.world.gen.feature.WorldGenTallGrassF;
 import com.captrojo.crwg.world.gen.feature.WorldGenWaterlilyF;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
@@ -34,7 +35,6 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigMushroom;
 import net.minecraft.world.gen.feature.WorldGenBlockBlob;
 import net.minecraft.world.gen.feature.WorldGenCactus;
-import net.minecraft.world.gen.feature.WorldGenDeadBush;
 import net.minecraft.world.gen.feature.WorldGenDoublePlant;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
 import net.minecraft.world.gen.feature.WorldGenLiquids;
@@ -50,12 +50,13 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 
 	public static final WorldGenBlockBlob Gen_Boulder_MossyCobble = new WorldGenBlockBlobF(Blocks.mossy_cobblestone, 0);
 
+	public static final WorldGenBush Gen_Bush = new WorldGenBush(ModBlocks.bush);
+	public static final WorldGenBush Gen_Bush_Dead = new WorldGenBush(Blocks.deadbush);
+
 	public static final WorldGenCactus Gen_Cactus = new WorldGenCactusF();
 
 	public static final WorldGenerator Gen_Clover = new WorldGenTallGrassF(ModBlocks.clover, 15, 1);
 	public static final WorldGenerator Gen_Clover_Large = new WorldGenTallGrassF(ModBlocks.clover_large, 0);
-
-	public static final WorldGenDeadBush Gen_DeadBush = new WorldGenDeadBushF(Blocks.deadbush);
 
 	public static final WorldGenDoublePlant Gen_DPlant_Sunflower = new WorldGenDoublePlantF(0);
 	public static final WorldGenDoublePlant Gen_DPlant_Lilac = new WorldGenDoublePlantF(1);
@@ -77,8 +78,21 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenFlowers Gen_Flower_TulipPink = new WorldGenFlowersF(Blocks.red_flower, 7);
 	public static final WorldGenFlowers Gen_Flower_OxeyeDaisy = new WorldGenFlowersF(Blocks.red_flower, 8);
 
+	public static final WorldGenFlowers Gen_Flower_PurpleOwlsClover = new WorldGenFlowersF(ModBlocks.flower_purple_owls_clover, 0);
+
+	public static final WorldGenFlowers Gen_Flower_LongspurLupine = new WorldGenFlowersF(ModBlocks.flower_longspur_lupine, 0);
+	public static final WorldGenFlowers Gen_Flower_SilverLupine = new WorldGenFlowersF(ModBlocks.flower_silver_lupine, 0);
+	public static final WorldGenFlowers Gen_Flower_SkyBlueLupine = new WorldGenFlowersF(ModBlocks.flower_sky_blue_lupine, 0);
+
 	public static final WorldGenFlowers Gen_Flower_Sage = new WorldGenFlowersF(ModBlocks.flower_sage, 0);
 	public static final WorldGenFlowers Gen_Flower_WoodlandSage = new WorldGenFlowersF(ModBlocks.flower_woodland_sage, 0);
+	
+	public static final WorldGenFlowers Gen_Flower_AquaHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_aqua, 0);
+	public static final WorldGenFlowers Gen_Flower_CreamHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_cream, 0);
+	public static final WorldGenFlowers Gen_Flower_CrimsonHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_crimson, 0);
+	public static final WorldGenFlowers Gen_Flower_DeepBlueHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_deepblue, 0);
+	public static final WorldGenFlowers Gen_Flower_PinkHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_pink, 0);
+	public static final WorldGenFlowers Gen_Flower_SalmonPinkHyacinth = new WorldGenFlowersF(ModBlocks.flower_hyacinth_salmonpink, 0);
 
 	public static final WorldGenLiquids Gen_Liquid_Water = new WorldGenLiquids(Blocks.flowing_water);
 	public static final WorldGenLiquids Gen_Liquid_Lava = new WorldGenLiquids(Blocks.flowing_lava);
@@ -87,8 +101,12 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 
 	public static final WorldGenFlowers Gen_Mushroom_Brown = new WorldGenFlowersF(Blocks.brown_mushroom, 0);
 	public static final WorldGenFlowers Gen_Mushroom_Red = new WorldGenFlowersF(Blocks.red_mushroom, 0);
+	
+	public static final WorldGenerator Gen_Plant_PurpleBush = new WorldGenFlowersF(ModBlocks.purple_bush, 0);
 
 	public static final WorldGenerator Gen_Pumpkin = new WorldGenPumpkinF();
+	
+	public static final WorldGenerator Gen_ShallowPond = new WorldGenShallowPond();
 
 	public static final WorldGenerator Gen_ShortGrass_Dry_A = new WorldGenTallGrassF(ModBlocks.dry_short_grass, 0);
 	public static final WorldGenerator Gen_ShortGrass_Dry_B = new WorldGenTallGrassF(ModBlocks.dry_short_grass, 1);
@@ -102,6 +120,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final WorldGenerator Gen_Vines = new WorldGenVines();
 
 	public static final WorldGenerator Gen_Waterlily = new WorldGenWaterlilyF();
+	public static final WorldGenerator Gen_Waterlily_Small = new WorldGenWaterlilyF(ModBlocks.small_waterlily);
 
 	public static void initAllBiomesWithWorldSeed(long world_seed)
 	{
@@ -112,6 +131,13 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 
 	public static int getAdjID(int id)
 	{
+		int page = id >>> 8;
+		id &= 0xff;
+		if (page == 0x01) {
+			return id + (BiomeConfig.id_page_b << 8);
+		} else if (page == 0x02) {
+			return id + (BiomeConfig.id_page_c << 8);
+		}
 		return id + (BiomeConfig.id_page_a << 8);
 	}
 
@@ -136,6 +162,12 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		this.worldGeneratorTrees = null;
 		this.worldGeneratorBigTree = null;
 		this.worldGeneratorSwamp = null;
+	}
+
+	protected void copyToHigherDecorators()
+	{
+		this.decorator_hills.copyFrom(this.decorator);
+		this.decorator_highlands.copyFrom(this.decorator);
 	}
 
 	public void initWithWorldSeed(long world_seed)
@@ -177,7 +209,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		int zc = z & 0xf;
 
 		for (int y = 511; y >= 20; y--) {
-			int idx = xc | (zc << 4) | ((y + ChunkProviderCRWG.EXT_UG_I) << 8);
+			int idx = xc | (zc << 4) | ((y + YConst.BOTTOM_H_LVL) << 8);
 
 			Block existing = ablock[idx];
 			if (existing == null || existing.getMaterial() == Material.air) {
@@ -220,12 +252,11 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 					ameta[idx] = (short) tmp.meta;
 
 					if (fill_remain == 0) {
-						if (tmp.block == Blocks.sand) {
-							ext_fill_blk = Blocks.sandstone;
-							ext_fill_remain = rand.nextInt(4) + Math.max(0, y - 126);
-						} else if (tmp.block == ModBlocks.orange_sand) {
-							ext_fill_blk = ModBlocks.orange_sandstone;
-							ext_fill_remain = rand.nextInt(4) + Math.max(0, y - 126);
+						tmp = this.getExtFillerBlock(world, x, y, z, rand, vals, tmp);
+						if (tmp != null) {
+							ext_fill_blk = tmp.block;
+							ext_fill_meta = (short) tmp.meta;
+							ext_fill_remain = rand.nextInt(4) + 1;
 						}
 					}
 				}
@@ -245,20 +276,31 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		return new BiomeDecoratorCRWG(this);
 	}
 
-	public Soil getSoil(World world, int x, int y, int z, Random rand, int s_temp, int s_rain, int species_val)
+	public SoilType getSoilType(World world, int x, int y, int z, Random rand, int s_temp, int s_rain, int species_val)
 	{
-		return Soil.Soil_Map[s_temp][s_rain][(species_val >> 16) & 0x3];
+		return SoilType.Soil_Map[s_temp][s_rain][(species_val >> 16) & 0x3];
 	}
 
 	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
 	{
-		return this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species).grass;
+		return this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species).grass;
 	}
 
 	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
 	{
-		Soil soil = this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		return low ? soil.coarse_dirt : soil.dirt;
+	}
+
+	public BlockState getExtFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, BlockState filler)
+	{
+		if (filler.block == Blocks.sand) {
+			return BlockState.SANDSTONE;
+		}
+		if (filler.block == ModBlocks.orange_sand) {
+			return BlockState.ORANGE_SANDSTONE;
+		}
+		return null;
 	}
 
 	public WorldGenerator getBoulderGen(World world, int x, int y, int z, Random rand)
@@ -291,9 +333,9 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		return BiomeCRWGBase.Gen_DPlant_TallGrass;
 	}
 
-	public WorldGenerator getDeadBushGen(World world, int x, int y, int z, Random rand)
+	public WorldGenerator getBushGen(World world, int x, int y, int z, Random rand)
 	{
-		return BiomeCRWGBase.Gen_DeadBush;
+		return BiomeCRWGBase.Gen_Bush;
 	}
 
 	public WorldGenerator getWaterlilyGen(World world, int x, int y, int z, Random rand)
@@ -344,6 +386,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 			this.decorator_hills.decorate(world, rand, x0, z0);
 			break;
 		case HIGHLANDS:
+		case FOOTHILLS:
 			this.decorator_highlands.decorate(world, rand, x0, z0);
 			break;
 		default:
@@ -376,9 +419,9 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	@Override
 	public float getFloatTemperature(int x, int y, int z)
 	{
-		if (y > ChunkProviderCRWG.SEA_LVL_Y) {
+		if (y > YConst.SEA_LVL_Y) {
 			float noise = (float) BiomeGenBase.temperatureNoise.func_151601_a((double) x / 8.0, (double) z / 8.0);
-			return this.temperature - (noise * 4.0F + (float) (y - ChunkProviderCRWG.SEA_LVL_Y)) * 0.05F / 60.0F;
+			return this.temperature - (noise * 4.0F + (float) (y - YConst.SEA_LVL_Y)) * 0.05F / 60.0F;
 		}
 		return this.temperature;
 	}

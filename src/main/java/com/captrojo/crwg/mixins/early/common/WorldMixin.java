@@ -8,7 +8,7 @@ import com.captrojo.crwg.mixins.interfaces.ChunkCRWG;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -110,10 +110,10 @@ public abstract class WorldMixin implements WorldCRWG
 
 	@Override
 	@Unique
-	public Soil crwg$getSoilType(int x, int z)
+	public SoilType crwg$getSoilType(int x, int z)
 	{
 		if (!CRWG.funcs.isWithinWorld(x, z)) {
-			return Soil.NORMAL;
+			return SoilType.NORMAL;
 		}
 		ChunkCRWG chunk = null;
 		try {
@@ -126,7 +126,7 @@ public abstract class WorldMixin implements WorldCRWG
 
 	@Override
 	@Unique
-	public boolean crwg$setSoilType(int x, int z, Soil soil_type)
+	public boolean crwg$setSoilType(int x, int z, SoilType soil_type)
 	{
 		if (!CRWG.funcs.isWithinWorld(x, z)) {
 			return false;

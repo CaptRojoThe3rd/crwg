@@ -4,11 +4,11 @@ import java.util.Random;
 
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.biome.data.SoilIdx;
 import com.captrojo.crwg.world.gen.data.GenVals;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerRand;
+import com.captrojo.crwg.world.gen.layer.GenLayerRand;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -23,7 +23,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	static final SoilIdx[] FILL_BLOCKS = {SoilIdx.DIRT, SoilIdx.DIRT, SoilIdx.COARSE_DIRT, null};
 
 	GenLayer genlayer_soil;
-
+	
 	{
 		this.genlayer_soil = new GenLayerRand(100L, TOP_BLOCKS.length);
 		this.genlayer_soil = GenLayerZoom.magnify(110L, this.genlayer_soil, 4);
@@ -60,7 +60,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 		if (a <= 1 && y > (CRWG.funcs.getSeaLevel() + 192)) {
 			return BlockState.STONE;
 		}
-		Soil soil = this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		BlockState block = soil.get(TOP_BLOCKS[a]);
 		if (block == null) {
 			return BlockState.GRAVEL;
@@ -76,7 +76,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 		if (a <= 1 && y > (CRWG.funcs.getSeaLevel() + 192)) {
 			return BlockState.STONE;
 		}
-		Soil soil = this.getSoil(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		BlockState block = soil.get(FILL_BLOCKS[a]);
 		if (block == null) {
 			return BlockState.STONE;

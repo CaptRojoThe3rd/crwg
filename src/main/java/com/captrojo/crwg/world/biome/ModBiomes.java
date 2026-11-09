@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.biome;
 
 import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerBiomesCRWG;
+import com.captrojo.crwg.world.gen.layer.GenLayerBiomesCRWG;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -12,6 +12,8 @@ import net.minecraftforge.common.BiomeManager.BiomeType;
 
 public abstract class ModBiomes
 {
+	/* BASIC BIOMES */
+
 	public static BiomeCRWGBase ocean;
 	public static BiomeCRWGBase ocean_lukewarm;
 	public static BiomeCRWGBase ocean_warm;
@@ -69,6 +71,7 @@ public abstract class ModBiomes
 	public static BiomeCRWGBase gravel_plateau;
 	public static BiomeCRWGBase snowy_plateau;
 
+	public static BiomeCRWGBase frozen_wasteland;
 	public static BiomeCRWGBase tundra;
 	public static BiomeCRWGBase ice_spikes;
 
@@ -95,81 +98,134 @@ public abstract class ModBiomes
 	public static BiomeCRWGBase jungle_mountains;
 	public static BiomeCRWGBase jungle_plateau;
 
+	/* MUSHROOM BIOMES */
+
+	public static BiomeCRWGBase mushroom_shore;
+	public static BiomeCRWGBase mushroom_mountains;
+	public static BiomeCRWGBase mushroom_plateau;
+
+	public static BiomeCRWGBase mushroom_desert;
+	public static BiomeCRWGBase mushroom_field;
+	public static BiomeCRWGBase mushroom_tundra;
+
+	/* MAGICAL BIOMES */
+
+	public static BiomeCRWGBase vibrant_forest;
+	public static BiomeCRWGBase enchanted_ash_forest;
+
+	public static BiomeCRWGBase rainbow_forest;
+	public static BiomeCRWGBase rainbow_jungle;
+
+	public static BiomeCRWGBase violet_forest;
+	public static BiomeCRWGBase old_growth_violet_forest;
+	public static BiomeCRWGBase snowy_violet_forest;
+	public static BiomeCRWGBase snowy_old_growth_violet_forest;
+
 	public static void registerBiomes()
 	{
-		/* Create CRWG biomes */
+		/**** BIOME INIT ****/
+
+		/* BASIC BIOMES */
 		ocean = new BiomeCRWGOcean(0x000, "Ocean", 0x000070, 0.5F, 0.5F);
-		ocean_lukewarm = new BiomeCRWGOcean(0x003, "Lukewarm Ocean", 0x102070, 0.6F, 0.5F);
-		ocean_warm = new BiomeCRWGOcean(0x006, "Warm Ocean", 0x204070, 0.8F, 0.5F);
-		ocean_cold = new BiomeCRWGOcean(0x009, "Cold Ocean", 0x080860, 0.3F, 0.5F);
-		ocean_frozen = (new BiomeCRWGOcean(0x00c, "Frozen Ocean", 0x181850, 0.1F, 0.5F)).setEnableSnow();
+		ocean_lukewarm = new BiomeCRWGOcean(0x001, "Lukewarm Ocean", 0x102070, 0.6F, 0.5F);
+		ocean_warm = new BiomeCRWGOcean(0x002, "Warm Ocean", 0x204070, 0.8F, 0.5F);
+		ocean_cold = new BiomeCRWGOcean(0x003, "Cold Ocean", 0x080860, 0.3F, 0.5F);
+		ocean_frozen = (new BiomeCRWGOcean(0x004, "Frozen Ocean", 0x181850, 0.1F, 0.5F)).setEnableSnow();
 
-		beach_frozen = new BiomeCRWGBeach(0x00f, "Cold Beach", 0xa2a284, 0.0F, 0.4F, BlockState.STONE, false);
-		beach_gravel = new BiomeCRWGBeach(0x010, "Gravel Beach", 0xa3a392, 0.2F, 0.4F, BlockState.GRAVEL, false);
-		beach = new BiomeCRWGBeach(0x011, "Beach", 0xc6c66f, 0.8F, 0.4F, BlockState.SAND, false);
-		beach_tropical = new BiomeCRWGBeach(0x012, "Tropical Beach", 0xe9f46b, 1.2F, 0.3F, BlockState.SAND, true);
+		beach_frozen = new BiomeCRWGBeach(0x005, "Cold Beach", 0xa2a284, 0.0F, 0.4F, BlockState.STONE, false);
+		beach_gravel = new BiomeCRWGBeach(0x006, "Gravel Beach", 0xa3a392, 0.2F, 0.4F, BlockState.GRAVEL, false);
+		beach = new BiomeCRWGBeach(0x007, "Beach", 0xc6c66f, 0.8F, 0.4F, BlockState.SAND, false);
+		beach_tropical = new BiomeCRWGBeach(0x008, "Tropical Beach", 0xe9f46b, 1.2F, 0.3F, BlockState.SAND, true);
 
-		river = new BiomeCRWGRiver(0x013, "River", 0x0000ff, 0.5F, 0.5F);
-		river_frozen = (new BiomeCRWGRiver(0x014, "Frozen River", 0x5050ff, 0.0F, 0.5F)).setEnableSnow();
-		river_swampy = new BiomeCRWGRiver(0x015, "Swampy River", 0x0040ff, 0.6F, 0.7F);
+		river = new BiomeCRWGRiver(0x009, "River", 0x0000ff, 0.5F, 0.5F, false);
+		river_frozen = (new BiomeCRWGRiver(0x00a, "Frozen River", 0x5050ff, 0.0F, 0.5F, false)).setEnableSnow();
+		river_swampy = new BiomeCRWGRiver(0x00b, "Swampy River", 0x0040ff, 0.6F, 0.7F, true);
 
-		lake = new BiomeCRWGRiver(0x016, "Lake", 0x2020f0, 0.5F, 0.5F);
-		lake_frozen = (new BiomeCRWGRiver(0x017, "Frozen Lake", 0x4040f0, 0.0F, 0.5F)).setEnableSnow();
+		lake = new BiomeCRWGRiver(0x00c, "Lake", 0x2020f0, 0.5F, 0.5F, false);
+		lake_frozen = (new BiomeCRWGRiver(0x00d, "Frozen Lake", 0x4040f0, 0.0F, 0.5F, false)).setEnableSnow();
 
-		dark_swamp = new BiomeDarkSwamp(0x018, "Dark Swamp", 0x07f9b2, 0.8F, 0.9F);
-		cypress_swamp = new BiomeCypressSwamp(0x01a, "Cypress Swamp", 0x07f998, 0.8F, 0.9F);
+		dark_swamp = new BiomeDarkSwamp(0x00e, "Dark Swamp", 0x07f9b2, 0.8F, 0.9F);
+		cypress_swamp = new BiomeCypressSwamp(0x010, "Cypress Swamp", 0x07f998, 0.8F, 0.9F);
 
-		fen_green = new BiomeFen(0x020, "Fen", 0x98b759, 0.55F, 0.8F);
+		fen_green = new BiomeFen(0x016, "Fen G", 0xabb759, 0.55F, 0.8F, 0);
+		fen_yellow = new BiomeFen(0x017, "Fen Y", 0x88b759, 0.55F, 0.75F, 1);
 
-		grassland = new BiomeGrassland(0x022, "Grassland", 0x80ff50, 0.8F, 0.4F, false);
-		grassland_sunflower = new BiomeGrassland(0x0a2, "Sunflower Grassland", 0x80ff50, 0.8F, 0.4F, true);
+		grassland = new BiomeGrassland(0x018, "Grassland", 0x80ff50, 0.8F, 0.4F, false);
+		grassland_sunflower = new BiomeGrassland(0x098, "Sunflower Grassland", 0x80ff50, 0.8F, 0.4F, true);
 
-		sparse_temperate_mountains = new BiomeSparseTemperateMountains(0x023, "Sparse Temperate Mountains");
-		sparse_plateau = new BiomeSparseTemperateMountains(0x024, "Sparse Plateau");
+		sparse_temperate_mountains = new BiomeSparseTemperateMountains(0x019, "Sparse Temperate Mountains");
+		sparse_plateau = new BiomeSparseTemperateMountains(0x01a, "Sparse Plateau");
 
-		oak_chaparral = new BiomeOakForest(0x025, "Oak Chaparral", 0x056621, 0.7F, 0.6F, BiomeOakForest.CHAPARRAL);
-		oak_forest = new BiomeOakForest(0x026, "Oak Forest", 0x056621, 0.7F, 0.8F, BiomeOakForest.NORMAL);
-		flower_chaparral = new BiomeOakForest(0x0a5, "Flower Chaparral", 0x056621, 0.7F, 0.633F, BiomeOakForest.FLOWER_CHAPARRAL);
-		flower_forest = new BiomeOakForest(0x0a6, "Flower Forest", 0x056621, 0.7F, 0.833F, BiomeOakForest.FLOWER);
-		dark_oak_forest = new BiomeDarkOakForest(0x027, "Dark Oak Forest", 0x40511a, 0.7F, 0.8F);
+		oak_chaparral = new BiomeOakForest(0x01b, "Oak Chaparral", 0x056621, 0.7F, 0.6F, BiomeOakForest.CHAPARRAL);
+		oak_forest = new BiomeOakForest(0x01c, "Oak Forest", 0x056621, 0.7F, 0.8F, BiomeOakForest.NORMAL);
+		flower_chaparral = new BiomeOakForest(0x09b, "Flower Chaparral", 0x056621, 0.7F, 0.633F, BiomeOakForest.FLOWER_CHAPARRAL);
+		flower_forest = new BiomeOakForest(0x09c, "Flower Forest", 0x056621, 0.7F, 0.833F, BiomeOakForest.FLOWER);
+		dark_oak_forest = new BiomeDarkOakForest(0x01d, "Dark Oak Forest", 0x40511a, 0.7F, 0.8F);
 
-		birch_chaparral = new BiomeBirchForest(0x028, "Birch Chaparral", 0x307444, 0.6F, 0.55F, BiomeBirchForest.CHAPARRAL);
-		birch_forest = new BiomeBirchForest(0x029, "Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.NORMAL);
-		old_growth_birch_forest = new BiomeBirchForest(0x0a9, "Old Growth Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.OLD_GROWTH);
+		birch_chaparral = new BiomeBirchForest(0x01e, "Birch Chaparral", 0x307444, 0.6F, 0.55F, BiomeBirchForest.CHAPARRAL);
+		birch_forest = new BiomeBirchForest(0x01f, "Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.NORMAL);
+		old_growth_birch_forest = new BiomeBirchForest(0x09f, "Old Growth Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.OLD_GROWTH);
 
-		mountains = new BiomeMountains(0x02a, "Mountains", 0x808080, 0.25F, 0.55F);
-		frozen_mountains = new BiomeMountains(0x02b, "Frozen Mountains", 0xa0a0c0, -0.55F, 0.55F);
+		mountains = new BiomeMountains(0x020, "Mountains", 0x808080, 0.25F, 0.55F);
+		frozen_mountains = (new BiomeMountains(0x021, "Frozen Mountains", 0xa0a0c0, -0.55F, 0.55F)).setEnableSnow();
 
-		gravel_plateau = (new BiomeWasteland(0x02c, "Gravel Plateau", 0xa0a0a0, 0.3F, 0.3F)).setEnableSnow();
-		snowy_plateau = new BiomeTundra(0x02d, "Snowy Plateau", 0xdfffff, -0.45F, 0.4F, false);
+		gravel_plateau = new BiomeWasteland(0x022, "Gravel Plateau", 0xa0a0a0, 0.3F, 0.3F);
+		snowy_plateau = (new BiomeTundra(0x023, "Snowy Plateau", 0xdfffff, -0.45F, 0.4F, false)).setEnableSnow();
 
-		tundra = new BiomeTundra(0x02e, "Tundra", 0xc0f0f0, -0.15F, 0.4F, false);
-		ice_spikes = new BiomeTundra(0x0ae, "Ice Spike Tundra", 0xb0e0f0, -0.25F, 0.6F, true);
+		frozen_wasteland = (new BiomeFrozenWasteland(0x024, "Frozen Wasteland", 0xd7efef, -0.7F, 0.0F)).setEnableSnow();
+		tundra = (new BiomeTundra(0x025, "Tundra", 0xc0f0f0, -0.15F, 0.4F, false)).setEnableSnow();
+		ice_spikes = (new BiomeTundra(0x0a5, "Ice Spike Tundra", 0xb0e0f0, -0.25F, 0.6F, true)).setEnableSnow();
 
-		spruce_forest = new BiomeSpruceForest(0x02f, "Spruce Forest", 0x0b6659, 0.35F, 0.7F, false);
-		old_growth_spruce_forest = new BiomeSpruceForest(0x0af, "Old Growth Spruce Forest", 0x596651, 0.35F, 0.85F, true);
-		snowy_spruce_forest = new BiomeSpruceForest(0x030, "Snowy Spruce Forest", 0x0b6659, -0.25F, 0.7F, false);
-		snowy_old_growth_spruce_forest = new BiomeSpruceForest(0x0b0, "Snowy Old Growth Spruce Forest", 0x596651, -0.25F, 0.85F, true);
+		spruce_forest = new BiomeSpruceForest(0x026, "Spruce Forest", 0x0b6659, 0.35F, 0.7F, false);
+		old_growth_spruce_forest = new BiomeSpruceForest(0x0a6, "Old Growth Spruce Forest", 0x596651, 0.35F, 0.85F, true);
+		snowy_spruce_forest = (new BiomeSpruceForest(0x027, "Snowy Spruce Forest", 0x0b6659, -0.25F, 0.7F, false)).setEnableSnow();
+		snowy_old_growth_spruce_forest = (new BiomeSpruceForest(0x0a7, "Snowy Old Growth Spruce Forest", 0x596651, -0.25F, 0.85F, true)).setEnableSnow();
 
-		pine_forest = new BiomePineForest(0x031, "Pine Forest", 0x0b663e, 0.35F, 0.7F, false);
-		old_growth_pine_forest = new BiomePineForest(0x0b1, "Old Growth Pine Forest", 0x5e6650, 0.35F, 0.85F, true);
-		snowy_pine_forest = new BiomePineForest(0x032, "Snowy Pine Forest", 0x0b663e, -0.25F, 0.7F, false);
-		snowy_old_growth_pine_forest = new BiomePineForest(0x0b2, "Snowy Old Growth Pine Forest", 0x5e6650, -0.25F, 0.85F, true);
+		pine_forest = new BiomePineForest(0x028, "Pine Forest", 0x0b663e, 0.35F, 0.7F, false);
+		old_growth_pine_forest = new BiomePineForest(0x0a8, "Old Growth Pine Forest", 0x5e6650, 0.35F, 0.85F, true);
+		snowy_pine_forest = (new BiomePineForest(0x029, "Snowy Pine Forest", 0x0b663e, -0.25F, 0.7F, false)).setEnableSnow();
+		snowy_old_growth_pine_forest = (new BiomePineForest(0x0a9, "Snowy Old Growth Pine Forest", 0x5e6650, -0.25F, 0.85F, true)).setEnableSnow();
 
-		cedar_forest = new BiomeCedarForest(0x033, "Cedar Forest", 0x226035, 0.35F, 0.7F, false);
-		old_growth_cedar_forest = new BiomeCedarForest(0x0b3, "Old Growth Cedar Forest", 0x52664f, 0.35F, 0.85F, true);
-		snowy_cedar_forest = new BiomeCedarForest(0x034, "Snowy Cedar Forest", 0x426035, -0.25F, 0.7F, false);
-		snowy_old_growth_cedar_forest = new BiomeCedarForest(0x0b4, "Snowy Old Growth Cedar Forest", 0x52664f, -0.25F, 0.85F, true);
+		cedar_forest = new BiomeCedarForest(0x02a, "Cedar Forest", 0x226035, 0.35F, 0.7F, false);
+		old_growth_cedar_forest = new BiomeCedarForest(0x0aa, "Old Growth Cedar Forest", 0x52664f, 0.35F, 0.85F, true);
+		snowy_cedar_forest = (new BiomeCedarForest(0x02b, "Snowy Cedar Forest", 0x426035, -0.25F, 0.7F, false)).setEnableSnow();
+		snowy_old_growth_cedar_forest = (new BiomeCedarForest(0x0ab, "Snowy Old Growth Cedar Forest", 0x52664f, -0.25F, 0.85F, true)).setEnableSnow();
 
-		desert = (new BiomeDesert(0x035, "Desert", 0xfa9418, 2.0F, 0.0F)).setDisableRain();
-		desert_mountains = (new BiomeDesertMountains(0x036, "Desert Mountains", 0xffd458, 1.6F, 0.0F)).setDisableRain();
-		desert_plateau = (new BiomeDesertMountains(0x037, "Desert Plateau", 0xffc448, 1.7F, 0.0F)).setDisableRain();
+		desert = (new BiomeDesert(0x02c, "Desert", 0xfa9418, 2.0F, 0.0F)).setDisableRain();
+		desert_mountains = (new BiomeDesertMountains(0x02d, "Desert Mountains", 0xffd458, 1.6F, 0.0F)).setDisableRain();
+		desert_plateau = (new BiomeDesertMountains(0x02e, "Desert Plateau", 0xffc448, 1.7F, 0.0F)).setDisableRain();
 
-		jungle = new BiomeJungle(0x038, "Jungle", 0x537b09, 0.95F, 0.9F, 0);
-		jungle_mountains = new BiomeJungle(0x039, "Jungle Mountains", 0x83ab39, 0.8F, 0.9F, 2);
-		jungle_plateau = new BiomeJungle(0x03a, "Jungle Plateau", 0x93bb49, 0.7F, 0.9F, 1);
+		jungle = new BiomeJungle(0x02f, "Jungle", 0x537b09, 0.95F, 0.9F, 0);
+		jungle_mountains = new BiomeJungle(0x030, "Jungle Mountains", 0x83ab39, 0.8F, 0.9F, 2);
+		jungle_plateau = new BiomeJungle(0x031, "Jungle Plateau", 0x93bb49, 0.7F, 0.9F, 1);
 
-		/* Register CRWG biomes with BiomeDictionary and BiomeManager */
+		/* MUSHROOM BIOMES */
+
+		mushroom_shore = new BiomeMushroomField(0x100, "Mushroom Beach", 0xa000ff, 0.8F, 0.7F, 1);
+		mushroom_mountains = new BiomeMushroomMountains(0x101, "Mushroom Mountains", 0xe020e0, 0.45F, 0.7F);
+		mushroom_plateau = new BiomeMushroomMountains(0x102, "Mushroom Plateau", 0xe010e0, 0.6F, 0.7F);
+
+		mushroom_desert = new BiomeMushroomField(0x103, "Mushroom Wasteland", 0xff00c0, 1.5F, 0.5F, 0);
+		mushroom_field = new BiomeMushroomField(0x104, "Mushroom Field", 0xff00ff, 0.8F, 0.7F, 1);
+		mushroom_tundra = (new BiomeMushroomField(0x105, "Mushroom Tundra", 0xff70ff, 0.0F, 1.0F, 0)).setEnableSnow();
+
+		/* MAGICAL BIOMES */
+
+		vibrant_forest = new BiomeVibrantForest(0x200, "Vibrant Forest", 0x30c965, 0.7F, 0.8F);
+		enchanted_ash_forest = new BiomeEnchantedAshForest(0x201, "Enchanted Ash Forest", 0x80fcdd, 0.5F, 0.7F);
+
+		rainbow_forest = new BiomeRainbowForest(0x202, "Rainbow Forest", 0x6de88f, 0.9F, 0.9F, false);
+		rainbow_jungle = new BiomeRainbowForest(0x203, "Rainbow Jungle", 0x6de8b4, 0.9F, 1.0F, true);
+
+		violet_forest = new BiomeVioletForest(0x204, "Violet Forest", 0x3c2a89, 0.3F, 0.7F, false);
+		old_growth_violet_forest = new BiomeVioletForest(0x205, "Old Growth Violet Forest", 0x3e3663, 0.3F, 0.85F, true);
+		snowy_violet_forest = (new BiomeVioletForest(0x206, "Snowy Violet Forest", 0x604faf, 0.0F, 0.7F, false)).setEnableSnow();
+		snowy_old_growth_violet_forest = (new BiomeVioletForest(0x207, "Snowy Old Growth Violet Forest", 0x69628c, 0.0F, 0.85F, true)).setEnableSnow();
+
+		/**** BIOME REGISTRATION ****/
+
+		/* BASIC BIOMES */
+
 		addOcean(ocean, Type.OCEAN);
 		addOcean(ocean_lukewarm, Type.OCEAN);
 		addOcean(ocean_warm, Type.OCEAN);
@@ -192,6 +248,7 @@ public abstract class ModBiomes
 		add(cypress_swamp, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
 
 		add(fen_green, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
+		add(fen_yellow, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
 
 		add(grassland, BiomeType.WARM, true, true, true, Type.PLAINS);
 		add(grassland_sunflower, BiomeType.WARM, true, true, true, Type.PLAINS);
@@ -216,6 +273,7 @@ public abstract class ModBiomes
 		add(gravel_plateau, BiomeType.COOL, false, false, false, Type.WASTELAND, Type.HILLS, Type.COLD);
 		add(snowy_plateau, BiomeType.ICY, false, false, false, Type.WASTELAND, Type.HILLS, Type.COLD, Type.SNOWY);
 
+		add(frozen_wasteland, BiomeType.ICY, false, false, false, Type.WASTELAND, Type.COLD, Type.SNOWY);
 		add(tundra, BiomeType.ICY, false, false, false, Type.WASTELAND, Type.COLD, Type.SNOWY);
 		add(ice_spikes, BiomeType.ICY, false, false, false, Type.WASTELAND, Type.COLD, Type.SNOWY);
 
@@ -241,6 +299,31 @@ public abstract class ModBiomes
 		add(jungle, BiomeType.WARM, true, false, true, Type.HOT, Type.WET, Type.DENSE, Type.JUNGLE);
 		add(jungle_mountains, BiomeType.WARM, true, false, true, Type.WET, Type.DENSE, Type.JUNGLE, Type.MOUNTAIN);
 		add(jungle_plateau, BiomeType.WARM, true, true, true, Type.WET, Type.DENSE, Type.JUNGLE, Type.HILLS);
+
+		/* MUSHROOM BIOMES */
+
+		add(mushroom_shore, BiomeType.WARM, false, false, false, Type.MUSHROOM);
+		add(mushroom_mountains, BiomeType.COOL, false, false, false, Type.MUSHROOM, Type.MOUNTAIN);
+		add(mushroom_plateau, BiomeType.COOL, false, false, false, Type.MUSHROOM, Type.HILLS);
+
+		add(mushroom_desert, BiomeType.DESERT, false, false, false, Type.MUSHROOM, Type.HOT);
+		add(mushroom_field, BiomeType.WARM, false, false, false, Type.MUSHROOM);
+		add(mushroom_tundra, BiomeType.ICY, false, false, false, Type.MUSHROOM, Type.COLD, Type.SNOWY);
+
+		/* MAGICAL BIOMES */
+
+		add(vibrant_forest, BiomeType.WARM, false, false, true, Type.FOREST, Type.MAGICAL, Type.LUSH);
+		add(enchanted_ash_forest, BiomeType.COOL, false, false, true, Type.FOREST, Type.MAGICAL);
+
+		add(rainbow_forest, BiomeType.WARM, false, false, true, Type.FOREST, Type.MAGICAL, Type.LUSH, Type.JUNGLE);
+		add(rainbow_jungle, BiomeType.WARM, false, false, true, Type.FOREST, Type.MAGICAL, Type.LUSH, Type.JUNGLE);
+
+		add(violet_forest, BiomeType.COOL, false, false, true, Type.COLD, Type.FOREST, Type.CONIFEROUS);
+		add(old_growth_violet_forest, BiomeType.COOL, false, false, true, Type.COLD, Type.FOREST, Type.CONIFEROUS);
+		add(snowy_violet_forest, BiomeType.COOL, false, false, true, Type.COLD, Type.SNOWY, Type.FOREST, Type.CONIFEROUS);
+		add(snowy_old_growth_violet_forest, BiomeType.COOL, false, false, true, Type.COLD, Type.SNOWY, Type.FOREST, Type.CONIFEROUS);
+
+		/**** OTHER STUFF ****/
 
 		/* Init GenLayer stuff */
 		GenLayerBiomesCRWG.ocean_biomes = new BiomeCRWGBase[][] {
@@ -310,6 +393,14 @@ public abstract class ModBiomes
 		 * type for a rare biome.)
 		 */
 
+		/* MUSHROOM BIOME TYPES */
+
+		BiomeTypeCRWG.MUSHROOM_DESERT.addGroupOf(mushroom_desert, mushroom_mountains, mushroom_plateau);
+
+		BiomeTypeCRWG.MUSHROOM_FIELD.addGroupOf(mushroom_field, mushroom_mountains, mushroom_plateau);
+
+		BiomeTypeCRWG.MUSHROOM_TUNDRA.addGroupOf(mushroom_tundra, mushroom_mountains, mushroom_plateau);
+
 		/* BASIC BIOME TYPES */
 
 		BiomeTypeCRWG.DESERT.addGroupOf(desert, desert_mountains, desert_plateau);
@@ -357,12 +448,26 @@ public abstract class ModBiomes
 		BiomeTypeCRWG.SNOWY_DENSE_BOREAL_FOREST.addGroupOf(snowy_old_growth_pine_forest, frozen_mountains, snowy_plateau);
 		BiomeTypeCRWG.SNOWY_DENSE_BOREAL_FOREST.addGroupOf(snowy_old_growth_cedar_forest, frozen_mountains, snowy_plateau);
 
-		BiomeTypeCRWG.FROZEN_WASTELAND.addGroupOf(tundra, frozen_mountains, snowy_plateau);
+		BiomeTypeCRWG.FROZEN_WASTELAND.addGroupOf(frozen_wasteland, frozen_mountains, snowy_plateau);
 
 		BiomeTypeCRWG.TUNDRA.addGroupOf(tundra, frozen_mountains, snowy_plateau);
 
 		/* MAGICAL BIOME TYPES */
 
 		BiomeTypeCRWG.SPECIAL_TUNDRA.addGroupOf(ice_spikes, frozen_mountains, snowy_plateau);
+
+		BiomeTypeCRWG.VIBRANT_FOREST.addGroupOf(vibrant_forest, mountains, sparse_plateau);
+		BiomeTypeCRWG.VIBRANT_FOREST.addGroupOf(enchanted_ash_forest, mountains, sparse_plateau);
+
+		BiomeTypeCRWG.COLORFUL_RAINFOREST.addGroupOf(rainbow_forest, sparse_temperate_mountains, sparse_plateau);
+		BiomeTypeCRWG.COLORFUL_RAINFOREST.addGroupOf(rainbow_jungle, sparse_temperate_mountains, sparse_plateau);
+
+		BiomeTypeCRWG.COLORFUL_BOREAL_FOREST.addGroupOf(violet_forest, mountains, gravel_plateau);
+
+		BiomeTypeCRWG.COLORFUL_DENSE_BOREAL_FOREST.addGroupOf(old_growth_violet_forest, mountains, gravel_plateau);
+
+		BiomeTypeCRWG.COLORFUL_SNOWY_BOREAL_FOREST.addGroupOf(snowy_violet_forest, frozen_mountains, snowy_plateau);
+
+		BiomeTypeCRWG.COLORFUL_SNOWY_DENSE_BOREAL_FOREST.addGroupOf(snowy_old_growth_violet_forest, frozen_mountains, snowy_plateau);
 	}
 }

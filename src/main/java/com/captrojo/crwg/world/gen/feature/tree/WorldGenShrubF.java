@@ -3,8 +3,11 @@ package com.captrojo.crwg.world.gen.feature.tree;
 import java.util.Random;
 
 import com.captrojo.crwg.block.WoodBlocks;
+import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenShrub;
@@ -36,21 +39,16 @@ public class WorldGenShrubF extends WorldGenShrub
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		Block block;
-		do {
-			block = world.getBlock(x, y, z);
-			if (!(block.isLeaves(world, x, y, z) || block.isAir(world, x, y, z))) {
-				break;
-			}
-			y--;
-		} while (y > 0);
-
-		Block gnd = world.getBlock(x, y, z);
-		if (!gnd.canSustainPlant(world, x, y, z, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
+		y = ((WorldCRWG) (Object) world).crwg$getGndHeight(x, z);
+		if (y <= YConst.SEA_LVL_Y) {
+			return false;
+		}
+		
+		Block gnd = world.getBlock(x, y - 1, z);
+		if (!gnd.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 			return false;
 		}
 
-		y++;
 		this.setBlockAndNotifyAdequately(world, x, y, z, this.log_block, this.field_150527_b);
 
 		for (int y1 = y; y1 <= (y + 2); y1++) {
@@ -66,7 +64,11 @@ public class WorldGenShrubF extends WorldGenShrub
 					if (!(Math.abs(xd) != rad || Math.abs(zd) != rad || rand.nextInt(2) != 0)) {
 						continue;
 					}
-					if (!world.getBlock(x1, y1, z1).canBeReplacedByLeaves(world, x1, y1, z1)) {
+					Block block = world.getBlock(x1, y1, z1);
+					if (!(
+						block.canBeReplacedByLeaves(world, x1, y1, z1) ||
+						block instanceof BlockBush
+					)) {
 						continue;
 					}
 					this.setBlockAndNotifyAdequately(world, x1, y1, z1, this.leaf_block, this.field_150528_a);

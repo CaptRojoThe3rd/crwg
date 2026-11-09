@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.biome;
 import java.util.Random;
 
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.ChunkProviderCRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.gen.data.GenVals;
 import com.captrojo.crwg.world.gen.noise.NoisePerlin;
 
@@ -59,16 +59,16 @@ public class BiomeMountains extends BiomeCRWGBase
 		if (this.frozen) {
 			double in = this.ice_noise.calcPoint((double) x / 50.0, (double) z / 50.0);
 			double inb = (int) (in * 20.0);
-			if (y > (ChunkProviderCRWG.SEA_LVL_Y + 224 + inb)) {
+			if (y > (YConst.SEA_LVL_Y + 224 + inb)) {
 				return BlockState.PACKED_ICE;
 			}
-			if (y > (ChunkProviderCRWG.SEA_LVL_Y + 168 + snb)) {
+			if (y > (YConst.SEA_LVL_Y + 168 + snb)) {
 				return BlockState.SNOW_BLOCK;
 			}
 			return BlockState.STONE;
 		}
 
-		if (y > (ChunkProviderCRWG.SEA_LVL_Y + 192 + snb)) {
+		if (y > (YConst.SEA_LVL_Y + 192 + snb)) {
 			return BlockState.SNOW_BLOCK;
 		}
 		return BlockState.STONE;
@@ -80,7 +80,7 @@ public class BiomeMountains extends BiomeCRWGBase
 		if (this.frozen && !low) {
 			double in = this.ice_noise.calcPoint((double) x / 50.0, (double) z / 50.0);
 			double inb = (int) (in * 20.0);
-			if (y > (ChunkProviderCRWG.SEA_LVL_Y + 224 + inb)) {
+			if (y > (YConst.SEA_LVL_Y + 224 + inb)) {
 				return BlockState.PACKED_ICE;
 			}
 		}

@@ -2,7 +2,7 @@ package com.captrojo.crwg.mixins.interfaces;
 
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 
 public interface ChunkCRWG
 {
@@ -20,9 +20,9 @@ public interface ChunkCRWG
 
 	void crwg$setBiomeType(int x, int z, BiomeTypeCRWG biome_type);
 
-	Soil crwg$getSoilType(int x, int z);
+	SoilType crwg$getSoilType(int x, int z);
 
-	void crwg$setSoilType(int x, int z, Soil soil_type);
+	void crwg$setSoilType(int x, int z, SoilType soil_type);
 
 	int crwg$getSubspeciesVal(int x, int z);
 

@@ -21,17 +21,17 @@ public class BiomeDesert extends BiomeCRWGBase
 	{
 		super(id, name, color, temperature, rainfall);
 
-		this.decorator.grass = 1;
-		this.decorator.grass_chance = 0.25f;
 		this.decorator.flowers = 0;
+		this.decorator.grass = 1;
+		this.decorator.grass_chance = 0.25F;
+		this.decorator.shrubs = 2;
+
 		this.decorator.reeds = 50;
 		this.decorator.cacti = 10;
-		this.decorator.dead_bushes = 2;
 
 		this.spawnableCreatureList.clear();
 
-		this.decorator_hills.copyFrom(this.decorator);
-		this.decorator_highlands.copyFrom(this.decorator);
+		this.copyToHigherDecorators();
 	}
 
 	@Override
@@ -50,5 +50,11 @@ public class BiomeDesert extends BiomeCRWGBase
 	public WorldGenerator getGrassGen(World world, int x, int y, int z, Random rand)
 	{
 		return GRASS_GENS[rand.nextInt(GRASS_GENS.length)];
+	}
+
+	@Override
+	public WorldGenerator getBushGen(World world, int x, int y, int z, Random rand)
+	{
+		return BiomeCRWGBase.Gen_Bush_Dead;
 	}
 }

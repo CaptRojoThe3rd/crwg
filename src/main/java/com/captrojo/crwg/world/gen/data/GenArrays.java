@@ -3,15 +3,20 @@ package com.captrojo.crwg.world.gen.data;
 import com.captrojo.crwg.mixins.interfaces.ChunkCRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
-import com.captrojo.crwg.world.biome.data.Soil;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.chunk.ChnkConst;
 
+import net.minecraft.block.Block;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class GenArrays
 {
 	private int asize = 0;
 	private GenVals gen_vals = new GenVals();
+	
+	/* block state */
+	public Block[] ablock;
+	public short[] ameta;
 
 	/* biomes & climate data */
 	public int[] biome_id_array;
@@ -104,10 +109,10 @@ public class GenArrays
 
 			int s_temp = this.s_temperatures[i];
 			int s_rain = this.s_rainfalls[i];
-			int soil = Soil.Soil_Map[s_temp][s_rain][(this.species_array[i] >> 16) & 3].ordinal();
+			int soil = SoilType.Soil_Map[s_temp][s_rain][(this.species_array[i] >> 16) & 3].ordinal();
 			v |= (soil << ChnkConst.SHIFT_SOILTYPE);
 
-			v |= (((this.species_array[i] >> 23) & 0xff) << ChnkConst.SHIFT_SUBSPECIES);
+			v |= (((this.species_array[i] >> 24) & 0xff) << ChnkConst.SHIFT_SUBSPECIES);
 
 			surf_data_map_a[i] = v;
 		}

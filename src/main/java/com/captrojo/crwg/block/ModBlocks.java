@@ -43,6 +43,7 @@ public abstract class ModBlocks
 	public static Block dry_short_grass;
 
 	public static Block bush;
+	public static Block purple_bush;
 
 	public static Block flower_purple_owls_clover;
 	public static Block flower_clustered_tarweed;
@@ -54,7 +55,16 @@ public abstract class ModBlocks
 	public static Block flower_sage;
 	public static Block flower_woodland_sage;
 
+	public static Block flower_hyacinth_aqua;
+	public static Block flower_hyacinth_cream;
+	public static Block flower_hyacinth_crimson;
+	public static Block flower_hyacinth_deepblue;
+	public static Block flower_hyacinth_pink;
+	public static Block flower_hyacinth_salmonpink;
+
 	public static Block dflower_purple_nightshade;
+
+	public static Block dplant_cattail;
 
 	public static Block clover;
 	public static Block clover_large;
@@ -141,7 +151,7 @@ public abstract class ModBlocks
 
 		clay_dirt = (new BlockDirtCRWG("clay_dirt", Material.ground))
 			.setHarvestTool("shovel", 0)
-			.setHardness(0.7f)
+			.setHardness(0.7F)
 			.setBlockTextureName(CRWG.ident("soil/clay_dirt"))
 			.setStepSound(Block.soundTypeGravel);
 		coarse_clay_dirt = (new BlockDirtCRWG("coarse_clay_dirt", Material.ground))
@@ -176,30 +186,56 @@ public abstract class ModBlocks
 			.setStepSound(Block.soundTypeGrass);
 
 		bush = (new BlockBushCRWG("bush", Material.plants, EnumPlantType.Plains))
-			.setSize(0.8F, 0.7F)
+			.setSize(0.8F, 0.8F)
 			.setColorizer(Colorizer.BIOME_GRASS)
-			.setBlockTextureName(CRWG.ident("plants/bush"))
-			.setStepSound(Block.soundTypeGrass);
+			.setBlockTextureName(CRWG.ident("plants/bush"));
+		purple_bush = (new BlockBushCRWG("purple_bush", Material.plants, EnumPlantType.Plains))
+			.setSize(0.8F, 0.8F)
+			.setBlockTextureName(CRWG.ident("plants/purple_bush"));
 
-		flower_purple_owls_clover = (new BlockBushCRWG("purple_owls_clover", 1))
+		flower_purple_owls_clover = (new BlockBushCRWG("purple_owls_clover"))
 			.setBlockTextureName(CRWG.ident("plants/flower_purple_owls_clover"));
-		flower_clustered_tarweed = (new BlockBushCRWG("clustered_tarweed", 1))
+		flower_clustered_tarweed = (new BlockBushCRWG("clustered_tarweed"))
 			.setBlockTextureName(CRWG.ident("plants/flower_clustered_tarweed"));
 
-		flower_longspur_lupine = (new BlockBushCRWG("longspur_lupine", 1))
+		flower_longspur_lupine = (new BlockBushCRWG("longspur_lupine"))
 			.setBlockTextureName(CRWG.ident("plants/flower_longspur_lupine"));
-		flower_silver_lupine = (new BlockBushCRWG("silver_lupine", 1))
+		flower_silver_lupine = (new BlockBushCRWG("silver_lupine"))
 			.setBlockTextureName(CRWG.ident("plants/flower_silver_lupine"));
-		flower_sky_blue_lupine = (new BlockBushCRWG("sky_blue_lupine", 1))
+		flower_sky_blue_lupine = (new BlockBushCRWG("sky_blue_lupine"))
 			.setBlockTextureName(CRWG.ident("plants/flower_sky_blue_lupine"));
 
-		flower_sage = (new BlockBushCRWG("sage", 1))
+		flower_sage = (new BlockBushCRWG("sage"))
 			.setBlockTextureName(CRWG.ident("plants/flower_sage"));
-		flower_woodland_sage = (new BlockBushCRWG("woodland_sage", 1))
+		flower_woodland_sage = (new BlockBushCRWG("woodland_sage"))
 			.setBlockTextureName(CRWG.ident("plants/flower_woodland_sage"));
 
-		dflower_purple_nightshade = (new BlockDoublePlantCRWG("purple_nightshade", 1, false))
+		flower_hyacinth_aqua = (new BlockBushCRWG("aqua_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_aqua"));
+		flower_hyacinth_cream = (new BlockBushCRWG("cream_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_cream"));
+		flower_hyacinth_crimson = (new BlockBushCRWG("crimson_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_crimson"));
+		flower_hyacinth_deepblue = (new BlockBushCRWG("deep_blue_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_deepblue"));
+		flower_hyacinth_pink = (new BlockBushCRWG("pink_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_pink"));
+		flower_hyacinth_salmonpink = (new BlockBushCRWG("salmon_pink_hyacinth"))
+			.setSize(0.6F, 1.0F)
+			.setBlockTextureName(CRWG.ident("plants/flower_hyacinth_salmonpink"));
+
+		dflower_purple_nightshade = (new BlockDoublePlantCRWG("purple_nightshade"))
 			.setBlockTextureName(CRWG.ident("plants/double_flower_purple_nightshade"));
+
+		dplant_cattail = (new BlockDoublePlantCRWG("cattail"))
+			.setColorizer(Colorizer.BIOME_GRASS, true)
+			.setItemTextureName(CRWG.ident("plants/cattail"))
+			.setBlockTextureName(CRWG.ident("plants/cattail"));
 
 		clover = (new Block2x2FloorPlant("clover"))
 			.setColorizer(Colorizer.BIOME_GRASS)
@@ -290,6 +326,7 @@ public abstract class ModBlocks
 		registerBlock(dry_short_grass, new ItemBlockWithMetadata(dry_short_grass, dry_short_grass));
 
 		registerBlock(bush);
+		registerBlock(purple_bush);
 
 		registerBlock(flower_purple_owls_clover);
 		registerBlock(flower_clustered_tarweed);
@@ -301,7 +338,16 @@ public abstract class ModBlocks
 		registerBlock(flower_sage);
 		registerBlock(flower_woodland_sage);
 
+		registerBlock(flower_hyacinth_aqua);
+		registerBlock(flower_hyacinth_cream);
+		registerBlock(flower_hyacinth_crimson);
+		registerBlock(flower_hyacinth_deepblue);
+		registerBlock(flower_hyacinth_pink);
+		registerBlock(flower_hyacinth_salmonpink);
+
 		registerBlock(dflower_purple_nightshade, ItemDoublePlantCRWG.class);
+
+		registerBlock(dplant_cattail, ItemDoublePlantCRWG.class);
 
 		registerBlock(clover, new Item2x2FloorPlant(clover, false));
 		registerBlock(clover_large);
@@ -360,15 +406,21 @@ public abstract class ModBlocks
 
 	public static boolean isModDirtBlock(Block block)
 	{
+		/* The Eclipse formatter can be dumb sometimes, and this code is in a place
+		 * that is edited frequently.
+		 */
+
+		/* @formatter:off */
 		return (
-			block instanceof BlockPodzol ||
-			block == silty_dirt ||
-			block == coarse_silty_dirt ||
-			block == loamy_dirt ||
-			block == coarse_loamy_dirt ||
-			block == clay_dirt ||
-			block == coarse_clay_dirt
+			block instanceof BlockPodzol
+			|| block == silty_dirt
+			|| block == coarse_silty_dirt
+			|| block == loamy_dirt
+			|| block == coarse_loamy_dirt
+			|| block == clay_dirt
+			|| block == coarse_clay_dirt
 		);
+		/* @formatter:on */
 	}
 
 	public static boolean isModFarmlandBlock(Block block)

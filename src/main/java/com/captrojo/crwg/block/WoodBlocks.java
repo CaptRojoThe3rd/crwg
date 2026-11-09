@@ -2,15 +2,16 @@ package com.captrojo.crwg.block;
 
 import java.util.List;
 
-import com.captrojo.crwg.block.BlockSaplingCRWG.Arrangement;
-import com.captrojo.crwg.block.BlockSignCRWG.Sign;
 import com.captrojo.crwg.block.data.Colorizer;
+import com.captrojo.crwg.block.data.SaplingArrangement;
 import com.captrojo.crwg.item.ItemDoorCRWG;
 import com.captrojo.crwg.item.ItemLeavesCRWG;
 import com.captrojo.crwg.item.ItemLogCRWG;
 import com.captrojo.crwg.item.ItemSignCRWG;
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.main.GameRegistry2;
+import com.captrojo.crwg.tileentity.TESignCRWG;
+import com.captrojo.crwg.tileentity.TESignCRWG.Sign;
 import com.captrojo.crwg.util.WorldFunction;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
@@ -25,10 +26,17 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public enum WoodBlocks
 {
-	BALD_CYPRESS("bald_cypress", Sign.BALD_CYPRESS, TreeGens::getBaldCypressSaplingGen, Arrangement.SINGLE, Colorizer.biomeFoliageAvg(0x5bd626, 0.5F)),
-	CEDAR("cedar", Sign.CEDAR, TreeGens::getCedarSaplingGen, Arrangement.SINGLE, Colorizer.biomeFoliageAvg(0x4c964c, 0.66F)),
-	PALM("palm", Sign.PALM, TreeGens::getPalmSaplingGen, Arrangement.SINGLE, Colorizer.BIOME_FOLIAGE),
-	PINE("pine", Sign.PINE, TreeGens::getPineSaplingGen, Arrangement.SINGLE, Colorizer.fixed(0x609970));
+	BALD_CYPRESS("bald_cypress", Sign.BALD_CYPRESS, TreeGens::getBaldCypressSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x5bd626, 0.5F)),
+	CEDAR("cedar", Sign.CEDAR, TreeGens::getCedarSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x4c964c, 0.66F)),
+	CHROMATICUS_RED("red_chromaticus", Sign.CHROMATICUS_RED, TreeGens::getChromaticusRedSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0xc17ca4, 0.66F)),
+	CHROMATICUS_GREEN("green_chromaticus", Sign.CHROMATICUS_GREEN, TreeGens::getChromaticusGreenSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x7cc194, 0.66F)),
+	CHROMATICUS_BLUE("blue_chromaticus", Sign.CHROMATICUS_BLUE, TreeGens::getChromaticusBlueSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x7cbec1, 0.66F)),
+	CHROMATICUS_VIOLET("violet_chromaticus", Sign.CHROMATICUS_VIOLET, TreeGens::getChromaticusVioletSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x887cc1, 0.66F)),
+	ENCHANTED_ASH("enchanted_ash", Sign.ENCHANTED_ASH, TreeGens::getEnchantedAshSaplingGen, SaplingArrangement.TWOBYTWO, Colorizer.NONE),
+	PALM("palm", Sign.PALM, TreeGens::getPalmSaplingGen, SaplingArrangement.SINGLE, Colorizer.BIOME_FOLIAGE),
+	PINE("pine", Sign.PINE, TreeGens::getPineSaplingGen, SaplingArrangement.SINGLE, Colorizer.fixed(0x609970)),
+	TAMARACK("tamarack", Sign.TAMARACK, TreeGens::getTamarackSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x5db73c, 0.5F)),
+	VIOLET("violet", Sign.VIOLET, TreeGens::getVioletSaplingGen, SaplingArrangement.SINGLE, Colorizer.BIOME_FOLIAGE);
 
 	public final String name;
 
@@ -51,9 +59,9 @@ public enum WoodBlocks
 
 	WoodBlocks(
 		String name,
-		BlockSignCRWG.Sign sign,
+		TESignCRWG.Sign sign,
 		WorldFunction<WorldGenerator> sapling_gen_func,
-		Arrangement sapling_arrangement,
+		SaplingArrangement sapling_arrangement,
 		Colorizer leaf_colorizer
 	)
 	{

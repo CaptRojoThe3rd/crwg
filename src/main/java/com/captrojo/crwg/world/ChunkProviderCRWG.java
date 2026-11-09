@@ -16,15 +16,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.BiomeCRWGBase;
-import com.captrojo.crwg.world.gen.MapGenCavesCRWG;
-import com.captrojo.crwg.world.gen.MapGenRavineCRWG;
+import com.captrojo.crwg.world.biome.ModBiomes;
+import com.captrojo.crwg.world.gen.cave.CaveGenBase;
+import com.captrojo.crwg.world.gen.cave.CaveGenBubble;
+import com.captrojo.crwg.world.gen.cave.CaveGenWorm;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
@@ -42,13 +44,6 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderCRWG implements IChunkProvider
 {
-	/** Extra underground size (index) */
-	public static int EXT_UG_I;
-	/** Sea level Y */
-	public static int SEA_LVL_Y;
-	/** Sea level index */
-	public static int SEA_LVL_I;
-
 	private static class InitBlockArrCallable implements Callable<Block[]>
 	{
 		final ChunkProviderCRWG prov;
@@ -64,7 +59,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		{
 			this.rand.setSeed(this.prov.rand.nextLong());
 
-			Block[] ablock = new Block[16 * 16 * (512 + EXT_UG_I)];
+			Block[] ablock = new Block[16 * 16 * YConst.CHUNK_HEIGHT];
 
 			for (int i = 0; i < 256; i++) {
 				ablock[i] = Blocks.bedrock;
@@ -81,15 +76,15 @@ public class ChunkProviderCRWG implements IChunkProvider
 				}
 			}
 
-			for (int i = (5 << 8); i < ((20 + EXT_UG_I) << 8); i++) {
+			for (int i = (5 << 8); i < ((20 + YConst.BOTTOM_H_LVL) << 8); i++) {
 				ablock[i] = Blocks.stone;
 			}
 
-			for (int i = ((20 + EXT_UG_I) << 8); i < ((128 + EXT_UG_I) << 8); i++) {
+			for (int i = ((20 + YConst.BOTTOM_H_LVL) << 8); i < ((128 + YConst.BOTTOM_H_LVL) << 8); i++) {
 				ablock[i] = Blocks.water;
 			}
 
-			for (int i = ((128 + EXT_UG_I) << 8); i < ablock.length; i++) {
+			for (int i = ((128 + YConst.BOTTOM_H_LVL) << 8); i < ablock.length; i++) {
 				ablock[i] = Blocks.air;
 			}
 
@@ -105,8 +100,8 @@ public class ChunkProviderCRWG implements IChunkProvider
 	Random rand;
 	boolean map_features_enabled;
 
-	private MapGenCavesCRWG cave_generator = new MapGenCavesCRWG();
-	private MapGenRavineCRWG ravine_generator = new MapGenRavineCRWG();
+	CaveGenBase cavegen_worm = new CaveGenWorm();
+	CaveGenBase cavegen_bubble = new CaveGenBubble();
 
 	private MapGenStronghold mapgen_stronghold;
 	private MapGenVillage mapgen_village;
@@ -134,10 +129,6 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 	public ChunkProviderCRWG(World world, long seed, boolean map_features_enabled)
 	{
-		EXT_UG_I = CRWG.funcs.getExtraUndergroundSize();
-		SEA_LVL_Y = CRWG.funcs.getSeaLevel();
-		SEA_LVL_I = SEA_LVL_Y - CRWG.funcs.getMinHeight();
-
 		this.exec_svc = Executors.newFixedThreadPool(1);
 		this.call_init_ablock = new ChunkProviderCRWG.InitBlockArrCallable(this);
 
@@ -151,76 +142,6 @@ public class ChunkProviderCRWG implements IChunkProvider
 	public void shutdown()
 	{
 		this.exec_svc.shutdown();
-	}
-
-	public void genBiomeTerrain(BiomeGenBase biome, Block[] ablock, short[] ameta, int x1, int z1, double noise, int thread)
-	{
-		Block top_block = biome.topBlock;
-		short top_meta = (short) (biome.field_150604_aj & 0xffff);
-		Block filler_block = biome.fillerBlock;
-
-		int k = -1;
-		int l = (int) (noise / 3.0 + 3.0 + this.rand.nextDouble() * 0.25);
-
-		int x = x1 & 15;
-		int z = z1 & 15;
-
-		for (int y = 511; y >= 0; y--) {
-			int idx = x | (z << 4) | ((y + EXT_UG_I) << 8);
-
-			Block existing = ablock[idx];
-			if (existing.getMaterial() == Material.air) {
-				k = -1;
-				continue;
-			}
-
-			if (existing != Blocks.stone) {
-				continue;
-			}
-
-			if (k == -1) {
-				if (l <= 0) {
-					top_block = null;
-					top_meta = 0;
-					filler_block = Blocks.stone;
-				} else if (y >= 118 && y <= 128) {
-					top_block = biome.topBlock;
-					top_meta = (short) (biome.field_150604_aj & 0xffff);
-					filler_block = biome.fillerBlock;
-				}
-
-				if (y < 127 && (top_block == null || top_block.getMaterial() == Material.air)) {
-					if (biome.getFloatTemperature(x1, y, z1) < 0.15f) {
-						top_block = Blocks.ice;
-						top_meta = 0;
-					} else {
-						top_block = Blocks.water;
-						top_meta = 0;
-					}
-				}
-
-				k = l;
-
-				if (y >= 127) {
-					ablock[idx] = top_block;
-					ameta[idx] = top_meta;
-				} else if (y < 127 - l) {
-					top_block = null;
-					filler_block = Blocks.stone;
-					ablock[idx] = Blocks.gravel;
-				} else {
-					ablock[idx] = filler_block;
-				}
-			} else if (k > 0) {
-				k--;
-				ablock[idx] = filler_block;
-
-				if (k == 0 && filler_block == Blocks.sand) {
-					k = this.rand.nextInt(4) + Math.max(0, y - 126);
-					filler_block = Blocks.sandstone;
-				}
-			}
-		}
 	}
 
 	public void genTerrain(int chunk_x, int chunk_z, Block[] ablock, GenArrays arrays)
@@ -283,7 +204,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 				/* fill in blocks */
 				for (int y = 20; y <= h; y++) {
-					int i = xz | ((y + EXT_UG_I) << 8);
+					int i = xz | ((y + YConst.BOTTOM_H_LVL) << 8);
 					ablock[i] = Blocks.stone;
 				}
 			}
@@ -314,56 +235,56 @@ public class ChunkProviderCRWG implements IChunkProvider
 			abiomeid[i] = (short) arrays.biome_id_array[i];
 		}
 
-		Block[] ablock;
-		short[] ameta = new short[16 * 16 * 512];
+		arrays.ameta = new short[16 * 16 * 512];
 
 		try {
-			ablock = futureb.get();
+			arrays.ablock = futureb.get();
 		} catch (Exception e) {
 			CRWG.log.error("Failed to init chunk on separate thread");
 			e.printStackTrace();
-			ablock = this.call_init_ablock.call();
+			arrays.ablock = this.call_init_ablock.call();
 		}
 
-		this.genTerrain(chunk_x, chunk_z, ablock, arrays);
+		this.genTerrain(chunk_x, chunk_z, arrays.ablock, arrays);
 
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				int xz = x | (z << 4);
 				BiomeGenBase biome = abiome[xz];
 				GenVals gen_vals = arrays.getVals(xz);
-				if (biome instanceof BiomeCRWGBase biome_crwg) {
-					biome_crwg.genTerrainExt(
-						this.world,
-						this.rand,
-						ablock,
-						ameta,
-						x0 + x,
-						z0 + z,
-						arrays,
-						gen_vals
-					);
-					continue;
+
+				BiomeCRWGBase biome_crwg;
+				if (biome instanceof BiomeCRWGBase) {
+					biome_crwg = (BiomeCRWGBase) biome;
+				} else {
+					biome_crwg = ModBiomes.grassland;
 				}
-				this.genBiomeTerrain(biome, ablock, ameta, x0 + x, z0 + z, 0.0, 0);
+
+				biome_crwg.genTerrainExt(
+					this.world,
+					this.rand,
+					arrays.ablock,
+					arrays.ameta,
+					x0 + x,
+					z0 + z,
+					arrays,
+					gen_vals
+				);
+				continue;
 			}
 		}
 
-		if (CRWG.funcs.shouldGenerateCaves()) {
-			this.cave_generator.func_151539_a(this, this.world, chunk_x, chunk_z, ablock);
-		}
-		if (CRWG.funcs.shouldGenerateRavines()) {
-			this.ravine_generator.func_151539_a(this, this.world, chunk_x, chunk_z, ablock);
-		}
+		this.cavegen_worm.generateAll(this.world, chunk_x, chunk_z, arrays);
+		this.cavegen_bubble.generateAll(this.world, chunk_x, chunk_z, arrays);
 
 		if (this.map_features_enabled) {
-			this.mapgen_mineshaft.func_151539_a(this, world, chunk_x, chunk_z, ablock);
-			this.mapgen_village.func_151539_a(this, world, chunk_x, chunk_z, ablock);
-			this.mapgen_stronghold.func_151539_a(this, world, chunk_x, chunk_z, ablock);
-			this.mapgen_scattered_feature.func_151539_a(this, world, chunk_x, chunk_z, ablock);
+			this.mapgen_mineshaft.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
+			this.mapgen_village.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
+			this.mapgen_stronghold.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
+			this.mapgen_scattered_feature.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
 		}
 
-		Chunk chunk = CRWG.funcs.createChunkFromArrays(this.world, chunk_x, chunk_z, ablock, ameta, abiome, abiomeid, arrays);
+		Chunk chunk = CRWG.funcs.createChunkFromArrays(this.world, chunk_x, chunk_z, arrays.ablock, arrays.ameta, abiome, abiomeid, arrays);
 		return chunk;
 	}
 

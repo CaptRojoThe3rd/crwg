@@ -2,6 +2,10 @@ package com.captrojo.crwg.util;
 
 public abstract class MathUtil
 {
+	public static final float PI = (float) Math.PI;
+	public static final float PIx2 = PI * 2.0F;
+	public static final float PId2 = PI / 2.0F;
+
 	public static int averageColors(int color_1, int color_2, float weight_of_color_1)
 	{
 		float weight_of_color_2 = 1.0F - weight_of_color_1;

@@ -13,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDoublePlant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.ColorizerGrass;
 
 public class ItemDoublePlantCRWG extends ItemDoublePlant
 {
@@ -33,6 +32,9 @@ public class ItemDoublePlantCRWG extends ItemDoublePlant
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamage(int meta)
 	{
+		if (this.field_150938_b != null) {
+			return this.field_150938_b;
+		}
 		return ((BlockDoublePlant) this.field_150939_a).func_149888_a(true, meta);
 	}
 
@@ -40,10 +42,10 @@ public class ItemDoublePlantCRWG extends ItemDoublePlant
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int par1)
 	{
-		if (((BlockDoublePlantCRWG) this.field_150939_a).is_grass) {
-			return ColorizerGrass.getGrassColor(0.5D, 1.0D);
+		if (((BlockDoublePlantCRWG) this.field_150939_a).non_colored_layer) {
+			return 0xffffff;
 		}
-		return 0xffffff;
+		return ((BlockDoublePlantCRWG) this.field_150939_a).getRenderColor(stack.getItemDamage());
 	}
 
 	@Override

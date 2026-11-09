@@ -11,25 +11,25 @@ import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
 import com.captrojo.crwg.world.gen.data.GConst;
 import com.captrojo.crwg.world.gen.data.GenArrays;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerAverage;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerBiomeTypes;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerBiomesCRWG;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerCached;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTInfect;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTInfectAlways;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTInfectChecked;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTRaise;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTRaiseGenerous;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTRaiseMulti;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLTValue;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLakes;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerLandType;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerRand;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerRiverCRWG;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerRiverMixCRWG;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerShoresCRWG;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerTuneUp;
-import com.captrojo.crwg.world.gen.genlayer.GenLayerWetlands;
+import com.captrojo.crwg.world.gen.layer.GenLayerAverage;
+import com.captrojo.crwg.world.gen.layer.GenLayerBiomeTypes;
+import com.captrojo.crwg.world.gen.layer.GenLayerBiomesCRWG;
+import com.captrojo.crwg.world.gen.layer.GenLayerCached;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTInfect;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTInfectAlways;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTInfectChecked;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTRaise;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTRaiseGenerous;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTRaiseMulti;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTValue;
+import com.captrojo.crwg.world.gen.layer.GenLayerLakes;
+import com.captrojo.crwg.world.gen.layer.GenLayerLandType;
+import com.captrojo.crwg.world.gen.layer.GenLayerRandUnbounded;
+import com.captrojo.crwg.world.gen.layer.GenLayerRiverCRWG;
+import com.captrojo.crwg.world.gen.layer.GenLayerRiverMixCRWG;
+import com.captrojo.crwg.world.gen.layer.GenLayerShoresCRWG;
+import com.captrojo.crwg.world.gen.layer.GenLayerTuneUp;
+import com.captrojo.crwg.world.gen.layer.GenLayerWetlands;
 import com.captrojo.crwg.world.gen.noise.NoisePerlinFractal;
 import com.captrojo.crwg.world.gen.noise.layer.NLayer;
 import com.captrojo.crwg.world.gen.noise.layer.NLayer2DNoise;
@@ -250,6 +250,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			new int[] {4, 4},
 			new int[] {5, 5}
 		);
+		
+		/* Islands */
+		
+		
 		glayer_main = GenLayerZoom.magnify(240L, glayer_main, 1);
 		glayer_main = new GenLayerLTRaise(250L, glayer_main, GConst.HIGHLANDS, GConst.MOUNTAINS, 4, 5);
 		glayer_main = new GenLayerLTRaiseGenerous(255L, glayer_main, GConst.HIGHLANDS, GConst.PLATEAUS, 1, 4);
@@ -311,7 +315,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.genlayer_biometype = glayer_biometype;
 
 		/* Species (specific biomes of a type) */
-		glayer_species = new GenLayerRand(800L, Integer.MAX_VALUE);
+		glayer_species = new GenLayerRandUnbounded(800L);
 		for (int i = 0; i < 4; i++) {
 			glayer_species = new GenLayerZoom((long) (810 + i), glayer_species);
 			glayer_species = new GenLayerZoom((long) (820 + i), glayer_species);
@@ -367,12 +371,12 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		/* Lowlands */
 		nlayer1 = new NLayer2DNoise(rand, 6, true, 1.0 / 35.0, 1.0 / 35.0);
-		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.25, 1.22);
+		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.25, 1.20);
 		this.n_gen_lowlands = nlayer1;
 
 		/* Hills */
 		nlayer1 = new NLayer2DNoise(rand, 5, true, 1.0 / 40.0, 1.0 / 40.0);
-		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.55, 1.30);
+		nlayer1 = new NLayerMultiplyAdd(nlayer1, 0.55, 1.25);
 		this.n_gen_hills = nlayer1;
 
 		/* Highlands */

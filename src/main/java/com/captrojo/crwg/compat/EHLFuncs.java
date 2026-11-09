@@ -65,7 +65,7 @@ public class EHLFuncs implements ICRWGFuncs
 		if (!this.isWithinWorld(x, z)) {
 			return false;
 		}
-		if (y < this.getMinHeight() || y > this.getMaxHeight()) {
+		if (y < this.getMinYLevel() || y > this.getMaxYLevel()) {
 			return false;
 		}
 		return true;
@@ -84,13 +84,13 @@ public class EHLFuncs implements ICRWGFuncs
 	}
 
 	@Override
-	public int getMinHeight()
+	public int getMinYLevel()
 	{
 		return 0;
 	}
 
 	@Override
-	public int getMaxHeight()
+	public int getMaxYLevel()
 	{
 		return 511;
 	}
