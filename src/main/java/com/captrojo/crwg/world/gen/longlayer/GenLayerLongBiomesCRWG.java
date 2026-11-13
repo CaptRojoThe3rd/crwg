@@ -1,4 +1,4 @@
-package com.captrojo.crwg.world.gen.layer;
+package com.captrojo.crwg.world.gen.longlayer;
 
 import com.captrojo.crwg.world.biome.BiomeCRWGBase;
 import com.captrojo.crwg.world.biome.ModBiomes;
@@ -10,47 +10,39 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class GenLayerBiomesCRWG extends GenLayer
+public class GenLayerLongBiomesCRWG extends GenLayerLong
 {
 	public static BiomeCRWGBase[][] ocean_biomes;
 	public static BiomeCRWGBase[][] beach_biomes;
-
+	
 	final GenLayer species;
 	final GenLayer biome_types;
 	final GenLayer land_types;
 
-	public GenLayerBiomesCRWG(long base_seed, GenLayer species, GenLayer biome_types, GenLayer terr_types)
+	public GenLayerLongBiomesCRWG(long base_seed, GenLayer species, GenLayer biome_types, GenLayer land_types)
 	{
 		super(base_seed);
 		this.species = species;
 		this.biome_types = biome_types;
-		this.land_types = terr_types;
+		this.land_types = land_types;
 	}
 
 	@Override
-	public void initWorldGenSeed(long seed)
-	{
-		this.species.initWorldGenSeed(seed);
-		this.biome_types.initWorldGenSeed(seed);
-		this.land_types.initWorldGenSeed(seed);
-		super.initWorldGenSeed(seed);
-	}
-
-	@Override
-	public int[] getInts(int ax, int ay, int aw, int ah)
+	public long[] getLongs(int ax, int ay, int aw, int ah)
 	{
 		int[] sp_arr = this.species.getInts(ax, ay, aw, ah);
 		int[] bt_arr = this.biome_types.getInts(ax, ay, aw, ah);
 		int[] lt_arr = this.land_types.getInts(ax, ay, aw, ah);
 
 		final int asize = aw * ah;
-		int[] n_arr = IntCache.getIntCache(asize);
+		long[] n_arr = LongCache.getLongCache(asize);
 
 		final LandType[] LT_ENUM = LandType.values();
 
 		for (int i = 0; i < asize; i++) {
 			int species = sp_arr[i];
-			BiomeTypeCRWG biome_type = BiomeTypeCRWG.values()[bt_arr[i]];
+			int biome_type_id = bt_arr[i];
+			BiomeTypeCRWG biome_type = BiomeTypeCRWG.values()[biome_type_id];
 			int land_type = lt_arr[i];
 
 			BiomeGenBase biome;
@@ -69,14 +61,14 @@ public class GenLayerBiomesCRWG extends GenLayer
 			case SHALLOW_OCEAN:
 			case OCEAN:
 			case DEEP_OCEAN:
-				biome = GenLayerBiomesCRWG.ocean_biomes[biome_type.s_temp][biome_type.s_rain];
+				biome = GenLayerLongBiomesCRWG.ocean_biomes[biome_type.s_temp][biome_type.s_rain];
 				break;
 
 			case BEACH:
 				if (biome_type.s_awesome == GConst.MUSHROOM) {
 					biome = ModBiomes.mushroom_shore;
 				} else {
-					biome = GenLayerBiomesCRWG.beach_biomes[biome_type.s_temp][biome_type.s_rain];
+					biome = GenLayerLongBiomesCRWG.beach_biomes[biome_type.s_temp][biome_type.s_rain];
 				}
 				break;
 
@@ -115,10 +107,34 @@ public class GenLayerBiomesCRWG extends GenLayer
 				biome = biome_type.getBiome(LT_ENUM[land_type], species & 0xffff);
 				break;
 			}
-			
-			n_arr[i] = biome.biomeID;
+
+			n_arr[i] = (long) biome.biomeID;
+			n_arr[i] |= ((long) species) & 0xffff0000L;
+			n_arr[i] |= ((long) land_type) << 32;
+			n_arr[i] |= ((long) biome_type_id) << 38;
 		}
 
 		return n_arr;
+	}
+	
+	@Override
+	public int[] getInts(int ax, int ay, int aw, int ah)
+	{
+		long[] l_arr = this.getLongs(ax, ay, aw, ah);
+		final int asize = aw * ah;
+		int[] i_arr = IntCache.getIntCache(asize);
+		for (int i = 0; i < asize; i++) {
+			i_arr[i] = (int) l_arr[i] & 0xffff;
+		}
+		return i_arr;
+	}
+
+	@Override
+	public void initWorldGenSeed(long seed)
+	{
+		this.species.initWorldGenSeed(seed);
+		this.biome_types.initWorldGenSeed(seed);
+		this.land_types.initWorldGenSeed(seed);
+		super.initWorldGenSeed(seed);
 	}
 }

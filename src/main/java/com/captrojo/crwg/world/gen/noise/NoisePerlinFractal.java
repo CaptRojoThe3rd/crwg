@@ -26,8 +26,43 @@ public class NoisePerlinFractal
 		}
 		return this;
 	}
+	
+	public double calcPoint(int pos_x, int pos_y, double scale_x, double scale_y)
+	{
+		double amp = 1.0;
+		double freq = 1.0 / (double) this.octaves;
+		double atotal = 0.0;
+		
+		double n = 0.0;
+		
+		double x0 = (double) pos_x;
+		double y0 = (double) pos_y;
+
+		for (int octave = 0; octave < this.octaves; octave++) {
+			double x = x0 * (scale_x * freq);
+			double y = y0 * (scale_y * freq);
+			
+			n += this.noise_gens[octave].calcPoint(x, y);
+
+			atotal += amp;
+			amp *= 0.5;
+			freq *= 2.0;
+		}
+		
+		atotal = (1.0 / atotal) * 0.5;
+		if (this.normalize) {
+			n = n * atotal + 0.5;
+		}
+		
+		return n;
+	}
 
 	public double[] calcArray(double[] array, int pos_x, int pos_y, int width, int height, double scale_x, double scale_y)
+	{
+		return this.calcArray(array, pos_x, pos_y, width, height, scale_x, scale_y, null);
+	}
+	
+	public double[] calcArray(double[] array, int pos_x, int pos_y, int width, int height, double scale_x, double scale_y, double[] selector)
 	{
 		int size = width * height;
 		if (array == null || array.length < size) {
@@ -39,26 +74,37 @@ public class NoisePerlinFractal
 
 		double amp = 1.0;
 		double freq = 1.0 / (double) this.octaves;
-
 		double atotal = 0.0;
 
 		for (int octave = 0; octave < this.octaves; octave++) {
-			this.noise_arrays[octave] = this.noise_gens[octave].calcArray(
-				this.noise_arrays[octave],
-				pos_x,
-				pos_y,
-				width,
-				height,
-				scale_x * freq,
-				scale_y * freq
-			);
+			if (selector == null) {
+				this.noise_arrays[octave] = this.noise_gens[octave].calcArray(
+					this.noise_arrays[octave],
+					pos_x,
+					pos_y,
+					width,
+					height,
+					scale_x * freq,
+					scale_y * freq
+				);
+			} else {
+				this.noise_arrays[octave] = this.noise_gens[octave].calcArray(
+					this.noise_arrays[octave],
+					pos_x,
+					pos_y,
+					width,
+					height,
+					scale_x * freq,
+					scale_y * freq,
+					selector
+				);
+			}
 
 			for (int i = 0; i < size; i++) {
 				array[i] += amp * this.noise_arrays[octave][i];
 			}
 
 			atotal += amp;
-
 			amp *= 0.5;
 			freq *= 2.0;
 		}

@@ -19,8 +19,8 @@ public abstract class GConst
 	public static final int LOWLANDS = LandType.LOWLANDS.ordinal();
 	public static final int HILLS = LandType.HILLS.ordinal();
 	public static final int HIGHLANDS = LandType.HIGHLANDS.ordinal();
-	public static final int MOUNTAINS = LandType.MOUNTAINS.ordinal();
 
+	public static final int MOUNTAINS = LandType.MOUNTAINS.ordinal();
 	public static final int PLATEAUS = LandType.PLATEAUS.ordinal();
 	public static final int FOOTHILLS = LandType.FOOTHILLS.ordinal();
 

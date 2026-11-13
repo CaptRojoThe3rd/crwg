@@ -80,22 +80,50 @@ public class NoisePerlin
 		return this.lerp(u, this.lerp(v, dot_bl, dot_tl), this.lerp(v, dot_br, dot_tr));
 	}
 
-	public final double[] calcArray(double[] array, double pos_x, double pos_y, int width, int height, double scale_x, double scale_y)
+	public final double[] calcArray(double[] array, int pos_x, int pos_y, int width, int height, double scale_x, double scale_y)
 	{
 		int size = width * height;
 		if (array == null || array.length < size) {
 			array = new double[size];
 		}
 
-		double x0 = pos_x * scale_x;
-		double y0 = pos_y * scale_y;
-
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				int idx = x + (y * height);
 
-				final double xf = x0 + (double) x * scale_x + this.x_offset;
-				final double yf = y0 + (double) y * scale_y + this.y_offset;
+				final int xa = pos_x + x;
+				final int ya = pos_y + y;
+
+				final double xf = (double) xa * scale_x + this.x_offset;
+				final double yf = (double) ya * scale_y + this.y_offset;
+
+				array[idx] = this.calcPoint(xf, yf);
+			}
+		}
+
+		return array;
+	}
+	
+	public final double[] calcArray(double[] array, int pos_x, int pos_y, int width, int height, double scale_x, double scale_y, double[] selector)
+	{
+		int size = width * height;
+		if (array == null || array.length < size) {
+			array = new double[size];
+		}
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int idx = x + (y * height);
+				
+				if (selector[idx] < 0.001) {
+					continue;
+				}
+
+				final int xa = pos_x + x;
+				final int ya = pos_y + y;
+
+				final double xf = (double) xa * scale_x + this.x_offset;
+				final double yf = (double) ya * scale_y + this.y_offset;
 
 				array[idx] = this.calcPoint(xf, yf);
 			}

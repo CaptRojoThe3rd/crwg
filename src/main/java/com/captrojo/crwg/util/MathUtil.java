@@ -1,5 +1,7 @@
 package com.captrojo.crwg.util;
 
+import net.minecraft.util.MathHelper;
+
 public abstract class MathUtil
 {
 	public static final float PI = (float) Math.PI;
@@ -23,5 +25,15 @@ public abstract class MathUtil
 		int bf = (int) (((float) b1 * weight_of_color_1) + ((float) b2 * weight_of_color_2));
 
 		return (rf << 16) | (gf << 8) | (bf);
+	}
+
+	public static float sin_65536(int θ)
+	{
+		return MathHelper.SIN_TABLE[θ & 65535];
+	}
+
+	public static float cos_65536(int θ)
+	{
+		return MathHelper.SIN_TABLE[(θ + 16384) & 65535];
 	}
 }

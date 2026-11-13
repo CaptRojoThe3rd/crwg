@@ -10,9 +10,9 @@ public class NLayerRidge extends NLayer
 	}
 
 	@Override
-	public double[] generate(int ax, int ay, int aw, int ah, int asize)
+	public double[] generate(int ax, int ay, int aw, int ah, int asize, double[] selector)
 	{
-		double[] array = this.parent.generate(ax, ay, aw, ah, asize);
+		double[] array = this.parent.generate(ax, ay, aw, ah, asize, selector);
 
 		for (int i = 0; i < asize; i++) {
 			double d = array[i];

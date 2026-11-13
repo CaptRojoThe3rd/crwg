@@ -11,10 +11,10 @@ public class NLayerMax extends NLayer
 	}
 
 	@Override
-	public double[] generate(int ax, int ay, int aw, int ah, int asize)
+	public double[] generate(int ax, int ay, int aw, int ah, int asize, double[] selector)
 	{
-		double[] array1 = this.layer1.generate(ax, ay, aw, ah, asize);
-		double[] array2 = this.layer2.generate(ax, ay, aw, ah, asize);
+		double[] array1 = this.layer1.generate(ax, ay, aw, ah, asize, selector);
+		double[] array2 = this.layer2.generate(ax, ay, aw, ah, asize, selector);
 
 		for (int i = 0; i < asize; i++) {
 			double d1 = array1[i];

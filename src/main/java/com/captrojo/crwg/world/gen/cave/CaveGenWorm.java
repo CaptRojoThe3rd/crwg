@@ -9,12 +9,32 @@ import com.captrojo.crwg.world.gen.data.GenArrays;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+/* 80-160 block long "worms" carved into the underground.
+ */
 public class CaveGenWorm extends CaveGenBase
 {
-	void generateWorm(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, GenArrays arrays)
+	void generateWorm(
+		World world,
+		int head_α,
+		int head_β,
+		double head_x,
+		double head_y,
+		double head_z,
+		int chunk_x,
+		int chunk_z,
+		GenArrays arrays,
+		boolean is_root
+	)
 	{
 		Random rand = this.rand;
-		
+
+		int max_height = arrays.gnd_height_avg - YConst.MIN_Y_LVL;
+		if (rand.nextInt(3) == 0) {
+			max_height += 15;
+		} else {
+			max_height -= 15;
+		}
+
 		final double MAX_H_LVL = (double) YConst.MAX_H_LVL;
 
 		int x0 = chunk_x << 4;
@@ -27,41 +47,34 @@ public class CaveGenWorm extends CaveGenBase
 		double chk_z_n = (double) z8 - 16.0;
 		double chk_z_p = (double) z8 + 16.0;
 
-		int rx0 = r_chunk_x << 4;
-		int rz0 = r_chunk_z << 4;
+		final int min_β = -30000;
+		final int max_β = 30000;
 
-		final float min_β = MathUtil.PI * -0.8F;
-		final float max_β = MathUtil.PI * 0.8F;
-
-		float head_α = MathUtil.PIx2 * rand.nextFloat();
-		float head_β_c = 0.0F;
-		float head_β;
-		double head_x = (double) rx0 + (rand.nextDouble() * 16.0);
-		double head_y = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * (YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL));
-		double head_z = (double) rz0 + (rand.nextDouble() * 16.0);
+		int head_β_actual;
 
 		double cur_radius_sq = 1.0 + (rand.nextDouble() * 2.0);
 		cur_radius_sq = cur_radius_sq * cur_radius_sq;
 		double actual_cur_radius_sq;
 
 		int worm_length = rand.nextInt(80) + 80;
+//		int remaining_forks = 3;
 
 	move_loop:
 		for (int head_pos = 0; head_pos < worm_length; head_pos++) {
-			head_α += (rand.nextFloat() - rand.nextFloat()) * 0.5F;
-			if (head_β_c > max_β) {
-				head_β_c -= rand.nextFloat() * 0.5F;
-			} else if (head_β_c < min_β) {
-				head_β_c += rand.nextFloat() * 0.5F;
+			head_α += rand.nextInt(5000) - rand.nextInt(5000);
+			if (head_β > max_β) {
+				head_β -= rand.nextInt(5000);
+			} else if (head_β < min_β) {
+				head_β += rand.nextInt(5000);
 			} else {
-				head_β_c += (rand.nextFloat() - rand.nextFloat()) * 0.33F;
+				head_β += rand.nextInt(5000) - rand.nextInt(5000);
 			}
-			head_β = head_β_c * 0.8F;
+			head_β_actual = head_β * 5 / 4;
 
-			double sin_head_α = (double) MathHelper.sin(head_α);
-			double cos_head_α = (double) MathHelper.cos(head_α);
-			double sin_head_β = (double) MathHelper.sin(head_β);
-			double cos_head_β = (double) MathHelper.cos(head_β);
+			double sin_head_α = (double) MathUtil.sin_65536(head_α);
+			double cos_head_α = (double) MathUtil.cos_65536(head_α);
+			double sin_head_β = (double) MathUtil.sin_65536(head_β_actual);
+			double cos_head_β = (double) MathUtil.cos_65536(head_β_actual);
 
 			head_x += sin_head_α * cos_head_β;
 			head_y += sin_head_β;
@@ -70,6 +83,11 @@ public class CaveGenWorm extends CaveGenBase
 			cur_radius_sq += (rand.nextDouble() - rand.nextDouble()) * 0.2;
 			cur_radius_sq = MathHelper.clamp_double(cur_radius_sq, 0.0, 4.25);
 			actual_cur_radius_sq = MathHelper.clamp_double(cur_radius_sq, 1.0, 4.0);
+
+			int hyi = MathHelper.floor_double(head_y);
+			if (hyi > (max_height)) {
+				continue;
+			}
 
 			if (head_x < chk_x_n || head_x > chk_x_p) {
 				continue;
@@ -81,12 +99,17 @@ public class CaveGenWorm extends CaveGenBase
 				continue;
 			}
 
-			int xn = MathHelper.floor_double(head_x) - 8 - x0;
-			int xp = MathHelper.floor_double(head_x) + 8 - x0;
-			int yn = MathHelper.floor_double(head_y) - 8;
-			int yp = MathHelper.floor_double(head_y) + 8;
-			int zn = MathHelper.floor_double(head_z) - 8;
-			int zp = MathHelper.floor_double(head_z) + 8;
+			int hxi = MathHelper.floor_double(head_x);
+			int hzi = MathHelper.floor_double(head_z);
+			int hxi0 = hxi - x0;
+			int hzi0 = hzi - z0;
+
+			int xn = hxi0 - 8;
+			int xp = hxi0 + 8;
+			int yn = hyi - 8;
+			int yp = hyi + 8;
+			int zn = hzi0 - 8;
+			int zp = hzi0 + 8;
 			if (xn < 0) {
 				xn = 0;
 			}
@@ -105,9 +128,9 @@ public class CaveGenWorm extends CaveGenBase
 			if (zp > 16) {
 				zp = 16;
 			}
-			for (int x1 = xn; x1 < xp; x1++) {
-				for (int y1 = yn; y1 < yp; y1++) {
-					for (int z1 = zn; z1 < zp; z1++) {
+			for (int x1 = xn; x1 < xp; x1 += 2) {
+				for (int y1 = yn; y1 < yp; y1 += 2) {
+					for (int z1 = zn; z1 < zp; z1 += 2) {
 						int idx = x1 | (z1 << 4) | (y1 << 8);
 						if (this.isWater(arrays, idx)) {
 							continue move_loop;
@@ -164,6 +187,20 @@ public class CaveGenWorm extends CaveGenBase
 	@Override
 	public void generate(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, GenArrays arrays)
 	{
-		this.generateWorm(world, r_chunk_x, r_chunk_z, chunk_x, chunk_z, arrays);
+		Random rand = this.rand;
+		int rx0 = r_chunk_x << 4;
+		int rz0 = r_chunk_z << 4;
+
+		int head_α = rand.nextInt(65536);
+		double head_x = (double) rx0 + (rand.nextDouble() * 16.0);
+		double head_y = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * (YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL));
+		double head_z = (double) rz0 + (rand.nextDouble() * 16.0);
+		this.generateWorm(world, head_α, 0, head_x, head_y, head_z, chunk_x, chunk_z, arrays, true);
+
+		head_α = rand.nextInt(65536);
+		head_x = (double) rx0 + (rand.nextDouble() * 16.0);
+		head_y = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * (YConst.SEA_LVL_H - YConst.MIN_CAVE_H_LVL));
+		head_z = (double) rz0 + (rand.nextDouble() * 16.0);
+		this.generateWorm(world, head_α, 0, head_x, head_y, head_z, chunk_x, chunk_z, arrays, true);
 	}
 }

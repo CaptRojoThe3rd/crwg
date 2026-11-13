@@ -36,9 +36,9 @@ public class NLayer2DNoise extends NLayer
 	}
 
 	@Override
-	public double[] generate(int ax, int ay, int aw, int ah, int asize)
+	public double[] generate(int ax, int ay, int aw, int ah, int asize, double[] selector)
 	{
-		this.noise_array = this.noise_gen.calcArray(this.noise_array, ax, ay, aw, ah, this.scale_x, this.scale_y);
+		this.noise_array = this.noise_gen.calcArray(this.noise_array, ax, ay, aw, ah, this.scale_x, this.scale_y, selector);
 
 		if (this.apply_multiplier) {
 			for (int i = 0; i < asize; i++) {

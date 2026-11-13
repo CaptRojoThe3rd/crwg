@@ -72,6 +72,7 @@ public class GenArrays
 
 	public double[] soil_bumpiness_noise;
 	public int[] gnd_height_map;
+	public int gnd_height_avg;
 
 	public void initCertainArraysIfNecessary(int asize)
 	{
@@ -79,6 +80,7 @@ public class GenArrays
 			return;
 		}
 		this.asize = asize;
+		this.biome_id_array = new int[asize];
 		this.biome_array = new BiomeGenBase[asize];
 		this.biome_type_id_array = new int[asize];
 		this.biome_type_array = new BiomeTypeCRWG[asize];
@@ -88,6 +90,40 @@ public class GenArrays
 		this.land_type_id_array = new int[asize];
 		this.land_type_array = new LandType[asize];
 		this.gnd_height_map = new int[asize];
+		
+		this.deep_ocean_noise = new double[asize];
+		this.ocean_noise = new double[asize];
+		this.shallow_ocean_noise = new double[asize];
+		this.beach_noise = new double[asize];
+
+		this.lowland_noise = new double[asize];
+		this.hill_noise = new double[asize];
+		this.highland_noise = new double[asize];
+		this.mountain_noise = new double[asize];
+
+		this.plateau_noise = new double[asize];
+		this.foothill_noise = new double[asize];
+
+		this.river_noise = new double[asize];
+		this.lake_noise = new double[asize];
+		this.wetlands_noise = new double[asize];
+
+		this.deep_ocean_sel = new double[asize];
+		this.ocean_sel = new double[asize];
+		this.shallow_ocean_sel = new double[asize];
+		this.beach_sel = new double[asize];
+
+		this.lowland_sel = new double[asize];
+		this.hill_sel = new double[asize];
+		this.highland_sel = new double[asize];
+		this.mountain_sel = new double[asize];
+
+		this.plateau_sel = new double[asize];
+		this.foothill_sel = new double[asize];
+
+		this.river_sel = new double[asize];
+		this.lake_sel = new double[asize];
+		this.wetlands_sel = new double[asize];
 	}
 
 	public GenVals getVals(int idx)

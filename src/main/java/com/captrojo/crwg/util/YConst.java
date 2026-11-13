@@ -13,6 +13,7 @@ public abstract class YConst
 	public static final int BOTTOM_H_LVL = 0;
 	public static final int MIN_CAVE_H_LVL = 0;
 	public static final int MAX_CAVE_H_LVL = 320;
+	public static final int EXT_CAVE_H = 0;
 	
 	public static final int CHUNK_HEIGHT = 512;
 }

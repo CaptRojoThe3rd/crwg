@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.biome;
 
 import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
-import com.captrojo.crwg.world.gen.layer.GenLayerBiomesCRWG;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomesCRWG;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -326,14 +326,14 @@ public abstract class ModBiomes
 		/**** OTHER STUFF ****/
 
 		/* Init GenLayer stuff */
-		GenLayerBiomesCRWG.ocean_biomes = new BiomeCRWGBase[][] {
+		GenLayerLongBiomesCRWG.ocean_biomes = new BiomeCRWGBase[][] {
 			{ocean_frozen, ocean_frozen, ocean_frozen},
 			{ocean_cold, ocean_cold, ocean_cold},
 			{ocean, ocean, ocean},
 			{ocean_lukewarm, ocean_lukewarm, ocean_lukewarm},
 			{ocean_warm, ocean_warm, ocean_warm}
 		};
-		GenLayerBiomesCRWG.beach_biomes = new BiomeCRWGBase[][] {
+		GenLayerLongBiomesCRWG.beach_biomes = new BiomeCRWGBase[][] {
 			{beach_frozen, beach_frozen, beach_frozen},
 			{beach_gravel, beach_gravel, beach_gravel},
 			{beach, beach, beach},

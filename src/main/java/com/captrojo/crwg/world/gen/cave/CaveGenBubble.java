@@ -2,128 +2,166 @@ package com.captrojo.crwg.world.gen.cave;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.MathUtil;
+import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class CaveGenBubble extends CaveGenBase
 {
-	final int add_h = (YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL) / 2;
+	static boolean[][][] generateCircleLUT(int radius)
+	{
+		int diameter = radius * 2 + 1;
 
-	double[] x_points = new double[32];
-	double[] y_points = new double[32];
-	double[] z_points = new double[32];
+		boolean[][][] lut = new boolean[diameter][][];
+		for (int x = -radius; x <= radius; x++) {
+			int x1 = x + radius;
+			lut[x1] = new boolean[diameter][];
+			for (int y = -radius; y <= radius; y++) {
+				int y1 = y + radius;
+				lut[x1][y1] = new boolean[diameter];
+				for (int z = -radius; z <= radius; z++) {
+					int z1 = z + radius;
+					int dist = (int) Math.sqrt(x * x + y * y + z * z);
+					lut[x1][y1][z1] = (dist < radius);
+				}
+			}
+		}
+
+		return lut;
+	}
+
+	private final int[] radii = {8, 10, 12};
+	private final int[] diameters = {17, 21, 25};
+	private final boolean[][][][] luts;
+
+	{
+		this.range = 5;
+
+		boolean[][][] circle_lut_8 = generateCircleLUT(8);
+		boolean[][][] circle_lut_10 = generateCircleLUT(10);
+		boolean[][][] circle_lut_12 = generateCircleLUT(12);
+		this.luts = new boolean[][][][] {circle_lut_8, circle_lut_10, circle_lut_12};
+	}
 
 	void generateBubble(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, GenArrays arrays)
 	{
-		int x0 = chunk_x << 4;
-		int z0 = chunk_z << 4;
-		int x15 = x0 + 15;
-		int z15 = z0 + 15;
-		
-		double dx0 = (double) x0;
-		double dz0 = (double) z0;
-		double dx15 = (double) x15;
-		double dz15 = (double) z15;
-
 		Random rand = this.rand;
-		double[] x_points = this.x_points;
-		double[] y_points = this.y_points;
-		double[] z_points = this.z_points;
 
-		double horz_size = rand.nextDouble() * 20.0 + 15.0;
-		double vert_size = horz_size * 0.25 + 0.75;
+		int rx0 = r_chunk_x << 4;
+		int rz0 = r_chunk_z << 4;
 
-		double hx = (double) (r_chunk_x << 4) + (rand.nextDouble() * 16.0);
-		double hy = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * this.add_h);
-		double hz = (double) (r_chunk_z << 4) + (rand.nextDouble() * 16.0);
+		int min_x = Integer.MAX_VALUE;
+		int max_x = Integer.MIN_VALUE;
+		int min_y = Integer.MAX_VALUE;
+		int max_y = Integer.MIN_VALUE;
+		int min_z = Integer.MAX_VALUE;
+		int max_z = Integer.MIN_VALUE;
 
-		double min_hy = hy;
-		double max_hy = hy;
-		boolean affects_this_chunk = false;
+		int[] x_points = new int[5];
+		int[] y_points = new int[5];
+		int[] z_points = new int[5];
+		int[] pt_sizes = new int[5];
 
-		int points = 16 + rand.nextInt(17);
-		for (int p = 0; p < points; p++) {
-			if (hy < min_hy) {
-				min_hy = hy;
-			} else if (hy > max_hy) {
-				max_hy = hy;
-			}
+		int hx = rx0 + rand.nextInt(16);
+		int hy = 20 + YConst.MIN_CAVE_H_LVL + rand.nextInt((YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL) / 4);
+		int hz = rz0 + rand.nextInt(16);
+
+		for (int p = 0; p < 5; p++) {
 			x_points[p] = hx;
 			y_points[p] = hy;
 			z_points[p] = hz;
-			hx += (rand.nextDouble() - rand.nextDouble()) * 6.0;
-			hy += (rand.nextDouble() - rand.nextDouble()) * 3.0;
-			hz += (rand.nextDouble() - rand.nextDouble()) * 6.0;
-			
-			if (!affects_this_chunk) {
-				double horz_size_sq = horz_size * horz_size;
-				double Δx, Δz;
-				
-				Δx = dx0 - hx;
-				Δz = dz0 - hz;
-				if ((Δx * Δx + Δz * Δz) < horz_size_sq) {
-					affects_this_chunk = true;
-					continue;
-				}
-				Δx = dx15 - hx;
-				Δz = dz0 - hz;
-				if ((Δx * Δx + Δz * Δz) < horz_size_sq) {
-					affects_this_chunk = true;
-					continue;
-				}
-				Δx = dx0 - hx;
-				Δz = dz15 - hz;
-				if ((Δx * Δx + Δz * Δz) < horz_size_sq) {
-					affects_this_chunk = true;
-					continue;
-				}
-				Δx = dx15 - hx;
-				Δz = dz15 - hz;
-				if ((Δx * Δx + Δz * Δz) < horz_size_sq) {
-					affects_this_chunk = true;
-					continue;
-				}
+			pt_sizes[p] = rand.nextInt(3);
+			hx += rand.nextInt(7) - rand.nextInt(7);
+			hy += rand.nextInt(7) - rand.nextInt(7);
+			hz += rand.nextInt(7) - rand.nextInt(7);
+			int r = this.radii[pt_sizes[p]];
+			int l_min_x = hx - r;
+			int l_max_x = hx + r;
+			int l_min_y = hy - r;
+			int l_max_y = hy + r;
+			int l_min_z = hz - r;
+			int l_max_z = hz + r;
+			if (l_min_x < min_x) {
+				min_x = l_min_x;
+			}
+			if (l_max_x > max_x) {
+				max_x = l_max_x;
+			}
+			if (l_min_y < min_y) {
+				min_y = l_min_y;
+			}
+			if (l_max_y > max_y) {
+				max_y = l_max_y;
+			}
+			if (l_min_z < min_z) {
+				min_z = l_min_z;
+			}
+			if (l_max_z > max_z) {
+				max_z = l_max_z;
 			}
 		}
-		
-		if (!affects_this_chunk) {
+
+		int x0 = chunk_x << 4;
+		int z0 = chunk_z << 4;
+		int x16 = x0 + 16;
+		int z16 = z0 + 16;
+		if (min_x > x16) {
 			return;
 		}
+		if (max_x < x0) {
+			return;
+		}
+		if (min_z > z16) {
+			return;
+		}
+		if (max_z < z0) {
+			return;
+		}
+		if (min_x < x0) {
+			min_x = x0;
+		}
+		if (max_x > x16) {
+			max_x = x16;
+		}
+		if (min_z < z0) {
+			min_z = z0;
+		}
+		if (max_z < z16) {
+			min_z = z16;
+		}
 
-		int lo_h = MathHelper.ceiling_double_int(min_hy - vert_size);
-		int hi_h = MathHelper.ceiling_double_int(max_hy + vert_size);
-		lo_h = MathHelper.clamp_int(lo_h, YConst.MIN_H_LVL, YConst.MAX_H_LVL);
-		hi_h = MathHelper.clamp_int(hi_h, YConst.MIN_H_LVL, YConst.MAX_H_LVL);
+		for (int x = min_x; x < max_x; x++) {
+			for (int y = min_y; y < max_y; y++) {
+				for (int z = min_z; z < max_z; z++) {
+				p_loop:
+					for (int p = 0; p < 5; p++) {
+						int s = 0;
+						int r = this.radii[s];
+						int d = this.diameters[s];
 
-		for (int xa = 0; xa < 16; xa++) {
-			for (int ya = lo_h; ya < hi_h; ya++) {
-				for (int za = 0; za < 16; za++) {
-					double dx = (double) (xa + x0);
-					double dy = (double) ya;
-					double dz = (double) (za + z0);
-					for (int p = 0; p < points; p++) {
-						double Δx = dx - x_points[p];
-						double Δy = dy - y_points[p];
-						double Δz = dz - z_points[p];
-						if (Δx < 1E-7 && Δz < 1E-7 && Δy > vert_size) {
+						int xr = x - x_points[p] + r;
+						if (xr < 0 || xr >= d) {
 							continue;
 						}
-						double Δx_sq = Δx * Δx;
-						double Δz_sq = Δz * Δz;
-						double Δhorz = Math.sqrt(Δx_sq + Δz_sq);
-						double t = Math.abs(Math.atan(Δy / Δhorz)) / MathUtil.PId2;
-						double local_size = (vert_size * t) + (horz_size * (1.0 - t));
-						double dist_sq = Δx_sq + Δz_sq + Δy * Δy;
-						if (dist_sq > (local_size * local_size)) {
+						int yr = y - y_points[p] + r;
+						if (yr < 0 || yr >= d) {
 							continue;
 						}
-						int idx = xa | (za << 4) | (ya << 8);
-						this.dig(arrays, idx, ya);
-						break;
+						int zr = z - z_points[p] + r;
+						if (zr < 0 || zr >= d) {
+							continue;
+						}
+
+						boolean b = this.luts[s][xr][yr][zr];
+						if (b) {
+							int xa = x - x0;
+							int za = z - z0;
+							int idx = xa | (za << 4) | (y << 8);
+							this.dig(arrays, idx, y);
+							break p_loop;
+						}
 					}
 				}
 			}

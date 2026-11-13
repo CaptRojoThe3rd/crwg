@@ -10,16 +10,26 @@ import net.minecraft.world.World;
 
 public abstract class CaveGenBase
 {
-	public int range = 8;
-	protected Random rand = new Random();
-	protected World world;
+	/* whether to use similar mechanism to MapGenBase, or to just call on the current chunk. */
+	boolean use_mapgen = true;
+
+	int range = 8;
+	Random rand = new Random();
+
+	public void initWorld(World world)
+	{
+	}
 
 	public abstract void generate(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, GenArrays arrays);
 
 	public void generateAll(World world, int chunk_x, int chunk_z, GenArrays arrays)
 	{
+		if (!this.use_mapgen) {
+			this.generate(world, chunk_x, chunk_z, chunk_x, chunk_z, arrays);
+			return;
+		}
+
 		int r = this.range;
-		this.world = world;
 		this.rand.setSeed(world.getSeed());
 		long la = this.rand.nextLong();
 		long lb = this.rand.nextLong();

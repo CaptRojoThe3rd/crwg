@@ -53,25 +53,16 @@ public class GenLayerTuneUp extends GenLayer
 				n_arr[n_idx] = px1y1;
 
 				if (px1y1 == GConst.MOUNTAINS) {
-					if (
-						px0y0 == GConst.LAKES ||
-						px0y0 == GConst.WETLANDS ||
-						px1y0 == GConst.LAKES ||
-						px1y0 == GConst.WETLANDS ||
-						px2y0 == GConst.LAKES ||
-						px2y0 == GConst.WETLANDS ||
-						px0y1 == GConst.LAKES ||
-						px0y1 == GConst.WETLANDS ||
-						px2y1 == GConst.LAKES ||
-						px2y1 == GConst.WETLANDS ||
-						px0y2 == GConst.LAKES ||
-						px0y2 == GConst.WETLANDS ||
-						px1y2 == GConst.LAKES ||
-						px1y2 == GConst.WETLANDS ||
-						px2y2 == GConst.LAKES ||
-						px2y2 == GConst.WETLANDS
-					) {
-						n_arr[n_idx] = GConst.FOOTHILLS;
+					for (int i = 0; i < 9; i++) {
+						int p = this.pvals[i];
+						if (
+							p == GConst.LAKES
+							|| p == GConst.WETLANDS
+							|| p == GConst.RIVERS
+						) {
+							n_arr[n_idx] = GConst.FOOTHILLS;
+							break;
+						}
 					}
 				} else if (px1y1 == GConst.RIVERS) {
 					int b = 0;
@@ -88,6 +79,14 @@ public class GenLayerTuneUp extends GenLayer
 							(px1y2 == GConst.SHALLOWOCEAN && px1y0 >= GConst.BEACH)
 						) {
 							n_arr[n_idx] = GConst.BEACH;
+						}
+					}
+				} else if (px1y1 == GConst.PLATEAUS) {
+					for (int i = 0; i < 9; i++) {
+						int p = this.pvals[i];
+						if (p == GConst.RIVERS) {
+							n_arr[n_idx] = GConst.LOWLANDS;
+							break;
 						}
 					}
 				}

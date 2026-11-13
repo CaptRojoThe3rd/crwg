@@ -1,11 +1,8 @@
 package com.captrojo.crwg.world;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
@@ -13,7 +10,6 @@ import com.captrojo.crwg.world.gen.data.GConst;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.layer.GenLayerAverage;
 import com.captrojo.crwg.world.gen.layer.GenLayerBiomeTypes;
-import com.captrojo.crwg.world.gen.layer.GenLayerBiomesCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerCached;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTInfect;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTInfectAlways;
@@ -30,6 +26,11 @@ import com.captrojo.crwg.world.gen.layer.GenLayerRiverMixCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerShoresCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerTuneUp;
 import com.captrojo.crwg.world.gen.layer.GenLayerWetlands;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLong;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomesCRWG;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongSmooth;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongZoom;
+import com.captrojo.crwg.world.gen.longlayer.LongCache;
 import com.captrojo.crwg.world.gen.noise.NoisePerlinFractal;
 import com.captrojo.crwg.world.gen.noise.layer.NLayer;
 import com.captrojo.crwg.world.gen.noise.layer.NLayer2DNoise;
@@ -75,89 +76,11 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		awesome_scale_64 = awesome_scale * 64.0;
 	}
 
-	private static class NoiseGenRunnable implements Runnable
-	{
-		final WorldChunkManagerCRWG wcm;
-
-		NoiseGenRunnable(WorldChunkManagerCRWG wcm)
-		{
-			this.wcm = wcm;
-		}
-
-		@Override
-		public void run()
-		{
-			this.wcm.gen_arrays.deep_ocean_noise = this.wcm.n_gen_deepocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.ocean_noise = this.wcm.n_gen_ocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.shallow_ocean_noise = this.wcm.n_gen_shallowocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.beach_noise = this.wcm.n_gen_beach.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-
-			this.wcm.gen_arrays.lowland_noise = this.wcm.n_gen_lowlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.hill_noise = this.wcm.n_gen_hills.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.highland_noise = this.wcm.n_gen_highlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.mountain_noise = this.wcm.n_gen_mountains.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-
-			this.wcm.gen_arrays.plateau_noise = this.wcm.n_gen_plateaus.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.foothill_noise = this.wcm.n_gen_foothills.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-
-			this.wcm.gen_arrays.river_noise = this.wcm.n_gen_rivers.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.lake_noise = this.wcm.n_gen_lakes.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.wetlands_noise = this.wcm.n_gen_wetlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-		}
-	}
-
-	private static class SelRunnable1 implements Runnable
-	{
-		final WorldChunkManagerCRWG wcm;
-
-		SelRunnable1(WorldChunkManagerCRWG wcm)
-		{
-			this.wcm = wcm;
-		}
-
-		@Override
-		public void run()
-		{
-			this.wcm.gen_arrays.deep_ocean_sel = this.wcm.n_sel_deepocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.ocean_sel = this.wcm.n_sel_ocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.shallow_ocean_sel = this.wcm.n_sel_shallowocean.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.beach_sel = this.wcm.n_sel_beach.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-
-			this.wcm.gen_arrays.lake_sel = this.wcm.n_sel_lakes.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.wetlands_sel = this.wcm.n_sel_wetlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-		}
-	}
-
-	private static class SelRunnable2 implements Runnable
-	{
-		final WorldChunkManagerCRWG wcm;
-
-		public SelRunnable2(WorldChunkManagerCRWG wcm)
-		{
-			this.wcm = wcm;
-		}
-
-		@Override
-		public void run()
-		{
-			this.wcm.gen_arrays.lowland_sel = this.wcm.n_sel_lowlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.hill_sel = this.wcm.n_sel_hills.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.highland_sel = this.wcm.n_sel_highlands.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.mountain_sel = this.wcm.n_sel_mountains.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-
-			this.wcm.gen_arrays.plateau_sel = this.wcm.n_sel_plateaus.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-			this.wcm.gen_arrays.foothill_sel = this.wcm.n_sel_foothills.generate(this.wcm.c_ax, this.wcm.c_ay, this.wcm.c_aw, this.wcm.c_ah, this.wcm.c_asize);
-		}
-	}
-
 	private GenArrays gen_arrays = new GenArrays();
 
-	private int c_ax, c_ay, c_aw, c_ah, c_asize;
-
-	public GenLayerCached genlayer_landtype;
 	public GenLayer genlayer_biometype;
 	public GenLayer genlayer_species;
-	public GenLayer genlayer_biomes;
+	public GenLayerLong genlayer_biomes;
 
 	public GenLayerCached genlayer_landtype_unscaled;
 
@@ -178,22 +101,22 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	public NLayer n_gen_lakes;
 	public NLayer n_gen_wetlands;
 
-	public NLayer n_sel_deepocean;
-	public NLayer n_sel_ocean;
-	public NLayer n_sel_shallowocean;
-	public NLayer n_sel_beach;
+	public NLayerGDiv n_sel_deepocean;
+	public NLayerGDiv n_sel_ocean;
+	public NLayerGDiv n_sel_shallowocean;
+	public NLayerGDiv n_sel_beach;
 
-	public NLayer n_sel_lowlands;
-	public NLayer n_sel_hills;
-	public NLayer n_sel_highlands;
-	public NLayer n_sel_mountains;
+	public NLayerGDiv n_sel_lowlands;
+	public NLayerGDiv n_sel_hills;
+	public NLayerGDiv n_sel_highlands;
 
-	public NLayer n_sel_plateaus;
-	public NLayer n_sel_foothills;
+	public NLayerGDiv n_sel_mountains;
+	public NLayerGDiv n_sel_plateaus;
+	public NLayerGDiv n_sel_foothills;
 
-	public NLayer n_sel_rivers;
-	public NLayer n_sel_lakes;
-	public NLayer n_sel_wetlands;
+	public NLayerGDiv n_sel_rivers;
+	public NLayerGDiv n_sel_lakes;
+	public NLayerGDiv n_sel_wetlands;
 
 	public NoisePerlinFractal noise_temperature;
 	public NoisePerlinFractal noise_rainfall;
@@ -204,11 +127,6 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	 * good job, Forge
 	 */
 	public NoiseGeneratorPerlin noise_soil_bumpiness;
-
-	private ExecutorService exec_svc;
-	private WorldChunkManagerCRWG.NoiseGenRunnable run_noise_gen;
-	private WorldChunkManagerCRWG.SelRunnable1 run_sel_1;
-	private WorldChunkManagerCRWG.SelRunnable2 run_sel_2;
 
 	public WorldChunkManagerCRWG(World world)
 	{
@@ -250,10 +168,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			new int[] {4, 4},
 			new int[] {5, 5}
 		);
-		
-		/* Islands */
-		
-		
+
 		glayer_main = GenLayerZoom.magnify(240L, glayer_main, 1);
 		glayer_main = new GenLayerLTRaise(250L, glayer_main, GConst.HIGHLANDS, GConst.MOUNTAINS, 4, 5);
 		glayer_main = new GenLayerLTRaiseGenerous(255L, glayer_main, GConst.HIGHLANDS, GConst.PLATEAUS, 1, 4);
@@ -278,10 +193,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_river = new GenLayerAddIsland(420L, glayer_river);
 		glayer_river = new GenLayerFuzzyZoom(430L, glayer_river);
 		glayer_river = new GenLayerRemoveTooMuchOcean(440L, glayer_river);
-		glayer_river = GenLayerZoom.magnify(450L, glayer_river, 3);
-		glayer_river = new GenLayerSmooth(460L, glayer_river);
+		glayer_river = new GenLayerFuzzyZoom(450L, glayer_river);
+		glayer_river = new GenLayerFuzzyZoom(451L, glayer_river);
+		glayer_river = new GenLayerFuzzyZoom(452L, glayer_river);
 		glayer_river = GenLayerZoom.magnify(470L, glayer_river, 2);
-		glayer_river = new GenLayerSmooth(480L, glayer_river);
 		glayer_river = new GenLayerRiverCRWG(490L, glayer_river);
 		glayer_main = new GenLayerRiverMixCRWG(500L, glayer_main, glayer_river);
 
@@ -293,24 +208,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_landtype_unscaled = new GenLayerCached(glayer_main);
 		this.genlayer_landtype_unscaled = (GenLayerCached) glayer_landtype_unscaled;
 
-		glayer_main = new GenLayerZoom(600L, glayer_main);
-		glayer_main = new GenLayerSmooth(601L, glayer_main);
-		glayer_main = new GenLayerZoom(610L, glayer_main);
-		glayer_main = new GenLayerSmooth(611L, glayer_main);
-		glayer_main = new GenLayerSmooth(612L, glayer_main);
-		glayer_main = new GenLayerZoom(620L, glayer_main);
-		glayer_main = new GenLayerSmooth(621L, glayer_main);
-		glayer_main = new GenLayerZoom(630L, glayer_main);
-		glayer_main = new GenLayerSmooth(631L, glayer_main);
-		glayer_main = new GenLayerSmooth(632L, glayer_main);
-		glayer_main = new GenLayerCached(glayer_main);
-		this.genlayer_landtype = (GenLayerCached) glayer_main;
-
 		/* Biome types */
 		glayer_biometype = new GenLayerBiomeTypes(1000L, this.noise_temperature, this.noise_rainfall, this.noise_awesomeness);
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 2; i++) {
 			glayer_biometype = new GenLayerZoom((long) (1010 + i), glayer_biometype);
-			glayer_biometype = new GenLayerSmooth((long) (1020 + i), glayer_biometype);
 		}
 		this.genlayer_biometype = glayer_biometype;
 
@@ -318,15 +219,20 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_species = new GenLayerRandUnbounded(800L);
 		for (int i = 0; i < 4; i++) {
 			glayer_species = new GenLayerZoom((long) (810 + i), glayer_species);
-			glayer_species = new GenLayerZoom((long) (820 + i), glayer_species);
-			glayer_species = new GenLayerSmooth((long) (830 + i), glayer_species);
 		}
 		glayer_species = new GenLayerSmooth(840L, glayer_species);
 		this.genlayer_species = glayer_species;
 
 		/* Biomes */
-		glayer_main = new GenLayerBiomesCRWG(2000L, glayer_species, glayer_biometype, glayer_main);
-		this.genlayer_biomes = glayer_main;
+		GenLayerLong glayerl_biomes;
+		glayerl_biomes = new GenLayerLongBiomesCRWG(2000L, glayer_species, glayer_biometype, glayer_main);
+		glayerl_biomes = new GenLayerLongZoom(600L, glayerl_biomes);
+		glayerl_biomes = new GenLayerLongZoom(610L, glayerl_biomes);
+		glayerl_biomes = new GenLayerLongSmooth(611L, glayerl_biomes);
+		glayerl_biomes = new GenLayerLongZoom(620L, glayerl_biomes);
+		glayerl_biomes = new GenLayerLongZoom(630L, glayerl_biomes);
+		glayerl_biomes = new GenLayerLongSmooth(631L, glayerl_biomes);
+		this.genlayer_biomes = glayerl_biomes;
 
 		/* Selectors */
 		this.n_sel_deepocean = this.createSelector(3000, glayer_landtype_unscaled, GConst.DEEPOCEAN, 1000);
@@ -337,17 +243,17 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.n_sel_lowlands = this.createSelector(3400, glayer_landtype_unscaled, GConst.LOWLANDS, 1000);
 		this.n_sel_hills = this.createSelector(3500, glayer_landtype_unscaled, GConst.HILLS, 1000);
 		this.n_sel_highlands = this.createSelector(3600, glayer_landtype_unscaled, GConst.HIGHLANDS, 1000);
-		this.n_sel_mountains = this.createSelector(3700, glayer_landtype_unscaled, GConst.MOUNTAINS, 1000);
 
+		this.n_sel_mountains = this.createSelector(3700, glayer_landtype_unscaled, GConst.MOUNTAINS, 1000);
 		this.n_sel_plateaus = this.createSelector(3800, glayer_landtype_unscaled, GConst.PLATEAUS, 1000);
 		this.n_sel_foothills = this.createSelector(3900, glayer_landtype_unscaled, GConst.FOOTHILLS, 1000);
 
-		this.n_sel_rivers = this.createSelector(4000, glayer_landtype_unscaled, GConst.RIVERS, 1500);
+		this.n_sel_rivers = this.createSelector(4000, glayer_landtype_unscaled, GConst.RIVERS, 2000);
 		this.n_sel_lakes = this.createSelector(4100, glayer_landtype_unscaled, GConst.LAKES, 1000);
 		this.n_sel_wetlands = this.createSelector(4200, glayer_landtype_unscaled, GConst.WETLANDS, 1000);
 
 		/* World seed */
-		glayer_main.initWorldGenSeed(seed);
+		glayerl_biomes.initWorldGenSeed(seed);
 
 		/* Deep Ocean */
 		nlayer1 = new NLayer2DNoise(rand, 4, true, 1.0 / 33.0, 1.0 / 33.0);
@@ -443,27 +349,16 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		/* Other stuff */
 		this.noise_soil_bumpiness = new NoiseGeneratorPerlin(rand, 4);
-
-		/* yay, multithreading! */
-		this.exec_svc = Executors.newFixedThreadPool(3);
-		this.run_noise_gen = new WorldChunkManagerCRWG.NoiseGenRunnable(this);
-		this.run_sel_1 = new WorldChunkManagerCRWG.SelRunnable1(this);
-		this.run_sel_2 = new WorldChunkManagerCRWG.SelRunnable2(this);
-	}
-
-	public void shutdown()
-	{
-		this.exec_svc.shutdown();
 	}
 
 	public void resetArrays()
 	{
 		IntCache.resetIntCache();
+		LongCache.resetLongCache();
 		this.genlayer_landtype_unscaled.reset();
-		this.genlayer_landtype.reset();
 	}
 
-	private NLayer createSelector(int base_seed, GenLayer unscaled, int land_type, int value)
+	private NLayerGDiv createSelector(int base_seed, GenLayer unscaled, int land_type, int value)
 	{
 		GenLayer glayer_sel = new GenLayerLTValue((long) base_seed, unscaled, land_type, value);
 		for (int i = 0; i < 4; i++) {
@@ -472,53 +367,97 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			if ((i & 0x1) != 0) {
 				glayer_sel = new GenLayerAverage((long) (base_seed + 30 + i), glayer_sel);
 			}
-			glayer_sel = new GenLayerSmooth((long) (base_seed + 40 + i), glayer_sel);
 		}
-
-		glayer_sel = new GenLayerSmooth(base_seed + 50L, glayer_sel);
 		return new NLayerGDiv(glayer_sel, 1000);
+	}
+
+	public GenArrays calcArrays(int chunk_x, int chunk_z)
+	{
+		return this.generateArrays(chunk_x << 4, chunk_z << 4, 16, 16);
 	}
 
 	public GenArrays generateArrays(int ax, int ay, int aw, int ah)
 	{
 		final int asize = aw * ah;
-		this.c_ax = ax;
-		this.c_ay = ay;
-		this.c_aw = aw;
-		this.c_ah = ah;
-		this.c_asize = asize;
 
 		this.resetArrays();
 
-		/* noise */
-		Future<?> future0 = this.exec_svc.submit(this.run_noise_gen);
+		GenArrays arrays = this.gen_arrays;
+		arrays.initCertainArraysIfNecessary(asize);
 
 		/* biomes */
-		this.gen_arrays.land_type_id_array = this.genlayer_landtype.getInts(ax, ay, aw, ah);
-		this.gen_arrays.biome_id_array = this.genlayer_biomes.getInts(ax, ay, aw, ah);
-		this.gen_arrays.biome_type_id_array = this.genlayer_biometype.getInts(ax, ay, aw, ah);
-		this.gen_arrays.species_array = this.genlayer_species.getInts(ax, ay, aw, ah);
+		long[] long_arr = this.genlayer_biomes.getLongs(ax, ay, aw, ah);
 
-		/* selectors */
-		/* we need a call to generate the cached layer before the other threads run */
-		this.gen_arrays.river_sel = this.n_sel_rivers.generate(ax, ay, aw, ah, asize);
-
-		Future<?> future1 = this.exec_svc.submit(this.run_sel_1);
-		Future<?> future2 = this.exec_svc.submit(this.run_sel_2);
-
-		this.gen_arrays.initCertainArraysIfNecessary(asize);
+		LandType[] LT_ENUM = LandType.values();
+		BiomeTypeCRWG[] BT_ENUM = BiomeTypeCRWG.values();
 
 		for (int i = 0; i < asize; i++) {
-			int biome_id = this.gen_arrays.biome_id_array[i];
-			BiomeGenBase biome = BiomeGenBase.getBiome(biome_id);
-			this.gen_arrays.biome_array[i] = biome;
-			int biome_type_id = this.gen_arrays.biome_type_id_array[i];
-			BiomeTypeCRWG type = BiomeTypeCRWG.values()[biome_type_id];
-			this.gen_arrays.biome_type_array[i] = type;
-			this.gen_arrays.s_temperatures[i] = type.s_temp;
-			this.gen_arrays.s_rainfalls[i] = type.s_rain;
-			int land_type_id = this.gen_arrays.land_type_id_array[i];
-			this.gen_arrays.land_type_array[i] = LandType.values()[land_type_id];
+			long l = long_arr[i];
+
+			int biome_id = (int) l & 0xffff;
+			arrays.biome_id_array[i] = biome_id;
+			arrays.biome_array[i] = BiomeGenBase.getBiome(biome_id);
+
+			int species = (int) l & 0xffff0000;
+			arrays.species_array[i] = species;
+
+			int land_type_id = (int) (l >> 32) & 0x3f;
+			arrays.land_type_id_array[i] = land_type_id;
+			arrays.land_type_array[i] = LT_ENUM[land_type_id];
+
+			int biome_type_id = (int) (l >> 38) & 0x3f;
+			arrays.biome_type_id_array[i] = biome_type_id;
+			BiomeTypeCRWG biome_type = BT_ENUM[biome_type_id];
+			arrays.biome_type_array[i] = biome_type;
+			arrays.s_temperatures[i] = biome_type.s_temp;
+			arrays.s_rainfalls[i] = biome_type.s_rain;
+		}
+
+		/* selectors */
+		this.calcSelectors(arrays, ax, ay, aw, ah, asize);
+
+		/* noise */
+		if (this.n_sel_deepocean.didWeEncounterAnything()) {
+			arrays.deep_ocean_noise = this.n_gen_deepocean.generate(ax, ay, aw, ah, asize, arrays.deep_ocean_sel);
+		}
+		if (this.n_sel_ocean.didWeEncounterAnything()) {
+			arrays.ocean_noise = this.n_gen_ocean.generate(ax, ay, aw, ah, asize, arrays.ocean_sel);
+		}
+		if (this.n_sel_shallowocean.didWeEncounterAnything()) {
+			arrays.shallow_ocean_noise = this.n_gen_shallowocean.generate(ax, ay, aw, ah, asize, arrays.shallow_ocean_sel);
+		}
+		if (this.n_sel_beach.didWeEncounterAnything()) {
+			arrays.beach_noise = this.n_gen_beach.generate(ax, ay, aw, ah, asize, arrays.beach_sel);
+		}
+
+		if (this.n_sel_lowlands.didWeEncounterAnything()) {
+			arrays.lowland_noise = this.n_gen_lowlands.generate(ax, ay, aw, ah, asize, arrays.lowland_sel);
+		}
+		if (this.n_sel_hills.didWeEncounterAnything()) {
+			arrays.hill_noise = this.n_gen_hills.generate(ax, ay, aw, ah, asize, arrays.hill_sel);
+		}
+		if (this.n_sel_highlands.didWeEncounterAnything()) {
+			arrays.highland_noise = this.n_gen_highlands.generate(ax, ay, aw, ah, asize, arrays.highland_sel);
+		}
+		if (this.n_sel_mountains.didWeEncounterAnything()) {
+			arrays.mountain_noise = this.n_gen_mountains.generate(ax, ay, aw, ah, asize, arrays.mountain_sel);
+		}
+
+		if (this.n_sel_plateaus.didWeEncounterAnything()) {
+			arrays.plateau_noise = this.n_gen_plateaus.generate(ax, ay, aw, ah, asize, arrays.plateau_sel);
+		}
+		if (this.n_sel_foothills.didWeEncounterAnything()) {
+			arrays.foothill_noise = this.n_gen_foothills.generate(ax, ay, aw, ah, asize, arrays.foothill_sel);
+		}
+
+		if (this.n_sel_rivers.didWeEncounterAnything()) {
+			arrays.river_noise = this.n_gen_rivers.generate(ax, ay, aw, ah, asize, arrays.river_sel);
+		}
+		if (this.n_sel_lakes.didWeEncounterAnything()) {
+			arrays.lake_noise = this.n_gen_lakes.generate(ax, ay, aw, ah, asize, arrays.lake_sel);
+		}
+		if (this.n_sel_wetlands.didWeEncounterAnything()) {
+			arrays.wetlands_noise = this.n_gen_wetlands.generate(ax, ay, aw, ah, asize, arrays.wetlands_sel);
 		}
 
 		this.gen_arrays.soil_bumpiness_noise = this.noise_soil_bumpiness.func_151599_a(
@@ -532,18 +471,93 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			1.0
 		);
 
-		/* wait for other threads */
-		try {
-			future0.get();
-			future1.get();
-			future2.get();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		return this.gen_arrays;
+	}
+
+	private void calcSelectors(GenArrays arrays, int ax, int ay, int aw, int ah, int asize)
+	{
+		arrays.deep_ocean_sel = this.n_sel_deepocean.generate(ax, ay, aw, ah, asize, null);
+		arrays.ocean_sel = this.n_sel_ocean.generate(ax, ay, aw, ah, asize, null);
+		if (this.n_sel_deepocean.didWeEncounterAnything()) {
+			this.zeroSelectors(arrays, asize, GConst.SHALLOWOCEAN, 99);
+			return;
 		}
 
-		return this.gen_arrays;
+		arrays.shallow_ocean_sel = this.n_sel_shallowocean.generate(ax, ay, aw, ah, asize, null);
+		arrays.beach_sel = this.n_sel_beach.generate(ax, ay, aw, ah, asize, null);
+		
+		arrays.lowland_sel = this.n_sel_lowlands.generate(ax, ay, aw, ah, asize, null);
+		arrays.hill_sel = this.n_sel_hills.generate(ax, ay, aw, ah, asize, null);
+		arrays.highland_sel = this.n_sel_highlands.generate(ax, ay, aw, ah, asize, null);
+
+		arrays.mountain_sel = this.n_sel_mountains.generate(ax, ay, aw, ah, asize, null);
+		arrays.plateau_sel = this.n_sel_plateaus.generate(ax, ay, aw, ah, asize, null);
+		arrays.foothill_sel = this.n_sel_foothills.generate(ax, ay, aw, ah, asize, null);
+
+		arrays.river_sel = this.n_sel_rivers.generate(ax, ay, aw, ah, asize, null);
+		arrays.lake_sel = this.n_sel_lakes.generate(ax, ay, aw, ah, asize, null);
+		arrays.wetlands_sel = this.n_sel_wetlands.generate(ax, ay, aw, ah, asize, null);
+	}
+
+	private void zeroSelector(double[] arr, int asize)
+	{
+		Arrays.fill(arr, 0, asize, 0.0);
+	}
+
+	private void zeroSelectors(GenArrays arrays, int asize, int start, int end)
+	{
+		LandType[] LT_ENUM = LandType.values();
+
+		for (int i = start; i <= end && i < LT_ENUM.length; i++) {
+			switch (LT_ENUM[i]) {
+			default:
+				break;
+
+			case DEEP_OCEAN:
+				this.zeroSelector(arrays.deep_ocean_sel, asize);
+				break;
+			case OCEAN:
+				this.zeroSelector(arrays.ocean_sel, asize);
+				break;
+			case SHALLOW_OCEAN:
+				this.zeroSelector(arrays.shallow_ocean_sel, asize);
+				break;
+			case BEACH:
+				this.zeroSelector(arrays.beach_sel, asize);
+				break;
+
+			case LOWLANDS:
+				this.zeroSelector(arrays.lowland_sel, asize);
+				break;
+			case HILLS:
+				this.zeroSelector(arrays.hill_sel, asize);
+				break;
+			case HIGHLANDS:
+				this.zeroSelector(arrays.highland_sel, asize);
+				break;
+
+			case MOUNTAINS:
+				this.zeroSelector(arrays.mountain_sel, asize);
+				break;
+			case PLATEAUS:
+				this.zeroSelector(arrays.plateau_sel, asize);
+				break;
+			case FOOTHILLS:
+				this.zeroSelector(arrays.foothill_sel, asize);
+				break;
+
+			case RIVER:
+				this.zeroSelector(arrays.river_sel, asize);
+				break;
+			case LAKE:
+				this.zeroSelector(arrays.lake_sel, asize);
+				break;
+			case WETLANDS:
+				this.zeroSelector(arrays.wetlands_sel, asize);
+				break;
+
+			}
+		}
 	}
 
 	@Override
@@ -578,9 +592,9 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			array = new BiomeGenBase[size];
 		}
 
-		int[] abiomeid = this.genlayer_biomes.getInts(ax, az, aw, ah);
+		long[] abiome_long = this.genlayer_biomes.getLongs(ax, az, aw, ah);
 		for (int xz = 0; xz < size; xz++) {
-			array[xz] = BiomeGenBase.getBiome(abiomeid[xz]);
+			array[xz] = BiomeGenBase.getBiome((int) abiome_long[xz] & 0xffff);
 			if (array[xz] == null) {
 				array[xz] = BiomeGenBase.ocean;
 			}
@@ -602,10 +616,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			System.arraycopy(array2, 0, array, 0, aw * ah);
 			return array;
 		} else {
-			int[] abiomeid = this.genlayer_biomes.getInts(ax, az, aw, ah);
+			long[] abiome_long = this.genlayer_biomes.getLongs(ax, az, aw, ah);
 
 			for (int xz = 0; xz < aw * ah; xz++) {
-				array[xz] = BiomeGenBase.getBiome(abiomeid[xz]);
+				array[xz] = BiomeGenBase.getBiome((int) abiome_long[xz] & 0xffff);
 			}
 
 			return array;
@@ -622,10 +636,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		int az2 = z + size;
 		int aw = ax2 - ax + 1;
 		int ah = az2 - az + 1;
-		int[] abiomeid = this.genlayer_biomes.getInts(ax, az, aw, ah);
+		long[] abiome_long = this.genlayer_biomes.getLongs(ax, az, aw, ah);
 
 		for (int xz = 0; xz < aw * ah; xz++) {
-			BiomeGenBase biome = BiomeGenBase.getBiome(abiomeid[xz]);
+			BiomeGenBase biome = BiomeGenBase.getBiome((int) abiome_long[xz] & 0xffff);
 
 			if (!biome_list.contains(biome)) {
 				return false;
@@ -644,7 +658,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		int az2 = z + size;
 		int aw = ax2 - ax + 1;
 		int ah = az2 - az + 1;
-		int[] abiomeid = this.genlayer_biomes.getInts(ax, az, aw, ah);
+		long[] abiome_long = this.genlayer_biomes.getLongs(ax, az, aw, ah);
 
 		ChunkPosition chunk_pos = null;
 		int i = 0;
@@ -652,7 +666,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		for (int xz = 0; xz < aw * ah; xz++) {
 			int x1 = ax + xz % aw;
 			int z1 = az + xz / aw;
-			BiomeGenBase biome = BiomeGenBase.getBiome(abiomeid[xz]);
+			BiomeGenBase biome = BiomeGenBase.getBiome((int) abiome_long[xz] & 0xffff);
 			if (biome_list.contains(biome) && (chunk_pos == null || rand.nextInt(i + 1) == 0)) {
 				chunk_pos = new ChunkPosition(x1, 0, z1);
 				++i;
