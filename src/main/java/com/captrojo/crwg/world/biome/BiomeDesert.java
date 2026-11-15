@@ -24,7 +24,7 @@ public class BiomeDesert extends BiomeCRWGBase
 		this.decorator.flowers = 0;
 		this.decorator.grass = 1;
 		this.decorator.grass_chance = 0.25F;
-		this.decorator.shrubs = 2;
+		this.decorator.shrubs = 8;
 
 		this.decorator.reeds = 50;
 		this.decorator.cacti = 10;

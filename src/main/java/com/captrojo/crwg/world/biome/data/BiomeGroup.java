@@ -23,10 +23,6 @@ public class BiomeGroup
 	{
 		switch (type) {
 		default:
-		case LOWLANDS:
-		case HILLS:
-		case HIGHLANDS:
-		case FOOTHILLS:
 			return this.plains;
 		case MOUNTAINS:
 			return this.mountain;

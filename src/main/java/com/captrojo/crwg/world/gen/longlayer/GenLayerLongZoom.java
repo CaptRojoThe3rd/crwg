@@ -5,7 +5,7 @@ public class GenLayerLongZoom extends GenLayerLong
 	public GenLayerLongZoom(long base_seed, GenLayerLong parent)
 	{
 		super(base_seed);
-		this.parent = parent;
+		this.setParent(parent);
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class GenLayerLongZoom extends GenLayerLong
 		int p_ay = ay >> 1;
 		int p_aw = (aw >> 1) + 2;
 		int p_ah = (ah >> 1) + 2;
-		long[] p_arr = this.parent.getLongs(p_ax, p_ay, p_aw, p_ah);
+		long[] p_arr = this.l_parent.getLongs(p_ax, p_ay, p_aw, p_ah);
 		int i_aw = p_aw - 1 << 1;
 		int i_ah = p_ah - 1 << 1;
 		long[] i_arr = LongCache.getLongCache(i_aw * i_ah);

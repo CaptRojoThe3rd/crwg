@@ -16,13 +16,15 @@ public enum BiomeTypeCRWG
 
 	/* BASIC BIOME TYPES */
 
-	MESA("Mesa", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
+	MESA("Mesa", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.OASIS),
 
-	DESERT("Desert", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
+	DESERT("Desert", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.OASIS),
 	SAVANNA("Savanna", GConst.HOT, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
 	SCRUBLAND("Scrubland", GConst.WARM, GConst.MODERATE, GConst.BASIC, WetlandType.MARSH),
 	TROPICAL_FOREST("Tropical Forest", GConst.WARM, GConst.WET, GConst.BASIC, WetlandType.SWAMP),
 	RAINFOREST("Rainforest", GConst.WARM, GConst.WET, GConst.BASIC, WetlandType.SWAMP),
+
+	WASTELAND("Wasteland", GConst.TEMPERATE, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
 
 	COOLER_DESERT("Cooler Desert", GConst.WARM, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
 	DRY_GRASSLAND("Dry Grassland", GConst.TEMPERATE, GConst.DRY, GConst.BASIC, WetlandType.MARSH),
@@ -60,7 +62,8 @@ public enum BiomeTypeCRWG
 
 	MUSHROOM_DESERT("Mushroom Desert", GConst.HOT, GConst.DRY, GConst.MUSHROOM, WetlandType.MUSHSHROOM),
 	MUSHROOM_FIELD("Mushroom Field", GConst.TEMPERATE, GConst.DRY, GConst.MUSHROOM, WetlandType.MUSHSHROOM),
-	MUSHROOM_TUNDRA("Mushroom Tundra", GConst.COLD, GConst.MODERATE, GConst.MUSHROOM, WetlandType.MUSHSHROOM);
+	MUSHROOM_FOREST("Mushroom Forest", GConst.TEMPERATE, GConst.WET, GConst.MUSHROOM, WetlandType.MUSHSHROOM),
+	MUSHROOM_TUNDRA("Mushroom Tundra", GConst.FROZEN, GConst.MODERATE, GConst.MUSHROOM, WetlandType.MUSHSHROOM);
 
 	public final String name;
 	public final int s_temp;

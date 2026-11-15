@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.gen.feature;
 import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
-import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -43,10 +43,7 @@ public class WorldGenBigMushroomF extends WorldGenBigMushroom
 	{
 		int height = rand.nextInt(3) + 4;
 
-		final int min_y = CRWG.funcs.getMinYLevel();
-		final int max_y = CRWG.funcs.getMaxYLevel();
-
-		if (!(y >= (min_y + 1) && y + height + 1 < max_y)) {
+		if (!(y >= (YConst.MIN_Y_LVL + 1) && y + height + 1 < YConst.MAX_Y_LVL)) {
 			return false;
 		}
 
@@ -69,7 +66,7 @@ public class WorldGenBigMushroomF extends WorldGenBigMushroom
 
 			for (x1 = x - chk_range; x1 <= x + chk_range; ++x1) {
 				for (z1 = z - chk_range; z1 <= z + chk_range; ++z1) {
-					if (y1 >= min_y && y1 < max_y) {
+					if (y1 >= YConst.MIN_Y_LVL && y1 < YConst.MAX_Y_LVL) {
 						Block block = world.getBlock(x1, y1, z1);
 
 						if (!block.isAir(world, x1, y1, z1) && !block.isLeaves(world, x1, y1, z1)) {

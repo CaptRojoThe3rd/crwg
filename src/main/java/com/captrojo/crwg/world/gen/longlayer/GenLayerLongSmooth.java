@@ -5,7 +5,7 @@ public class GenLayerLongSmooth extends GenLayerLong
 	public GenLayerLongSmooth(long base_seed, GenLayerLong parent)
 	{
 		super(base_seed);
-		this.parent = parent;
+		this.setParent(parent);
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class GenLayerLongSmooth extends GenLayerLong
 		int p_ay = ay - 1;
 		int p_aw = aw + 2;
 		int p_ah = ah + 2;
-		long[] p_arr = this.parent.getLongs(p_ax, p_ay, p_aw, p_ah);
+		long[] p_arr = this.l_parent.getLongs(p_ax, p_ay, p_aw, p_ah);
 		long[] n_arr = LongCache.getLongCache(aw * ah);
 
 		for (int y = 0; y < ah; y++) {

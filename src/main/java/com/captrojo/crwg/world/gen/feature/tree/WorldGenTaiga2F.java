@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.gen.feature.tree;
 import java.util.Random;
 
 import com.captrojo.crwg.block.WoodBlocks;
-import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -36,9 +36,6 @@ public class WorldGenTaiga2F extends WorldGenTaiga2
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		final int MIN_Y = CRWG.funcs.getMinYLevel();
-		final int MAX_Y = CRWG.funcs.getMaxYLevel();
-
 		int height = rand.nextInt(4) + 6;
 		int adj = 1 + rand.nextInt(2);
 		int adj_height = height - adj;
@@ -55,7 +52,7 @@ public class WorldGenTaiga2F extends WorldGenTaiga2
 
 			for (int x1 = (x - rad); x1 <= (x + rad); x1++) {
 				for (int z1 = (z - rad); z1 <= (z + rad); z1++) {
-					if (y1 < MIN_Y || y1 >= MAX_Y) {
+					if (y1 < YConst.MIN_Y_LVL || y1 >= YConst.MAX_Y_LVL) {
 						return false;
 					}
 					Block block = world.getBlock(x1, y1, z1);

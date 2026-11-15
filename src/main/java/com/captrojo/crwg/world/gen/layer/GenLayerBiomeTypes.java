@@ -22,6 +22,8 @@ public class GenLayerBiomeTypes extends GenLayer
 		BiomeTypeCRWG TrFr = BiomeTypeCRWG.TROPICAL_FOREST;
 		BiomeTypeCRWG RnFr = BiomeTypeCRWG.RAINFOREST;
 
+		BiomeTypeCRWG WstL = BiomeTypeCRWG.WASTELAND;
+
 		BiomeTypeCRWG ClDs = BiomeTypeCRWG.COOLER_DESERT;
 		BiomeTypeCRWG DrGr = BiomeTypeCRWG.DRY_GRASSLAND;
 		BiomeTypeCRWG GrsL = BiomeTypeCRWG.GRASSLAND;
@@ -64,10 +66,10 @@ public class GenLayerBiomeTypes extends GenLayer
 			Tndr, Tndr, Tndr, Tndr, CdGs, SnBr, SnBr, SnBr, SnBr, SnDB, /* -0.3 E */
 			Tndr, Tndr, Tndr, CdGs, CdGs, SnBr, SnBr, SnBr, SnDB, SnDB, /* -0.1 M */
 			Tndr, Tndr, CdGs, CdGs, CdGs, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.1 P */
-			ClDs, DrGr, GrsL, GrsL, Chpl, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.3 E */
-			ClDs, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
-			ClDs, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.7 A */
-			ClDs, ClDs, Scrb, GrsL, Chpl, Chpl, DcFr, DcFr, DDFr, DDFr, /* +0.9 T */
+			WstL, DrGr, GrsL, GrsL, Chpl, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.3 E */
+			WstL, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
+			WstL, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.7 A */
+			Dsrt, ClDs, Scrb, GrsL, Chpl, Chpl, DcFr, DcFr, DDFr, DDFr, /* +0.9 T */
 			Dsrt, ClDs, Svnh, Scrb, Scrb, TrFr, TrFr, DcFr, DDFr, RnFr, /* +1.1 U */
 			Dsrt, Dsrt, Svnh, Svnh, Scrb, Scrb, TrFr, RnFr, RnFr, RnFr, /* +1.3 R */
 			Dsrt, Dsrt, Svnh, Svnh, Scrb, Scrb, TrFr, TrFr, RnFr, RnFr, /* +1.5 E */
@@ -84,10 +86,10 @@ public class GenLayerBiomeTypes extends GenLayer
 			Tndr, Tndr, Tndr, Tndr, CdGs, SnBr, SnBr, SnBr, SnBr, SnDB, /* -0.3 E */
 			Tndr, Tndr, Tndr, CdGs, CdGs, SnBr, SnBr, SnBr, SnDB, SnDB, /* -0.1 M */
 			Tndr, Tndr, CdGs, CdGs, CdGs, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.1 P */
-			ClDs, DrGr, GrsL, GrsL, Chpl, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.3 E */
-			ClDs, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
-			ClDs, DrGr, GrsL, GrsL, Chpl, VbFr, VbFr, VbFr, DDFr, DDFr, /* +0.7 A */
-			ClDs, ClDs, Scrb, GrsL, Chpl, Chpl, VbFr, VbFr, DDFr, DDFr, /* +0.9 T */
+			WstL, DrGr, GrsL, GrsL, Chpl, BrFr, BrFr, BrFr, DBFr, DBFr, /* +0.3 E */
+			WstL, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
+			WstL, DrGr, GrsL, GrsL, Chpl, VbFr, VbFr, VbFr, DDFr, DDFr, /* +0.7 A */
+			Dsrt, ClDs, Scrb, GrsL, Chpl, Chpl, VbFr, VbFr, DDFr, DDFr, /* +0.9 T */
 			Dsrt, ClDs, Svnh, Scrb, Scrb, TrFr, TrFr, VbFr, DDFr, RnFr, /* +1.1 U */
 			Mesa, Dsrt, Svnh, Svnh, Scrb, Scrb, TrFr, RnFr, RnFr, RnFr, /* +1.3 R */
 			Mesa, Dsrt, Svnh, Svnh, Scrb, Scrb, TrFr, TrFr, RnFr, RnFr, /* +1.5 E */
@@ -104,10 +106,10 @@ public class GenLayerBiomeTypes extends GenLayer
 			Tndr, Tndr, Tndr, Tndr, CdGs, CSBF, CSBF, CSBF, CSBF, CSDB, /* -0.3 E */
 			Tndr, Tndr, Tndr, CdGs, CdGs, CSBF, CSBF, CSBF, CSDB, CSDB, /* -0.1 M */
 			Tndr, Tndr, CdGs, CdGs, CdGs, CBFr, CBFr, CBFr, CDBF, CDBF, /* +0.1 P */
-			ClDs, DrGr, GrsL, GrsL, Chpl, CBFr, CBFr, CBFr, CDBF, CDBF, /* +0.3 E */
-			ClDs, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
-			ClDs, DrGr, GrsL, GrsL, Chpl, VbFr, VbFr, VbFr, DDFr, DDFr, /* +0.7 A */
-			ClDs, ClDs, Scrb, GrsL, Chpl, Chpl, VbFr, VbFr, DDFr, DDFr, /* +0.9 T */
+			WstL, DrGr, GrsL, GrsL, Chpl, CBFr, CBFr, CBFr, CDBF, CDBF, /* +0.3 E */
+			WstL, DrGr, GrsL, GrsL, Chpl, DcFr, DcFr, DcFr, DDFr, DDFr, /* +0.5 R */
+			WstL, DrGr, GrsL, GrsL, Chpl, VbFr, VbFr, VbFr, DDFr, DDFr, /* +0.7 A */
+			Dsrt, ClDs, Scrb, GrsL, Chpl, Chpl, VbFr, VbFr, DDFr, DDFr, /* +0.9 T */
 			Dsrt, ClDs, Svnh, Scrb, Scrb, Lnyu, Lnyu, VbFr, DDFr, CRFr, /* +1.1 U */
 			Mesa, Dsrt, Svnh, Svnh, Scrb, Scrb, Lnyu, CRFr, CRFr, CRFr, /* +1.3 R */
 			Mesa, Mesa, Svnh, Svnh, Scrb, Scrb, Lnyu, CRFr, CRFr, CRFr, /* +1.5 E */

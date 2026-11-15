@@ -2,8 +2,6 @@ package com.captrojo.crwg.world.gen.longlayer;
 
 import java.util.ArrayList;
 
-import com.captrojo.crwg.main.CRWG;
-
 /* It's the IntCache, but for longs! */
 public class LongCache
 {

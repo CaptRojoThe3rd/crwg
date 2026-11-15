@@ -1,4 +1,7 @@
 
+generator.CRWG=CRWG [Normal]
+generator.CRWGIslands=CRWG [Islands]
+
 itemGroup.crwg_blocks=CRWG - Blocks
 
 tile.bald_cypress_log.regular.name=Bald Cypress Log

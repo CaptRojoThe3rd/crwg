@@ -9,6 +9,11 @@ public enum LandType
 	SHALLOW_OCEAN("Shallow Ocean"),
 	BEACH("Beach"),
 
+	ISLAND("Island"),
+	ISLAND_HILLS("Island Hills"),
+	MUSHROOM_ISLAND("Mushroom Island"),
+	MUSHROOM_ISLAND_HILLS("Mushroom Island Hills"),
+
 	LOWLANDS("Lowlands"),
 	HILLS("Hills"),
 	HIGHLANDS("Highlands"),
@@ -16,6 +21,7 @@ public enum LandType
 	MOUNTAINS("Mountains"),
 	PLATEAUS("Plateaus"),
 	FOOTHILLS("Foothills"),
+	EXTREME_HILLS("Extreme Hills"),
 
 	RIVER("River"),
 	LAKE("Lake"),

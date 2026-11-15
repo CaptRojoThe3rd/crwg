@@ -10,16 +10,16 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class GenLayerLongBiomesCRWG extends GenLayerLong
+public class GenLayerLongBiomes extends GenLayerLong
 {
 	public static BiomeCRWGBase[][] ocean_biomes;
 	public static BiomeCRWGBase[][] beach_biomes;
-	
+
 	final GenLayer species;
 	final GenLayer biome_types;
 	final GenLayer land_types;
 
-	public GenLayerLongBiomesCRWG(long base_seed, GenLayer species, GenLayer biome_types, GenLayer land_types)
+	public GenLayerLongBiomes(long base_seed, GenLayer species, GenLayer biome_types, GenLayer land_types)
 	{
 		super(base_seed);
 		this.species = species;
@@ -38,11 +38,12 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 		long[] n_arr = LongCache.getLongCache(asize);
 
 		final LandType[] LT_ENUM = LandType.values();
+		final BiomeTypeCRWG[] BT_ENUM = BiomeTypeCRWG.values();
 
 		for (int i = 0; i < asize; i++) {
 			int species = sp_arr[i];
 			int biome_type_id = bt_arr[i];
-			BiomeTypeCRWG biome_type = BiomeTypeCRWG.values()[biome_type_id];
+			BiomeTypeCRWG biome_type = BT_ENUM[biome_type_id];
 			int land_type = lt_arr[i];
 
 			BiomeGenBase biome;
@@ -61,14 +62,14 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 			case SHALLOW_OCEAN:
 			case OCEAN:
 			case DEEP_OCEAN:
-				biome = GenLayerLongBiomesCRWG.ocean_biomes[biome_type.s_temp][biome_type.s_rain];
+				biome = GenLayerLongBiomes.ocean_biomes[biome_type.s_temp][biome_type.s_rain];
 				break;
 
 			case BEACH:
 				if (biome_type.s_awesome == GConst.MUSHROOM) {
 					biome = ModBiomes.mushroom_shore;
 				} else {
-					biome = GenLayerLongBiomesCRWG.beach_biomes[biome_type.s_temp][biome_type.s_rain];
+					biome = GenLayerLongBiomes.beach_biomes[biome_type.s_temp][biome_type.s_rain];
 				}
 				break;
 
@@ -83,6 +84,9 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 			case WETLANDS:
 				int s;
 				switch (biome_type.wetland_type) {
+				case OASIS:
+					biome = ModBiomes.oasis;
+					break;
 				default:
 				case SWAMP:
 					s = (species >>> 20) % 3;
@@ -90,6 +94,14 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 						biome = ModBiomes.cypress_swamp;
 					} else {
 						biome = ModBiomes.dark_swamp;
+					}
+					break;
+				case MARSH:
+					s = (species >>> 20) & 1;
+					if (s == 0) {
+						biome = ModBiomes.marsh_green;
+					} else {
+						biome = ModBiomes.marsh_yellow;
 					}
 					break;
 				case FEN:
@@ -102,6 +114,20 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 					break;
 				}
 				break;
+
+			case MUSHROOM_ISLAND:
+			case MUSHROOM_ISLAND_HILLS:
+				if (biome_type.s_temp == GConst.FROZEN) {
+					biome_type = BiomeTypeCRWG.MUSHROOM_TUNDRA;
+				} else if (biome_type.s_temp == GConst.HOT && biome_type.s_rain == GConst.DRY) {
+					biome_type = BiomeTypeCRWG.MUSHROOM_DESERT;
+				} else if (biome_type.s_rain == GConst.WET) {
+					biome_type = BiomeTypeCRWG.MUSHROOM_FOREST;
+				} else {
+					biome_type = BiomeTypeCRWG.MUSHROOM_FIELD;
+				}
+				biome_type_id = biome_type.ordinal();
+				/* fallthrough */
 
 			default:
 				biome = biome_type.getBiome(LT_ENUM[land_type], species & 0xffff);
@@ -116,7 +142,7 @@ public class GenLayerLongBiomesCRWG extends GenLayerLong
 
 		return n_arr;
 	}
-	
+
 	@Override
 	public int[] getInts(int ax, int ay, int aw, int ah)
 	{

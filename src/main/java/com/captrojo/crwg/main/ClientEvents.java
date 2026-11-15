@@ -13,6 +13,7 @@ import com.captrojo.crwg.world.gen.data.GConst;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
@@ -56,7 +57,7 @@ public class ClientEvents
 			event.right.add(i, mspt_str);
 			i++;
 
-			long since_last_tick = Minecraft.getSystemTime() - PerformanceInfo.tick_time_end;
+			long since_last_tick = MinecraftServer.getSystemTimeMillis() - PerformanceInfo.tick_time_end;
 
 			String tps_str = String.format(
 				"tps: %.2f, slt: %.1f",

@@ -19,11 +19,11 @@ public class BiomeJungle extends BiomeCRWGBase
 		super(id, name, color, temperature, rainfall);
 
 		if (sparseness == 0) {
-			this.decorator.trees = 30;
+			this.decorator.trees = 35;
 			this.decorator.grass = 25;
 			this.decorator.flowers = 4;
 		} else if (sparseness == 1) {
-			this.decorator.trees = 10;
+			this.decorator.trees = 12;
 			this.decorator.grass = 17;
 			this.decorator.flowers = 3;
 		} else {
@@ -47,10 +47,10 @@ public class BiomeJungle extends BiomeCRWGBase
 		if (rand.nextInt(10) == 0) {
 			return TreeGens.Oak_Big;
 		}
-		if (rand.nextInt(2) == 0) {
+		if (rand.nextInt(3) == 0) {
 			return TreeGens.Jungle_Shrub;
 		}
-		if (rand.nextInt(3) == 0) {
+		if (rand.nextInt(2) == 0) {
 			return TreeGens.Jungle_Large;
 		}
 		return TreeGens.Jungle_Small;

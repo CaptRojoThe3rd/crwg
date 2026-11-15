@@ -73,10 +73,10 @@ public class GenLayerTuneUp extends GenLayer
 					}
 					if (b < 2) {
 						if (
-							(px0y1 == GConst.SHALLOWOCEAN && px2y1 >= GConst.BEACH) ||
-							(px2y1 == GConst.SHALLOWOCEAN && px0y1 >= GConst.BEACH) ||
-							(px1y0 == GConst.SHALLOWOCEAN && px1y2 >= GConst.BEACH) ||
-							(px1y2 == GConst.SHALLOWOCEAN && px1y0 >= GConst.BEACH)
+							(px0y1 == GConst.SHALLOWOCEAN && px2y1 >= GConst.BEACH)
+							|| (px2y1 == GConst.SHALLOWOCEAN && px0y1 >= GConst.BEACH)
+							|| (px1y0 == GConst.SHALLOWOCEAN && px1y2 >= GConst.BEACH)
+							|| (px1y2 == GConst.SHALLOWOCEAN && px1y0 >= GConst.BEACH)
 						) {
 							n_arr[n_idx] = GConst.BEACH;
 						}

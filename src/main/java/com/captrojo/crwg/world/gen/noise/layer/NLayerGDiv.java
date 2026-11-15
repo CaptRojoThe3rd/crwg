@@ -8,7 +8,7 @@ public class NLayerGDiv extends NLayer
 	double[] array;
 
 	final double divider;
-	
+
 	/* for optimization purposes */
 	public double total_encountered;
 
@@ -17,7 +17,12 @@ public class NLayerGDiv extends NLayer
 		this.parent = parent;
 		this.divider = divider;
 	}
-	
+
+	public void resetEncountered()
+	{
+		this.total_encountered = 0.0;
+	}
+
 	public boolean didWeEncounterAnything()
 	{
 		return (this.total_encountered > 0.0);
@@ -31,7 +36,7 @@ public class NLayerGDiv extends NLayer
 		if (this.array == null || this.array.length < asize) {
 			this.array = new double[asize];
 		}
-		
+
 		this.total_encountered = 0.0;
 		for (int i = 0; i < asize; i++) {
 			double d = ((double) i_arr[i]) / this.divider;

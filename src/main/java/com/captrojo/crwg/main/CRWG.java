@@ -23,6 +23,7 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.captrojo.crwg.GeneratedTags;
 import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.compat.EHLFuncs;
 import com.captrojo.crwg.compat.ICRWGFuncs;
@@ -32,10 +33,10 @@ import com.captrojo.crwg.recipe.ModCraftingRecipes;
 import com.captrojo.crwg.recipe.ModSmeltingRecipes;
 import com.captrojo.crwg.tileentity.ModTileEntities;
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.WorldEvents;
 import com.captrojo.crwg.world.WorldTypeCRWG;
 import com.captrojo.crwg.world.biome.ModBiomes;
 import com.captrojo.crwg.world.chunk.ChunkDataMgr;
+import com.captrojo.crwg.world.gen.WorldGenEvents;
 import com.falsepattern.chunk.api.DataRegistry;
 
 import cpw.mods.fml.common.Mod;
@@ -60,10 +61,15 @@ public class CRWG
 	public static final String MOD_ID = "crwg";
 	public static final String NAME = "CaptRojo's World Gen";
 
-//	public static final String VERSION = "0.0.0";
-//	public static final String VERSIONS_ACCEPTED = "0.0.*";
-	public static final String VERSION = "B0000";
-	public static final String VERSIONS_ACCEPTED = "B0000";
+//	public static final String VERSION = "0.0.0.0";
+//	public static final String VERSIONS_ACCEPTED = "0.0.0.*";
+//	public static final String VERSION_NAME = "0.0.0.0 (Build #0000)";
+//	public static final String VERSION = "X0000";
+//	public static final String VERSIONS_ACCEPTED = "X0000";
+//	public static final String VERSION_NAME = "Build #0000";
+	public static final String VERSION = GeneratedTags.VERSION;
+	public static final String VERSIONS_ACCEPTED = GeneratedTags.VERSION;
+	public static final String VERSION_NAME = GeneratedTags.VERSION;
 
 	/* Given to ChunkAPI */
 	public static final String DATA_VERSION = "0.0";
@@ -98,6 +104,8 @@ public class CRWG
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		CRWG.log.info("CaptRojo's World Gen " + VERSION_NAME);
+		
 		funcs = new EHLFuncs();
 
 		dir_config = event.getModConfigurationDirectory().getPath() + File.separator + "crwg";
@@ -114,8 +122,8 @@ public class CRWG
 
 		ModTileEntities.registerTileEntities();
 
-		WorldEvents.instance = new WorldEvents();
-		MinecraftForge.TERRAIN_GEN_BUS.register(WorldEvents.instance);
+		WorldGenEvents.instance = new WorldGenEvents();
+		MinecraftForge.TERRAIN_GEN_BUS.register(WorldGenEvents.instance);
 
 		proxy.preInit(event);
 	}
@@ -131,7 +139,8 @@ public class CRWG
 		ModBiomes.registerBiomes();
 		ModBiomes.initBiomeTypes();
 
-		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG();
+		WorldTypeCRWG.TYPE_CRWG = new WorldTypeCRWG("CRWG", WorldTypeCRWG.SUBTYPE_NORMAL);
+		WorldTypeCRWG.TYPE_CRWG_ISLANDS = new WorldTypeCRWG("CRWGIslands", WorldTypeCRWG.SUBTYPE_ISLANDS);
 
 		DataRegistry.registerDataManager(new ChunkDataMgr(), 0);
 

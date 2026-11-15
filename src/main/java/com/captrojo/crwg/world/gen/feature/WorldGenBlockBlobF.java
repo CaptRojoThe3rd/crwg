@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.gen.feature;
 import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
-import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -21,7 +21,7 @@ public class WorldGenBlockBlobF extends WorldGenBlockBlob
 	@Override
 	public boolean generate(World world, Random rand, int x, int y, int z)
 	{
-		final int min_y = CRWG.funcs.getMinYLevel() + 3;
+		final int min_y = YConst.MIN_Y_LVL + 3;
 		while (y > min_y) {
 			if (!world.isAirBlock(x, y - 1, z)) {
 				Block block = world.getBlock(x, y - 1, z);

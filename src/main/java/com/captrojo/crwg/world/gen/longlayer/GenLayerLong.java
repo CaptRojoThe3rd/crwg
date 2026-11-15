@@ -4,7 +4,7 @@ import net.minecraft.world.gen.layer.GenLayer;
 
 public abstract class GenLayerLong extends GenLayer
 {
-	protected GenLayerLong parent;
+	protected GenLayerLong l_parent;
 	
 	public GenLayerLong(long base_seed)
 	{
@@ -12,6 +12,12 @@ public abstract class GenLayerLong extends GenLayer
 	}
 
 	public abstract long[] getLongs(int ax, int ay, int aw, int ah);
+	
+	protected void setParent(GenLayerLong parent)
+	{
+		this.l_parent = parent;
+		this.parent = parent;
+	}
 
 	protected long selectRandom(long... p_151619_1_)
 	{

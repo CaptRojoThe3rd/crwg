@@ -1,5 +1,9 @@
 package com.captrojo.crwg.main;
 
+import java.io.File;
+
+import com.captrojo.crwg.config.ClientConfig;
+import com.captrojo.crwg.config.ModConfig;
 import com.captrojo.crwg.render.block.RenderBlock2x2FloorPlant;
 import com.captrojo.crwg.render.block.RenderBlockDoublePlant;
 import com.captrojo.crwg.render.block.RenderBlockFloorPlant;
@@ -16,6 +20,17 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy
 {
 	@Override
+	public void loadConfig()
+	{
+		super.loadConfig();
+		ModConfig.load(new File(CRWG.dir_config + File.separator + "client.cfg"));
+
+		ClientConfig.init();
+
+		ModConfig.save();
+	}
+
+	@Override
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
@@ -29,8 +44,12 @@ public class ClientProxy extends CommonProxy
 	{
 		super.init(event);
 
-		ClientCommandHandler.instance.registerCommand(new CommandFlightSpeed());
-		ClientCommandHandler.instance.registerCommand(new CommandResetPerformanceInfo());
+		if (ClientConfig.cmd_flight_speed) {
+			ClientCommandHandler.instance.registerCommand(new CommandFlightSpeed());
+		}
+		if (ClientConfig.cmd_reset_perf_info) {
+			ClientCommandHandler.instance.registerCommand(new CommandResetPerformanceInfo());
+		}
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TESignCRWG.class, new RenderTESignCRWG());
 

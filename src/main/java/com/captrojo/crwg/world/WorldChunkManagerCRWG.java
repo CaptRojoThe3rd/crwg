@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
 import com.captrojo.crwg.world.gen.data.GConst;
@@ -11,23 +12,28 @@ import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.layer.GenLayerAverage;
 import com.captrojo.crwg.world.gen.layer.GenLayerBiomeTypes;
 import com.captrojo.crwg.world.gen.layer.GenLayerCached;
+import com.captrojo.crwg.world.gen.layer.GenLayerForcedIsland;
+import com.captrojo.crwg.world.gen.layer.GenLayerIslandOceans;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTInfect;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTInfectAlways;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTInfectChecked;
-import com.captrojo.crwg.world.gen.layer.GenLayerLTRaise;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTRaiseGenerous;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTRaiseMulti;
 import com.captrojo.crwg.world.gen.layer.GenLayerLTValue;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTValueDouble;
+import com.captrojo.crwg.world.gen.layer.GenLayerLTValueTriple;
 import com.captrojo.crwg.world.gen.layer.GenLayerLakes;
 import com.captrojo.crwg.world.gen.layer.GenLayerLandType;
 import com.captrojo.crwg.world.gen.layer.GenLayerRandUnbounded;
+import com.captrojo.crwg.world.gen.layer.GenLayerRareIsland;
 import com.captrojo.crwg.world.gen.layer.GenLayerRiverCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerRiverMixCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerShoresCRWG;
 import com.captrojo.crwg.world.gen.layer.GenLayerTuneUp;
 import com.captrojo.crwg.world.gen.layer.GenLayerWetlands;
+import com.captrojo.crwg.world.gen.layer.GenLayerZero;
 import com.captrojo.crwg.world.gen.longlayer.GenLayerLong;
-import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomesCRWG;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomes;
 import com.captrojo.crwg.world.gen.longlayer.GenLayerLongSmooth;
 import com.captrojo.crwg.world.gen.longlayer.GenLayerLongZoom;
 import com.captrojo.crwg.world.gen.longlayer.LongCache;
@@ -128,7 +134,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	 */
 	public NoiseGeneratorPerlin noise_soil_bumpiness;
 
-	public WorldChunkManagerCRWG(World world)
+	public WorldChunkManagerCRWG(World world, int subtype)
 	{
 		long seed = world.getSeed();
 		Random rand = new Random(seed);
@@ -149,6 +155,10 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_main = GenLayerZoom.magnify(150L, glayer_main, 1);
 		glayer_main = new GenLayerSmooth(160L, glayer_main);
 
+		if (subtype == WorldTypeCRWG.SUBTYPE_ISLANDS) {
+			glayer_main = new GenLayerZero();
+		}
+
 		/* Land type */
 		glayer_main = new GenLayerLandType(200L, glayer_main);
 		glayer_main = new GenLayerLTRaiseMulti(
@@ -156,8 +166,8 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			glayer_main,
 			new int[] {GConst.LOWLANDS, GConst.SHALLOWOCEAN},
 			new int[] {GConst.HILLS, GConst.OCEAN},
-			new int[] {4, 4},
-			new int[] {5, 5}
+			new int[] {4, 1},
+			new int[] {5, 1}
 		);
 		glayer_main = GenLayerZoom.magnify(220L, glayer_main, 1);
 		glayer_main = new GenLayerLTRaiseMulti(
@@ -165,12 +175,25 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 			glayer_main,
 			new int[] {GConst.HILLS, GConst.OCEAN},
 			new int[] {GConst.HIGHLANDS, GConst.DEEPOCEAN},
-			new int[] {4, 4},
-			new int[] {5, 5}
+			new int[] {4, 1},
+			new int[] {5, 1}
 		);
 
+		if (subtype == WorldTypeCRWG.SUBTYPE_ISLANDS) {
+			glayer_main = new GenLayerForcedIsland(glayer_main);
+		}
+
+		glayer_main = new GenLayerRareIsland(190L, glayer_main, (subtype == WorldTypeCRWG.SUBTYPE_ISLANDS) ? 20 : 40);
 		glayer_main = GenLayerZoom.magnify(240L, glayer_main, 1);
-		glayer_main = new GenLayerLTRaise(250L, glayer_main, GConst.HIGHLANDS, GConst.MOUNTAINS, 4, 5);
+		glayer_main = new GenLayerIslandOceans(191L, glayer_main, GConst.DEEPOCEAN, GConst.OCEAN);
+		glayer_main = new GenLayerLTRaiseMulti(
+			250L,
+			glayer_main,
+			new int[] {GConst.HIGHLANDS, GConst.ISLAND, GConst.MUSHROOM_ISLAND},
+			new int[] {GConst.MOUNTAINS, GConst.ISLAND_HILLS, GConst.MUSHROOM_ISLAND_HILLS},
+			new int[] {4, 4, 4},
+			new int[] {5, 5, 5}
+		);
 		glayer_main = new GenLayerLTRaiseGenerous(255L, glayer_main, GConst.HIGHLANDS, GConst.PLATEAUS, 1, 4);
 
 		glayer_main = new GenLayerLakes(370L, glayer_main);
@@ -180,6 +203,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		glayer_main = new GenLayerLTInfectChecked(1110L, glayer_main, GConst.WETLANDS, 2, 3, GConst.LAKES);
 
 		glayer_main = new GenLayerFuzzyZoom(260L, glayer_main);
+		glayer_main = new GenLayerIslandOceans(192L, glayer_main, GConst.OCEAN, GConst.SHALLOWOCEAN);
 		glayer_main = GenLayerZoom.magnify(270L, glayer_main, 1);
 		glayer_main = new GenLayerSmooth(280L, glayer_main);
 
@@ -225,7 +249,7 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 		/* Biomes */
 		GenLayerLong glayerl_biomes;
-		glayerl_biomes = new GenLayerLongBiomesCRWG(2000L, glayer_species, glayer_biometype, glayer_main);
+		glayerl_biomes = new GenLayerLongBiomes(2000L, glayer_species, glayer_biometype, glayer_main);
 		glayerl_biomes = new GenLayerLongZoom(600L, glayerl_biomes);
 		glayerl_biomes = new GenLayerLongZoom(610L, glayerl_biomes);
 		glayerl_biomes = new GenLayerLongSmooth(611L, glayerl_biomes);
@@ -240,15 +264,15 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.n_sel_shallowocean = this.createSelector(3200, glayer_landtype_unscaled, GConst.SHALLOWOCEAN, 1000);
 		this.n_sel_beach = this.createSelector(3300, glayer_landtype_unscaled, GConst.BEACH, 1000);
 
-		this.n_sel_lowlands = this.createSelector(3400, glayer_landtype_unscaled, GConst.LOWLANDS, 1000);
-		this.n_sel_hills = this.createSelector(3500, glayer_landtype_unscaled, GConst.HILLS, 1000);
+		this.n_sel_lowlands = this.createSelector(3400, glayer_landtype_unscaled, GConst.LOWLANDS, GConst.ISLAND, GConst.MUSHROOM_ISLAND, 1000);
+		this.n_sel_hills = this.createSelector(3500, glayer_landtype_unscaled, GConst.HILLS, GConst.ISLAND_HILLS, GConst.MUSHROOM_ISLAND_HILLS, 1000);
 		this.n_sel_highlands = this.createSelector(3600, glayer_landtype_unscaled, GConst.HIGHLANDS, 1000);
 
 		this.n_sel_mountains = this.createSelector(3700, glayer_landtype_unscaled, GConst.MOUNTAINS, 1000);
 		this.n_sel_plateaus = this.createSelector(3800, glayer_landtype_unscaled, GConst.PLATEAUS, 1000);
-		this.n_sel_foothills = this.createSelector(3900, glayer_landtype_unscaled, GConst.FOOTHILLS, 1000);
+		this.n_sel_foothills = this.createSelector(3900, glayer_landtype_unscaled, GConst.FOOTHILLS, GConst.EXTREME_HILLS, 1000);
 
-		this.n_sel_rivers = this.createSelector(4000, glayer_landtype_unscaled, GConst.RIVERS, 2000);
+		this.n_sel_rivers = this.createSelector(4000, glayer_landtype_unscaled, GConst.RIVERS, 1500);
 		this.n_sel_lakes = this.createSelector(4100, glayer_landtype_unscaled, GConst.LAKES, 1000);
 		this.n_sel_wetlands = this.createSelector(4200, glayer_landtype_unscaled, GConst.WETLANDS, 1000);
 
@@ -358,9 +382,26 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 		this.genlayer_landtype_unscaled.reset();
 	}
 
-	private NLayerGDiv createSelector(int base_seed, GenLayer unscaled, int land_type, int value)
+	private NLayerGDiv createSelector(int base_seed, GenLayer unscaled, int lt, int value)
 	{
-		GenLayer glayer_sel = new GenLayerLTValue((long) base_seed, unscaled, land_type, value);
+		GenLayer glayer_sel = new GenLayerLTValue((long) base_seed, unscaled, lt, value);
+		return this.finishCreatingSelector(base_seed, glayer_sel);
+	}
+
+	private NLayerGDiv createSelector(int base_seed, GenLayer unscaled, int lt1, int lt2, int value)
+	{
+		GenLayer glayer_sel = new GenLayerLTValueDouble((long) base_seed, unscaled, lt1, lt2, value);
+		return this.finishCreatingSelector(base_seed, glayer_sel);
+	}
+
+	private NLayerGDiv createSelector(int base_seed, GenLayer unscaled, int lt1, int lt2, int lt3, int value)
+	{
+		GenLayer glayer_sel = new GenLayerLTValueTriple((long) base_seed, unscaled, lt1, lt2, lt3, value);
+		return this.finishCreatingSelector(base_seed, glayer_sel);
+	}
+
+	private NLayerGDiv finishCreatingSelector(int base_seed, GenLayer glayer_sel)
+	{
 		for (int i = 0; i < 4; i++) {
 			glayer_sel = new GenLayerAverage((long) (base_seed + 10 + i), glayer_sel);
 			glayer_sel = new GenLayerZoom((long) (base_seed + 20 + i), glayer_sel);
@@ -476,23 +517,149 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 
 	private void calcSelectors(GenArrays arrays, int ax, int ay, int aw, int ah, int asize)
 	{
-		arrays.deep_ocean_sel = this.n_sel_deepocean.generate(ax, ay, aw, ah, asize, null);
-		arrays.ocean_sel = this.n_sel_ocean.generate(ax, ay, aw, ah, asize, null);
-		if (this.n_sel_deepocean.didWeEncounterAnything()) {
-			this.zeroSelectors(arrays, asize, GConst.SHALLOWOCEAN, 99);
-			return;
+		boolean deep_ocean = false;
+		boolean ocean = false;
+		boolean shallow_ocean = false;
+		boolean beach = false;
+		
+		boolean island = false;
+		boolean island_hills = false;
+
+		boolean lowlands = false;
+		boolean hills = false;
+		boolean highlands = false;
+
+		boolean mountains = false;
+		boolean plateau = false;
+		boolean foothills = false;
+
+		boolean river = false;
+		boolean lake = false;
+		boolean wetlands = false;
+
+		for (int i = 0; i < asize; i++) {
+			LandType lt = arrays.land_type_array[i];
+			switch (lt) {
+			case NULL -> 
+				CRWG.log.warn("Land type was null at {}, {}", ax, ay);
+
+			case DEEP_OCEAN ->
+				deep_ocean = true;
+			case OCEAN ->
+				ocean = true;
+			case SHALLOW_OCEAN ->
+				shallow_ocean = true;
+			case BEACH ->
+				beach = true;
+
+			case ISLAND ->
+				island = true;
+			case ISLAND_HILLS ->
+				island_hills = true;
+			case MUSHROOM_ISLAND ->
+				island = true;
+			case MUSHROOM_ISLAND_HILLS ->
+				island_hills = true;
+
+			case LOWLANDS ->
+				lowlands = true;
+			case HILLS ->
+				hills = true;
+			case HIGHLANDS ->
+				highlands = true;
+
+			case MOUNTAINS ->
+				mountains = true;
+			case PLATEAUS ->
+				plateau = true;
+			case FOOTHILLS ->
+				foothills = true;
+			case EXTREME_HILLS ->
+				foothills = true;
+
+			case RIVER ->
+				river = true;
+			case LAKE ->
+				lake = true;
+			case WETLANDS ->
+				wetlands = true;
+			}
 		}
 
-		arrays.shallow_ocean_sel = this.n_sel_shallowocean.generate(ax, ay, aw, ah, asize, null);
-		arrays.beach_sel = this.n_sel_beach.generate(ax, ay, aw, ah, asize, null);
+		boolean islands = island || island_hills;
+		boolean std_lands = lowlands || hills || highlands;
+		boolean tall_lands = mountains || plateau || foothills;
+		boolean everywhere_water = river || lake || wetlands;
 		
-		arrays.lowland_sel = this.n_sel_lowlands.generate(ax, ay, aw, ah, asize, null);
-		arrays.hill_sel = this.n_sel_hills.generate(ax, ay, aw, ah, asize, null);
-		arrays.highland_sel = this.n_sel_highlands.generate(ax, ay, aw, ah, asize, null);
+		/* If anyone is confused by this...
+		 * We first check if the selector should be generated. If not, we then check if
+		 * it encountered anything in the last chunk. If not, then we don't need to zero
+		 * it out (since it is alreay empty). This works as NLayer objects don't use a
+		 * static array cache, unlike GenLayer objects.
+		 */
 
-		arrays.mountain_sel = this.n_sel_mountains.generate(ax, ay, aw, ah, asize, null);
-		arrays.plateau_sel = this.n_sel_plateaus.generate(ax, ay, aw, ah, asize, null);
-		arrays.foothill_sel = this.n_sel_foothills.generate(ax, ay, aw, ah, asize, null);
+		if (deep_ocean || ocean || shallow_ocean || beach || islands || river) {
+			arrays.deep_ocean_sel = this.n_sel_deepocean.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_deepocean.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.deep_ocean_sel, asize);
+			this.n_sel_deepocean.resetEncountered();
+		}
+		if (deep_ocean || ocean || shallow_ocean || beach || islands || river) {
+			arrays.ocean_sel = this.n_sel_ocean.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_ocean.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.ocean_sel, asize);
+			this.n_sel_ocean.resetEncountered();
+		}
+		if (deep_ocean || ocean || shallow_ocean || beach || islands || river) {
+			arrays.shallow_ocean_sel = this.n_sel_shallowocean.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_shallowocean.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.shallow_ocean_sel, asize);
+			this.n_sel_shallowocean.resetEncountered();
+		}
+		if (deep_ocean || ocean || shallow_ocean || beach || lowlands || islands || river) {
+			arrays.beach_sel = this.n_sel_beach.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_beach.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.beach_sel, asize);
+			this.n_sel_beach.resetEncountered();
+		}
+
+		if (shallow_ocean || beach || std_lands || islands || tall_lands || everywhere_water) {
+			arrays.lowland_sel = this.n_sel_lowlands.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_lowlands.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.lowland_sel, asize);
+			this.n_sel_lowlands.resetEncountered();
+		}
+		if (std_lands || islands || beach || tall_lands || everywhere_water) {
+			arrays.hill_sel = this.n_sel_hills.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_hills.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.hill_sel, asize);
+			this.n_sel_hills.resetEncountered();
+		}
+		if (std_lands || tall_lands || everywhere_water) {
+			arrays.highland_sel = this.n_sel_highlands.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_highlands.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.highland_sel, asize);
+			this.n_sel_highlands.resetEncountered();
+		}
+
+		if (hills || highlands || tall_lands || everywhere_water) {
+			arrays.mountain_sel = this.n_sel_mountains.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_mountains.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.mountain_sel, asize);
+			this.n_sel_mountains.resetEncountered();
+		}
+		if (std_lands || tall_lands || everywhere_water) {
+			arrays.plateau_sel = this.n_sel_plateaus.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_plateaus.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.plateau_sel, asize);
+			this.n_sel_plateaus.resetEncountered();
+		}
+		if (std_lands || islands || tall_lands || everywhere_water) {
+			arrays.foothill_sel = this.n_sel_foothills.generate(ax, ay, aw, ah, asize, null);
+		} else if (this.n_sel_foothills.didWeEncounterAnything()) {
+			this.zeroSelector(arrays.foothill_sel, asize);
+			this.n_sel_foothills.resetEncountered();
+		}
 
 		arrays.river_sel = this.n_sel_rivers.generate(ax, ay, aw, ah, asize, null);
 		arrays.lake_sel = this.n_sel_lakes.generate(ax, ay, aw, ah, asize, null);
@@ -502,62 +669,6 @@ public class WorldChunkManagerCRWG extends WorldChunkManager
 	private void zeroSelector(double[] arr, int asize)
 	{
 		Arrays.fill(arr, 0, asize, 0.0);
-	}
-
-	private void zeroSelectors(GenArrays arrays, int asize, int start, int end)
-	{
-		LandType[] LT_ENUM = LandType.values();
-
-		for (int i = start; i <= end && i < LT_ENUM.length; i++) {
-			switch (LT_ENUM[i]) {
-			default:
-				break;
-
-			case DEEP_OCEAN:
-				this.zeroSelector(arrays.deep_ocean_sel, asize);
-				break;
-			case OCEAN:
-				this.zeroSelector(arrays.ocean_sel, asize);
-				break;
-			case SHALLOW_OCEAN:
-				this.zeroSelector(arrays.shallow_ocean_sel, asize);
-				break;
-			case BEACH:
-				this.zeroSelector(arrays.beach_sel, asize);
-				break;
-
-			case LOWLANDS:
-				this.zeroSelector(arrays.lowland_sel, asize);
-				break;
-			case HILLS:
-				this.zeroSelector(arrays.hill_sel, asize);
-				break;
-			case HIGHLANDS:
-				this.zeroSelector(arrays.highland_sel, asize);
-				break;
-
-			case MOUNTAINS:
-				this.zeroSelector(arrays.mountain_sel, asize);
-				break;
-			case PLATEAUS:
-				this.zeroSelector(arrays.plateau_sel, asize);
-				break;
-			case FOOTHILLS:
-				this.zeroSelector(arrays.foothill_sel, asize);
-				break;
-
-			case RIVER:
-				this.zeroSelector(arrays.river_sel, asize);
-				break;
-			case LAKE:
-				this.zeroSelector(arrays.lake_sel, asize);
-				break;
-			case WETLANDS:
-				this.zeroSelector(arrays.wetlands_sel, asize);
-				break;
-
-			}
-		}
 	}
 
 	@Override

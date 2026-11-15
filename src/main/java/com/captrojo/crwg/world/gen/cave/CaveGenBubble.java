@@ -2,7 +2,6 @@ package com.captrojo.crwg.world.gen.cave;
 
 import java.util.Random;
 
-import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 

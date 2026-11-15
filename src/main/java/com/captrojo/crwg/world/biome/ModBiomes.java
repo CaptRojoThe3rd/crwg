@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.biome;
 
 import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
-import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomesCRWG;
+import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomes;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -49,7 +49,9 @@ public abstract class ModBiomes
 	public static BiomeCRWGBase fen_yellow;
 
 	public static BiomeCRWGBase grassland;
-	public static BiomeCRWGBase grassland_sunflower;
+	public static BiomeCRWGBase sunflower_plains;
+	public static BiomeCRWGBase dry_grassland;
+	public static BiomeCRWGBase cold_grassland;
 
 	public static BiomeCRWGBase sparse_temperate_mountains;
 	public static BiomeCRWGBase sparse_plateau;
@@ -65,12 +67,14 @@ public abstract class ModBiomes
 	public static BiomeCRWGBase birch_forest;
 	public static BiomeCRWGBase old_growth_birch_forest;
 
+	public static BiomeCRWGBase stony_peaks;
 	public static BiomeCRWGBase mountains;
 	public static BiomeCRWGBase frozen_mountains;
 
 	public static BiomeCRWGBase gravel_plateau;
 	public static BiomeCRWGBase snowy_plateau;
 
+	public static BiomeCRWGBase wasteland;
 	public static BiomeCRWGBase frozen_wasteland;
 	public static BiomeCRWGBase tundra;
 	public static BiomeCRWGBase ice_spikes;
@@ -95,8 +99,10 @@ public abstract class ModBiomes
 	public static BiomeCRWGBase desert_plateau;
 
 	public static BiomeCRWGBase jungle;
-	public static BiomeCRWGBase jungle_mountains;
 	public static BiomeCRWGBase jungle_plateau;
+
+	public static BiomeCRWGBase savanna;
+	public static BiomeCRWGBase savanna_plateau;
 
 	/* MUSHROOM BIOMES */
 
@@ -106,6 +112,7 @@ public abstract class ModBiomes
 
 	public static BiomeCRWGBase mushroom_desert;
 	public static BiomeCRWGBase mushroom_field;
+	public static BiomeCRWGBase mushroom_forest;
 	public static BiomeCRWGBase mushroom_tundra;
 
 	/* MAGICAL BIOMES */
@@ -144,14 +151,21 @@ public abstract class ModBiomes
 		lake = new BiomeCRWGRiver(0x00c, "Lake", 0x2020f0, 0.5F, 0.5F, false);
 		lake_frozen = (new BiomeCRWGRiver(0x00d, "Frozen Lake", 0x4040f0, 0.0F, 0.5F, false)).setEnableSnow();
 
+		oasis = new BiomeOasis(0x071, "Oasis", 0xc9f918, 1.5F, 0.5F);
+
 		dark_swamp = new BiomeDarkSwamp(0x00e, "Dark Swamp", 0x07f9b2, 0.8F, 0.9F);
 		cypress_swamp = new BiomeCypressSwamp(0x010, "Cypress Swamp", 0x07f998, 0.8F, 0.9F);
+
+		marsh_green = new BiomeMarsh(0x011, "Marsh G", 0x7b8440, 0.45F, 0.7F, 0);
+		marsh_yellow = new BiomeMarsh(0x012, "Marsh Y", 0x628440, 0.45F, 0.65F, 1);
 
 		fen_green = new BiomeFen(0x016, "Fen G", 0xabb759, 0.55F, 0.8F, 0);
 		fen_yellow = new BiomeFen(0x017, "Fen Y", 0x88b759, 0.55F, 0.75F, 1);
 
-		grassland = new BiomeGrassland(0x018, "Grassland", 0x80ff50, 0.8F, 0.4F, false);
-		grassland_sunflower = new BiomeGrassland(0x098, "Sunflower Grassland", 0x80ff50, 0.8F, 0.4F, true);
+		grassland = new BiomeGrassland(0x018, "Grassland", 0x80ff50, 0.8F, 0.4F, BiomeGrassland.TYPE_PLAIN);
+		sunflower_plains = new BiomeGrassland(0x098, "Sunflower Plains", 0x9aff68, 0.8F, 0.4F, BiomeGrassland.TYPE_SUNFLOWER);
+		dry_grassland = new BiomeGrassland(0x060, "Dry Grassland", 0xbde547, 0.8F, 0.25F, BiomeGrassland.TYPE_DRY);
+		cold_grassland = new BiomeGrassland(0x061, "Cold Grassland", 0x5be572, 0.4F, 0.4F, BiomeGrassland.TYPE_COLD);
 
 		sparse_temperate_mountains = new BiomeSparseTemperateMountains(0x019, "Sparse Temperate Mountains");
 		sparse_plateau = new BiomeSparseTemperateMountains(0x01a, "Sparse Plateau");
@@ -166,12 +180,14 @@ public abstract class ModBiomes
 		birch_forest = new BiomeBirchForest(0x01f, "Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.NORMAL);
 		old_growth_birch_forest = new BiomeBirchForest(0x09f, "Old Growth Birch Forest", 0x307444, 0.6F, 0.65F, BiomeBirchForest.OLD_GROWTH);
 
+		stony_peaks = new BiomeMountains(0x066, "Stony Peaks", 0x606060, 0.45F, 0.35F);
 		mountains = new BiomeMountains(0x020, "Mountains", 0x808080, 0.25F, 0.55F);
 		frozen_mountains = (new BiomeMountains(0x021, "Frozen Mountains", 0xa0a0c0, -0.55F, 0.55F)).setEnableSnow();
 
 		gravel_plateau = new BiomeWasteland(0x022, "Gravel Plateau", 0xa0a0a0, 0.3F, 0.3F);
 		snowy_plateau = (new BiomeTundra(0x023, "Snowy Plateau", 0xdfffff, -0.45F, 0.4F, false)).setEnableSnow();
 
+		wasteland = new BiomeWasteland(0x070, "Wasteland", 0x404040, 0.4F, 0.0F);
 		frozen_wasteland = (new BiomeFrozenWasteland(0x024, "Frozen Wasteland", 0xd7efef, -0.7F, 0.0F)).setEnableSnow();
 		tundra = (new BiomeTundra(0x025, "Tundra", 0xc0f0f0, -0.15F, 0.4F, false)).setEnableSnow();
 		ice_spikes = (new BiomeTundra(0x0a5, "Ice Spike Tundra", 0xb0e0f0, -0.25F, 0.6F, true)).setEnableSnow();
@@ -196,8 +212,10 @@ public abstract class ModBiomes
 		desert_plateau = (new BiomeDesertMountains(0x02e, "Desert Plateau", 0xffc448, 1.7F, 0.0F)).setDisableRain();
 
 		jungle = new BiomeJungle(0x02f, "Jungle", 0x537b09, 0.95F, 0.9F, 0);
-		jungle_mountains = new BiomeJungle(0x030, "Jungle Mountains", 0x83ab39, 0.8F, 0.9F, 2);
 		jungle_plateau = new BiomeJungle(0x031, "Jungle Plateau", 0x93bb49, 0.7F, 0.9F, 1);
+		
+		savanna = (new BiomeSavanna(0x032, "Savanna", 0xbdb25f, 1.2F, 0.0F)).setDisableRain();
+		savanna_plateau = (new BiomeSavanna(0x033, "Savanna Plateau", 0xa79d64, 1.0F, 0.0F)).setDisableRain();
 
 		/* MUSHROOM BIOMES */
 
@@ -207,7 +225,8 @@ public abstract class ModBiomes
 
 		mushroom_desert = new BiomeMushroomField(0x103, "Mushroom Wasteland", 0xff00c0, 1.5F, 0.5F, 0);
 		mushroom_field = new BiomeMushroomField(0x104, "Mushroom Field", 0xff00ff, 0.8F, 0.7F, 1);
-		mushroom_tundra = (new BiomeMushroomField(0x105, "Mushroom Tundra", 0xff70ff, 0.0F, 1.0F, 0)).setEnableSnow();
+		mushroom_forest = new BiomeMushroomField(0x105, "Mushroom Forest", 0xd000d0, 0.8F, 1.0F, 2);
+		mushroom_tundra = (new BiomeMushroomField(0x106, "Mushroom Tundra", 0xff70ff, 0.0F, 1.0F, 0)).setEnableSnow();
 
 		/* MAGICAL BIOMES */
 
@@ -247,11 +266,16 @@ public abstract class ModBiomes
 		add(dark_swamp, BiomeType.COOL, false, true, true, Type.WET, Type.SWAMP);
 		add(cypress_swamp, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
 
+		add(marsh_green, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
+		add(marsh_yellow, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
+
 		add(fen_green, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
 		add(fen_yellow, BiomeType.COOL, false, false, true, Type.WET, Type.SWAMP);
 
 		add(grassland, BiomeType.WARM, true, true, true, Type.PLAINS);
-		add(grassland_sunflower, BiomeType.WARM, true, true, true, Type.PLAINS);
+		add(sunflower_plains, BiomeType.WARM, true, true, true, Type.PLAINS);
+		add(dry_grassland, BiomeType.WARM, true, true, true, Type.PLAINS);
+		add(cold_grassland, BiomeType.COOL, true, true, true, Type.PLAINS);
 
 		add(sparse_temperate_mountains, BiomeType.COOL, true, false, true, Type.SPARSE, Type.MOUNTAIN);
 		add(sparse_plateau, BiomeType.COOL, true, false, true, Type.SPARSE, Type.HILLS);
@@ -267,6 +291,7 @@ public abstract class ModBiomes
 		add(birch_forest, BiomeType.WARM, true, false, true, Type.FOREST);
 		add(old_growth_birch_forest, BiomeType.WARM, true, false, true, Type.FOREST);
 
+		add(stony_peaks, BiomeType.COOL, false, false, true, Type.MOUNTAIN, Type.SPARSE);
 		add(mountains, BiomeType.COOL, false, false, true, Type.MOUNTAIN, Type.SPARSE, Type.COLD);
 		add(frozen_mountains, BiomeType.ICY, false, false, true, Type.MOUNTAIN, Type.SPARSE, Type.COLD, Type.SNOWY);
 
@@ -297,8 +322,10 @@ public abstract class ModBiomes
 		add(desert_plateau, BiomeType.DESERT, false, false, true, Type.HOT, Type.DRY, Type.SANDY, Type.HILLS);
 
 		add(jungle, BiomeType.WARM, true, false, true, Type.HOT, Type.WET, Type.DENSE, Type.JUNGLE);
-		add(jungle_mountains, BiomeType.WARM, true, false, true, Type.WET, Type.DENSE, Type.JUNGLE, Type.MOUNTAIN);
 		add(jungle_plateau, BiomeType.WARM, true, true, true, Type.WET, Type.DENSE, Type.JUNGLE, Type.HILLS);
+
+		add(savanna, BiomeType.WARM, true, true, true, Type.HOT, Type.SAVANNA, Type.PLAINS, Type.SPARSE);
+		add(savanna_plateau, BiomeType.WARM, true, false, true, Type.HOT, Type.SAVANNA, Type.PLAINS, Type.SPARSE, Type.HILLS);
 
 		/* MUSHROOM BIOMES */
 
@@ -308,6 +335,7 @@ public abstract class ModBiomes
 
 		add(mushroom_desert, BiomeType.DESERT, false, false, false, Type.MUSHROOM, Type.HOT);
 		add(mushroom_field, BiomeType.WARM, false, false, false, Type.MUSHROOM);
+		add(mushroom_forest, BiomeType.WARM, false, false, false, Type.MUSHROOM);
 		add(mushroom_tundra, BiomeType.ICY, false, false, false, Type.MUSHROOM, Type.COLD, Type.SNOWY);
 
 		/* MAGICAL BIOMES */
@@ -326,14 +354,14 @@ public abstract class ModBiomes
 		/**** OTHER STUFF ****/
 
 		/* Init GenLayer stuff */
-		GenLayerLongBiomesCRWG.ocean_biomes = new BiomeCRWGBase[][] {
+		GenLayerLongBiomes.ocean_biomes = new BiomeCRWGBase[][] {
 			{ocean_frozen, ocean_frozen, ocean_frozen},
 			{ocean_cold, ocean_cold, ocean_cold},
 			{ocean, ocean, ocean},
 			{ocean_lukewarm, ocean_lukewarm, ocean_lukewarm},
 			{ocean_warm, ocean_warm, ocean_warm}
 		};
-		GenLayerLongBiomesCRWG.beach_biomes = new BiomeCRWGBase[][] {
+		GenLayerLongBiomes.beach_biomes = new BiomeCRWGBase[][] {
 			{beach_frozen, beach_frozen, beach_frozen},
 			{beach_gravel, beach_gravel, beach_gravel},
 			{beach, beach, beach},
@@ -399,24 +427,32 @@ public abstract class ModBiomes
 
 		BiomeTypeCRWG.MUSHROOM_FIELD.addGroupOf(mushroom_field, mushroom_mountains, mushroom_plateau);
 
+		BiomeTypeCRWG.MUSHROOM_FOREST.addGroupOf(mushroom_forest, mushroom_mountains, mushroom_plateau);
+
 		BiomeTypeCRWG.MUSHROOM_TUNDRA.addGroupOf(mushroom_tundra, mushroom_mountains, mushroom_plateau);
 
 		/* BASIC BIOME TYPES */
 
+		BiomeTypeCRWG.MESA.addGroupOf(desert, desert_mountains, desert_plateau);
+
 		BiomeTypeCRWG.DESERT.addGroupOf(desert, desert_mountains, desert_plateau);
 
-		BiomeTypeCRWG.SAVANNA.addGroupOf(desert, desert_mountains, desert_plateau);
+		BiomeTypeCRWG.SAVANNA.addGroupOf(savanna, stony_peaks, savanna_plateau);
 
-		BiomeTypeCRWG.SCRUBLAND.addGroupOf(desert, desert_mountains, desert_plateau);
+		BiomeTypeCRWG.SCRUBLAND.addGroupOf(dry_grassland, stony_peaks, savanna_plateau);
 
 		BiomeTypeCRWG.TROPICAL_FOREST.addGroupOf(dark_oak_forest, sparse_temperate_mountains, sparse_plateau);
 
-		BiomeTypeCRWG.RAINFOREST.addGroupOf(jungle, jungle_mountains, jungle_plateau);
+		BiomeTypeCRWG.RAINFOREST.addGroupOf(jungle, stony_peaks, jungle_plateau);
+
+		BiomeTypeCRWG.WASTELAND.addGroupOf(wasteland, mountains, gravel_plateau);
 
 		BiomeTypeCRWG.COOLER_DESERT.addGroupOf(desert, desert_mountains, desert_plateau);
 
+		BiomeTypeCRWG.DRY_GRASSLAND.addGroupOf(dry_grassland, stony_peaks, gravel_plateau);
+
 		BiomeTypeCRWG.GRASSLAND.addGroupOf(grassland, mountains, gravel_plateau);
-		BiomeTypeCRWG.GRASSLAND.addGroupOf(grassland_sunflower, mountains, gravel_plateau);
+		BiomeTypeCRWG.GRASSLAND.addGroupOf(sunflower_plains, mountains, gravel_plateau);
 
 		BiomeTypeCRWG.CHAPARRAL.addGroupOf(oak_chaparral, mountains, gravel_plateau);
 		BiomeTypeCRWG.CHAPARRAL.addGroupOf(flower_chaparral, mountains, gravel_plateau);
@@ -430,7 +466,7 @@ public abstract class ModBiomes
 		BiomeTypeCRWG.DENSE_DECIDUOUS_FOREST.addGroupOf(flower_forest, mountains, gravel_plateau);
 		BiomeTypeCRWG.DENSE_DECIDUOUS_FOREST.addGroupOf(old_growth_birch_forest, mountains, gravel_plateau);
 
-		BiomeTypeCRWG.COLD_GRASSLAND.addGroupOf(grassland, frozen_mountains, snowy_plateau);
+		BiomeTypeCRWG.COLD_GRASSLAND.addGroupOf(cold_grassland, frozen_mountains, snowy_plateau);
 
 		BiomeTypeCRWG.BOREAL_FOREST.addGroupOf(spruce_forest, frozen_mountains, snowy_plateau);
 		BiomeTypeCRWG.BOREAL_FOREST.addGroupOf(pine_forest, frozen_mountains, snowy_plateau);

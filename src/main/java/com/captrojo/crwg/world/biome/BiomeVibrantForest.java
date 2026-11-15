@@ -13,6 +13,10 @@ public class BiomeVibrantForest extends BiomeCRWGBase
 	public BiomeVibrantForest(int id, String name, int color, float temperature, float rainfall)
 	{
 		super(id, name, color, temperature, rainfall);
+		
+		this.decorator.trees = 8;
+
+		this.copyToHigherDecorators();
 	}
 
 	@Override

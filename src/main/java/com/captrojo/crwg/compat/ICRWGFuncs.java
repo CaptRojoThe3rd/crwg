@@ -42,12 +42,14 @@ public interface ICRWGFuncs
 	 * Also used to calculate indices into `ablock` and `ameta` arrays. This is an actual
 	 * Y coordinate.
 	 */
+	@Deprecated
 	int getMinYLevel();
 
 	/**
 	 * Get the top height limit of the world. Used for things like world gen checks. This is
 	 * an actual Y coordinate.
 	 */
+	@Deprecated
 	int getMaxYLevel();
 
 	/**
@@ -56,6 +58,7 @@ public interface ICRWGFuncs
 	 * 
 	 * This should be the height of the last water block.
 	 */
+	@Deprecated
 	int getSeaLevel();
 
 	/**
@@ -64,28 +67,33 @@ public interface ICRWGFuncs
 	 * Remember to update the parameters for ore generation and the values returned by the
 	 * getMinCaveHeight and getMaxCaveHeight functions.
 	 */
+	@Deprecated
 	int getExtraUndergroundSize();
 
 	/**
 	 * Get whether vanilla-style caves should generate or not
 	 */
+	@Deprecated
 	boolean shouldGenerateCaves();
 
 	/**
 	 * Get the minimum height of caves. This is a Y index of the `ablock` and `ameta` arrays,
 	 * NOT an actual Y coordinate.
 	 */
+	@Deprecated
 	int getMinCaveHeight();
 
 	/**
 	 * Get the maximum height of caves. This is a Y index of the `ablock` and `ameta` arrays,
 	 * NOT an actual Y coordinate.
 	 */
+	@Deprecated
 	int getMaxCaveHeight();
-	
+
 	/**
 	 * Get whether vanilla-style ravines should generate or not
 	 */
+	@Deprecated
 	boolean shouldGenerateRavines();
 
 	/**
@@ -95,9 +103,12 @@ public interface ICRWGFuncs
 	 * Vanilla world gen uses the values 40, 8, and 20, respectively.
 	 * These are Y indicies of the `ablock` and `ameta` arrays, NOT actual Y coordinates.
 	 */
+	@Deprecated
 	int getRavineHeight1();
 
+	@Deprecated
 	int getRavineHeight2();
 
+	@Deprecated
 	int getRavineHeight3();
 }

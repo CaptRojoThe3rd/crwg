@@ -11,12 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
-import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.BiomeCRWGBase;
@@ -216,6 +211,8 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		this.genTerrain(chunk_x, chunk_z, arrays.ablock, arrays);
 
+		this.cavegen_worm.generateAll(this.world, chunk_x, chunk_z, arrays);
+
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				int xz = x | (z << 4);
@@ -242,8 +239,6 @@ public class ChunkProviderCRWG implements IChunkProvider
 				continue;
 			}
 		}
-
-		this.cavegen_worm.generateAll(this.world, chunk_x, chunk_z, arrays);
 
 		if (this.map_features_enabled) {
 			this.mapgen_mineshaft.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);

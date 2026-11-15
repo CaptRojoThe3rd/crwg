@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenCanopyTree;
 import net.minecraft.world.gen.feature.WorldGenForest;
 import net.minecraft.world.gen.feature.WorldGenMegaJungle;
+import net.minecraft.world.gen.feature.WorldGenSavannaTree;
 import net.minecraft.world.gen.feature.WorldGenSwamp;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -19,6 +20,7 @@ public class TreeGens
 	public static final WorldGenAbstractTree Oak = new WorldGenTrees(false);
 	public static final WorldGenAbstractTree Oak_Big = new WorldGenBigTreeF(false, 7, 20);
 	public static final WorldGenAbstractTree Oak_Swamp = new WorldGenSwamp();
+	public static final WorldGenAbstractTree Oak_Shrub = new WorldGenShrubF(Blocks.log, 0, Blocks.leaves, 0);
 
 	public static final WorldGenAbstractTree Dark_Oak = new WorldGenCanopyTree(false);
 
@@ -28,10 +30,14 @@ public class TreeGens
 	public static final WorldGenAbstractTree Spruce_Tiny = new WorldGenTaiga2F(false, Blocks.log, 1, Blocks.leaves, 1);
 	public static final WorldGenAbstractTree Spruce = new WorldGenTallTree(false, 9, 17, false, false, Blocks.log, 1, Blocks.leaves, 1);
 	public static final WorldGenAbstractTree Spruce_Big = new WorldGenTallTree(false, 18, 35, true, true, Blocks.log, 1, Blocks.leaves, 1);
+	public static final WorldGenAbstractTree Spruce_Shrub = new WorldGenShrubF(Blocks.log, 1, Blocks.leaves, 1);
 
 	public static final WorldGenAbstractTree Jungle_Small = new WorldGenTrees(false, 9, 3, 3, true);
 	public static final WorldGenAbstractTree Jungle_Large = new WorldGenMegaJungle(false, 10, 20, 3, 3);
 	public static final WorldGenAbstractTree Jungle_Shrub = new WorldGenShrubF(3, 3);
+
+	public static final WorldGenAbstractTree Acacia = new WorldGenSavannaTree(false);
+	public static final WorldGenAbstractTree Acacia_Shrub = new WorldGenShrubF(Blocks.log2, 0, Blocks.leaves2, 0);
 
 	public static final WorldGenAbstractTree Bald_Cypress = new WorldGenBaldCypress(false);
 	public static final WorldGenAbstractTree Bald_Cypress_N = new WorldGenBaldCypress(true);

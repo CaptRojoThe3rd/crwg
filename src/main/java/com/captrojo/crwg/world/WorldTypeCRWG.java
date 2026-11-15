@@ -1,24 +1,26 @@
 package com.captrojo.crwg.world;
 
-import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraftforge.common.DimensionManager;
 
 public class WorldTypeCRWG extends WorldType
 {
+	public static final int SUBTYPE_NORMAL = 0;
+	public static final int SUBTYPE_ISLANDS = 1;
+
 	public static WorldTypeCRWG TYPE_CRWG;
+	public static WorldTypeCRWG TYPE_CRWG_ISLANDS;
 
-	public WorldTypeCRWG()
+	private final int subtype;
+
+	public WorldTypeCRWG(String name, int subtype)
 	{
-		super("CRWG");
-
-		DimensionManager.unregisterProviderType(0);
-		DimensionManager.registerProviderType(0, WorldProviderSurfaceCRWG.class, true);
+		super(name);
+		this.subtype = subtype;
 	}
 
 	@Override
@@ -30,18 +32,12 @@ public class WorldTypeCRWG extends WorldType
 	@Override
 	public WorldChunkManager getChunkManager(World world)
 	{
-		return new WorldChunkManagerCRWG(world);
-	}
-
-	@Override
-	public GenLayer getBiomeLayer(long seed, GenLayer parent)
-	{
-		return super.getBiomeLayer(seed, parent);
+		return new WorldChunkManagerCRWG(world, this.subtype);
 	}
 
 	@Override
 	public float getCloudHeight()
 	{
-		return CRWG.funcs.getSeaLevel() + 224;
+		return (float) (YConst.SEA_LVL_Y + 224);
 	}
 }

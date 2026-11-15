@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.gen.feature.tree;
 import java.util.Random;
 
 import com.captrojo.crwg.block.WoodBlocks;
-import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
@@ -39,7 +39,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 	{
 		final int height = rand.nextInt(this.add_height) + this.min_height;
 
-		if (y < CRWG.funcs.getMinYLevel() && (y + height) > CRWG.funcs.getMaxYLevel()) {
+		if (y < YConst.MIN_Y_LVL && (y + height) > YConst.MAX_Y_LVL) {
 			return false;
 		}
 

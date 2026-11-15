@@ -271,28 +271,28 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		}
 	}
 
-	public BiomeDecoratorCRWG createCRWGBiomeDecorator()
+	protected BiomeDecoratorCRWG createCRWGBiomeDecorator()
 	{
 		return new BiomeDecoratorCRWG(this);
 	}
 
-	public SoilType getSoilType(World world, int x, int y, int z, Random rand, int s_temp, int s_rain, int species_val)
+	protected SoilType getSoilType(World world, int x, int y, int z, Random rand, int s_temp, int s_rain, int species_val)
 	{
 		return SoilType.Soil_Map[s_temp][s_rain][(species_val >> 16) & 0x3];
 	}
 
-	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
+	protected BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
 	{
 		return this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species).grass;
 	}
 
-	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
+	protected BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
 	{
 		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
 		return low ? soil.coarse_dirt : soil.dirt;
 	}
 
-	public BlockState getExtFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, BlockState filler)
+	protected BlockState getExtFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, BlockState filler)
 	{
 		if (filler.block == Blocks.sand) {
 			return BlockState.SANDSTONE;

@@ -2,10 +2,10 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.world.biome.data.SoilType;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.data.SoilIdx;
+import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.gen.data.GenVals;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 import com.captrojo.crwg.world.gen.layer.GenLayerRand;
@@ -57,7 +57,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	{
 		IntCache.resetIntCache();
 		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
-		if (a <= 1 && y > (CRWG.funcs.getSeaLevel() + 192)) {
+		if (a <= 1 && y > (YConst.SEA_LVL_Y + 192)) {
 			return BlockState.STONE;
 		}
 		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
@@ -73,7 +73,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	{
 		IntCache.resetIntCache();
 		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
-		if (a <= 1 && y > (CRWG.funcs.getSeaLevel() + 192)) {
+		if (a <= 1 && y > (YConst.SEA_LVL_Y + 192)) {
 			return BlockState.STONE;
 		}
 		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);

@@ -1,4 +1,4 @@
-package com.captrojo.crwg.world;
+package com.captrojo.crwg.world.gen;
 
 import com.captrojo.crwg.world.biome.ModBiomes;
 
@@ -7,9 +7,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.terraingen.BiomeEvent;
 
-public class WorldEvents
+public class WorldGenEvents
 {
-	public static WorldEvents instance;
+	public static WorldGenEvents instance;
 
 	@SubscribeEvent
 	public void getVillageBlockID(BiomeEvent.GetVillageBlockID event)
@@ -32,6 +32,30 @@ public class WorldEvents
 			event.setResult(Result.DENY);
 			if (event.original == Blocks.oak_stairs) {
 				event.replacement = Blocks.birch_stairs;
+			} else {
+				event.replacement = event.original;
+			}
+			return;
+		}
+
+		/* cold grassland */
+		if (event.biome == ModBiomes.cold_grassland) {
+			event.setResult(Result.DENY);
+			if (event.original == Blocks.oak_stairs) {
+				event.replacement = Blocks.spruce_stairs;
+			} else {
+				event.replacement = event.original;
+			}
+			return;
+		}
+
+		/* savanna */
+		if (event.biome == ModBiomes.savanna) {
+			event.setResult(Result.DENY);
+			if (event.original == Blocks.log) {
+				event.replacement = Blocks.log2;
+			} else if (event.original == Blocks.oak_stairs) {
+				event.replacement = Blocks.acacia_stairs;
 			} else {
 				event.replacement = event.original;
 			}
@@ -97,6 +121,31 @@ public class WorldEvents
 			} else {
 				event.replacement = event.type;
 			}
+			return;
+		}
+
+		/* cold grassland */
+		if (event.biome == ModBiomes.cold_grassland) {
+			event.setResult(Result.DENY);
+			if (event.original == Blocks.planks) {
+				event.replacement = 1; /* spruce (Blocks.planks) */
+			} else if (event.original == Blocks.log) {
+				event.replacement = 1; /* spruce (Blocks.log) */
+			} else {
+				event.replacement = event.type;
+			}
+			return;
+		}
+
+		/* savanna */
+		if (event.biome == ModBiomes.savanna) {
+			event.setResult(Result.DENY);
+			if (event.original == Blocks.planks) {
+				event.replacement = 5; /* acacia (Blocks.planks) */
+			} else {
+				event.replacement = event.type;
+			}
+			/* Acacia logs have the same metadata as oak logs (different block ID) */
 			return;
 		}
 

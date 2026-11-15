@@ -16,6 +16,11 @@ public abstract class GConst
 	public static final int SHALLOWOCEAN = LandType.SHALLOW_OCEAN.ordinal();
 	public static final int BEACH = LandType.BEACH.ordinal();
 
+	public static final int ISLAND = LandType.ISLAND.ordinal();
+	public static final int ISLAND_HILLS = LandType.ISLAND_HILLS.ordinal();
+	public static final int MUSHROOM_ISLAND = LandType.MUSHROOM_ISLAND.ordinal();
+	public static final int MUSHROOM_ISLAND_HILLS = LandType.MUSHROOM_ISLAND_HILLS.ordinal();
+
 	public static final int LOWLANDS = LandType.LOWLANDS.ordinal();
 	public static final int HILLS = LandType.HILLS.ordinal();
 	public static final int HIGHLANDS = LandType.HIGHLANDS.ordinal();
@@ -23,6 +28,7 @@ public abstract class GConst
 	public static final int MOUNTAINS = LandType.MOUNTAINS.ordinal();
 	public static final int PLATEAUS = LandType.PLATEAUS.ordinal();
 	public static final int FOOTHILLS = LandType.FOOTHILLS.ordinal();
+	public static final int EXTREME_HILLS = LandType.EXTREME_HILLS.ordinal();
 
 	public static final int RIVERS = LandType.RIVER.ordinal();
 	public static final int LAKES = LandType.LAKE.ordinal();
