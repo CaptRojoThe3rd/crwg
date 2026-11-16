@@ -2,12 +2,14 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
+import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class WorldGenTreePalm extends WorldGenAbstractTree
@@ -44,7 +46,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 		}
 
 		Block ground = world.getBlock(x, y - 1, z);
-		if (!ground.canSustainPlant(world, x, y, z, ForgeDirection.UP, WoodBlocks.PALM.sapling)) {
+		if (!ground.canSustainPlant(world, x, y, z, ForgeDirection.UP, (IPlantable) ModBlocks.sapling_palm)) {
 			return false;
 		}
 
@@ -61,7 +63,7 @@ public class WorldGenTreePalm extends WorldGenAbstractTree
 		ground.onPlantGrow(world, x, y - 1, z, x, y, z);
 
 		final Block log = WoodBlocks.PALM.log;
-		final Block leaf = WoodBlocks.PALM.leaf;
+		final Block leaf = ModBlocks.leaf_palm;
 
 		float f = -0.1f, fa = 0.2f;
 		int t = -1;

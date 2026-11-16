@@ -1,11 +1,14 @@
 package com.captrojo.crwg.block;
 
 import com.captrojo.crwg.block.data.Colorizer;
+import com.captrojo.crwg.block.data.SaplingArrangement;
 import com.captrojo.crwg.item.Item2x2FloorPlant;
 import com.captrojo.crwg.item.ItemBlockCRWG;
 import com.captrojo.crwg.item.ItemDoublePlantCRWG;
+import com.captrojo.crwg.item.ItemLeavesCRWG;
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.main.GameRegistry2;
+import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -19,6 +22,34 @@ import net.minecraftforge.common.EnumPlantType;
 
 public abstract class ModBlocks
 {
+	public static Block sapling_bald_cypress;
+	public static Block sapling_cedar;
+	public static Block sapling_chromaticus_red;
+	public static Block sapling_chromaticus_green;
+	public static Block sapling_chromaticus_blue;
+	public static Block sapling_chromaticus_violet;
+	public static Block sapling_enchanted_ash;
+	public static Block sapling_palm;
+	public static Block sapling_pine;
+	public static Block sapling_tamarack;
+	public static Block sapling_violet;
+	public static Block sapling_willow_black;
+	public static Block sapling_willow_white;
+
+	public static Block leaf_bald_cypress;
+	public static Block leaf_cedar;
+	public static Block leaf_chromaticus_red;
+	public static Block leaf_chromaticus_green;
+	public static Block leaf_chromaticus_blue;
+	public static Block leaf_chromaticus_violet;
+	public static Block leaf_enchanted_ash;
+	public static Block leaf_palm;
+	public static Block leaf_pine;
+	public static Block leaf_tamarack;
+	public static Block leaf_violet;
+	public static Block leaf_willow_black;
+	public static Block leaf_willow_white;
+
 	public static Block silty_dirt;
 	public static Block coarse_silty_dirt;
 	public static Block silty_grass;
@@ -92,6 +123,74 @@ public abstract class ModBlocks
 	public static void initBlocks()
 	{
 		WoodBlocks.values();
+		
+		sapling_bald_cypress = (new BlockSaplingCRWG("bald_cypress_sapling", TreeGens::getBaldCypressSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/bald_cypress"));
+		sapling_cedar = (new BlockSaplingCRWG("cedar_sapling", TreeGens::getCedarSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/cedar"));
+		sapling_chromaticus_red = (new BlockSaplingCRWG("red_chromaticus_sapling", TreeGens::getChromaticusRedSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/red_chromaticus"));
+		sapling_chromaticus_green = (new BlockSaplingCRWG("green_chromaticus_sapling", TreeGens::getChromaticusGreenSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/green_chromaticus"));
+		sapling_chromaticus_blue = (new BlockSaplingCRWG("blue_chromaticus_sapling", TreeGens::getChromaticusBlueSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/blue_chromaticus"));
+		sapling_chromaticus_violet = (new BlockSaplingCRWG("violet_chromaticus_sapling", TreeGens::getChromaticusVioletSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/violet_chromaticus"));
+		sapling_enchanted_ash = (new BlockSaplingCRWG("enchanted_ash_sapling", TreeGens::getEnchantedAshSaplingGen))
+			.setSaplingArrangement(SaplingArrangement.TWOBYTWO)
+			.setBlockTextureName(CRWG.ident("saplings/enchanted_ash"));
+		sapling_palm = (new BlockSaplingCRWG("palm_sapling", TreeGens::getPalmSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/palm"));
+		sapling_pine = (new BlockSaplingCRWG("pine_sapling", TreeGens::getPineSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/pine"));
+		sapling_tamarack = (new BlockSaplingCRWG("tamarack_sapling", TreeGens::getTamarackSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/tamarack"));
+		sapling_violet = (new BlockSaplingCRWG("violet_sapling", TreeGens::getVioletSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/violet"));
+		sapling_willow_black = (new BlockSaplingCRWG("black_willow_sapling", TreeGens::getWillowBlackSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/black_willow"));
+		sapling_willow_white = (new BlockSaplingCRWG("white_willow_sapling", TreeGens::getWillowWhiteSaplingGen))
+			.setBlockTextureName(CRWG.ident("saplings/white_willow"));
+
+		leaf_bald_cypress = (new BlockLeavesCRWG("bald_cypress_leaves", sapling_bald_cypress))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x5bd626, 0.5F))
+			.setBlockTextureName(CRWG.ident("leaves/bald_cypress"));
+		leaf_cedar = (new BlockLeavesCRWG("cedar_leaves", sapling_cedar))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x4c964c, 0.66F))
+			.setBlockTextureName(CRWG.ident("leaves/cedar"));
+		leaf_chromaticus_red = (new BlockLeavesCRWG("red_chromaticus_leaves", sapling_chromaticus_red))
+			.setColorizer(Colorizer.biomeFoliageAvg(0xc17ca4, 0.66F))
+			.setBlockTextureName(CRWG.ident("leaves/red_chromaticus"));
+		leaf_chromaticus_green = (new BlockLeavesCRWG("green_chromaticus_leaves", sapling_chromaticus_green))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x7cc194, 0.66F))
+			.setBlockTextureName(CRWG.ident("leaves/green_chromaticus"));
+		leaf_chromaticus_blue = (new BlockLeavesCRWG("blue_chromaticus_leaves", sapling_chromaticus_blue))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x7cbec1, 0.66F))
+			.setBlockTextureName(CRWG.ident("leaves/blue_chromaticus"));
+		leaf_chromaticus_violet = (new BlockLeavesCRWG("violet_chromaticus_leaves", sapling_chromaticus_violet))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x887cc1, 0.66F))
+			.setBlockTextureName(CRWG.ident("leaves/violet_chromaticus"));
+		leaf_enchanted_ash = (new BlockLeavesCRWG("enchanted_ash_leaves", sapling_enchanted_ash))
+			.setColorizer(Colorizer.NONE)
+			.setBlockTextureName(CRWG.ident("leaves/enchanted_ash"));
+		leaf_palm = (new BlockLeavesCRWG("palm_leaves", sapling_palm))
+			.setColorizer(Colorizer.BIOME_FOLIAGE)
+			.setBlockTextureName(CRWG.ident("leaves/palm"));
+		leaf_pine = (new BlockLeavesCRWG("pine_leaves", sapling_pine))
+			.setColorizer(Colorizer.fixed(0x609970))
+			.setBlockTextureName(CRWG.ident("leaves/pine"));
+		leaf_tamarack = (new BlockLeavesCRWG("tamarack_leaves", sapling_tamarack))
+			.setColorizer(Colorizer.biomeFoliageAvg(0x5db73c, 0.5F))
+			.setBlockTextureName(CRWG.ident("leaves/tamarack"));
+		leaf_violet = (new BlockLeavesCRWG("violet_leaves", sapling_violet))
+			.setColorizer(Colorizer.BIOME_FOLIAGE)
+			.setBlockTextureName(CRWG.ident("leaves/violet"));
+		leaf_willow_black = (new BlockLeavesCRWG("black_willow_leaves", sapling_willow_black))
+			.setColorizer(Colorizer.BIOME_FOLIAGE)
+			.setBlockTextureName(CRWG.ident("leaves/black_willow"));
+		leaf_willow_white = (new BlockLeavesCRWG("white_willow_leaves", sapling_willow_white))
+			.setColorizer(Colorizer.BIOME_FOLIAGE)
+			.setBlockTextureName(CRWG.ident("leaves/white_willow"));
 
 		/* SOILS */
 
@@ -301,6 +400,34 @@ public abstract class ModBlocks
 		for (WoodBlocks type : WoodBlocks.values()) {
 			type.registerBlocks();
 		}
+
+		registerBlock(sapling_bald_cypress);
+		registerBlock(sapling_cedar);
+		registerBlock(sapling_chromaticus_red);
+		registerBlock(sapling_chromaticus_green);
+		registerBlock(sapling_chromaticus_blue);
+		registerBlock(sapling_chromaticus_violet);
+		registerBlock(sapling_enchanted_ash);
+		registerBlock(sapling_palm);
+		registerBlock(sapling_pine);
+		registerBlock(sapling_tamarack);
+		registerBlock(sapling_violet);
+		registerBlock(sapling_willow_black);
+		registerBlock(sapling_willow_white);
+		
+		registerBlock(leaf_bald_cypress, new ItemLeavesCRWG(leaf_bald_cypress));
+		registerBlock(leaf_cedar, new ItemLeavesCRWG(leaf_cedar));
+		registerBlock(leaf_chromaticus_red, new ItemLeavesCRWG(leaf_chromaticus_red));
+		registerBlock(leaf_chromaticus_green, new ItemLeavesCRWG(leaf_chromaticus_green));
+		registerBlock(leaf_chromaticus_blue, new ItemLeavesCRWG(leaf_chromaticus_blue));
+		registerBlock(leaf_chromaticus_violet, new ItemLeavesCRWG(leaf_chromaticus_violet));
+		registerBlock(leaf_enchanted_ash, new ItemLeavesCRWG(leaf_enchanted_ash));
+		registerBlock(leaf_palm, new ItemLeavesCRWG(leaf_palm));
+		registerBlock(leaf_pine, new ItemLeavesCRWG(leaf_pine));
+		registerBlock(leaf_tamarack, new ItemLeavesCRWG(leaf_tamarack));
+		registerBlock(leaf_violet, new ItemLeavesCRWG(leaf_violet));
+		registerBlock(leaf_willow_black, new ItemLeavesCRWG(leaf_willow_black));
+		registerBlock(leaf_willow_white, new ItemLeavesCRWG(leaf_willow_white));
 
 		registerBlock(silty_dirt);
 		registerBlock(coarse_silty_dirt);

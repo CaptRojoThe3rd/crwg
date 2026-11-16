@@ -1,7 +1,14 @@
 package com.captrojo.crwg.world.biome;
 
+import java.util.Random;
+
+import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class BiomeMarsh extends BiomeAbstractSwamp
 {
@@ -20,10 +27,25 @@ public class BiomeMarsh extends BiomeAbstractSwamp
 			this.foliage_color = 0x7b8440;
 		}
 
-		this.decorator.trees = 0;
+		this.decorator.sup_trees = this::getTreeCount;
 
 		this.decorator.grass = 10;
 		this.decorator.tall_grass = 30;
+	}
+
+	private int getTreeCount(World world, int x0, int z0, Random rand)
+	{
+		double d = BiomeGenBase.plantNoise.func_151601_a((double) x0 / 256.0, (double) z0 / 256.0);
+		if (d < -0.333) {
+			return 7;
+		}
+		return 0;
+	}
+
+	@Override
+	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	{
+		return TreeGens.Willow_Black;
 	}
 
 	@Override

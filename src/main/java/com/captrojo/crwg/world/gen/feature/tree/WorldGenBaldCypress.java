@@ -12,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class WorldGenBaldCypress extends WorldGenAbstractTree
@@ -27,7 +28,7 @@ public class WorldGenBaldCypress extends WorldGenAbstractTree
 	private static final int[] SOIL_Z_OFFS = {0, 0, -1, 1};
 
 	Block log = WoodBlocks.BALD_CYPRESS.log;
-	Block leaf = WoodBlocks.BALD_CYPRESS.leaf;
+	Block leaf = ModBlocks.leaf_bald_cypress;
 
 	int min_height = 8;
 	int add_height = 8;
@@ -122,14 +123,14 @@ public class WorldGenBaldCypress extends WorldGenAbstractTree
 			gnd = world.getBlock(x, y - 1, z);
 		}
 
-		if (!gnd.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, WoodBlocks.BALD_CYPRESS.sapling)) {
+		if (!gnd.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, (IPlantable) ModBlocks.sapling_bald_cypress)) {
 			return false;
 		}
 		for (int i = 0; i < 4; i++) {
 			int x1 = x + SOIL_X_OFFS[i];
 			int z1 = z + SOIL_Z_OFFS[i];
 			gnd = world.getBlock(x1, y - 1, z1);
-			if (!gnd.canSustainPlant(world, x1, y - 1, z1, ForgeDirection.UP, WoodBlocks.BALD_CYPRESS.sapling)) {
+			if (!gnd.canSustainPlant(world, x1, y - 1, z1, ForgeDirection.UP, (IPlantable) ModBlocks.sapling_bald_cypress)) {
 				return false;
 			}
 		}

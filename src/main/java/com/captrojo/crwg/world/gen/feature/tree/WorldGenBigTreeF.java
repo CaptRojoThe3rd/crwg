@@ -2,8 +2,6 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.block.WoodBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -28,11 +26,11 @@ public class WorldGenBigTreeF extends WorldGenBigTree
 		this.heightLimitLimit = max_height - min_height + 1;
 	}
 
-	public WorldGenBigTreeF(boolean notify, int min_height, int max_height, WoodBlocks wood)
+	public WorldGenBigTreeF(boolean notify, int min_height, int max_height, Block log, Block leaf)
 	{
 		this(notify, min_height, max_height);
-		this.log_block = wood.log;
-		this.leaf_block = wood.leaf;
+		this.log_block = log;
+		this.leaf_block = leaf;
 	}
 
 	public WorldGenBigTreeF big()

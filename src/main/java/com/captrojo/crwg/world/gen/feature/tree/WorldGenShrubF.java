@@ -2,7 +2,6 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.util.YConst;
 
@@ -19,9 +18,9 @@ public class WorldGenShrubF extends WorldGenShrub
 	final Block log_block;
 	final Block leaf_block;
 
-	public WorldGenShrubF(WoodBlocks wood)
+	public WorldGenShrubF(Block log, Block leaf)
 	{
-		this(wood.log, 0, wood.leaf, 0);
+		this(log, 0, leaf, 0);
 	}
 
 	public WorldGenShrubF(int log_meta, int leaf_meta)

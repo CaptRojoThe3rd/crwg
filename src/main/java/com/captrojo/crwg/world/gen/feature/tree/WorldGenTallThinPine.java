@@ -2,8 +2,6 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.block.WoodBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
@@ -20,12 +18,12 @@ public class WorldGenTallThinPine extends WorldGenAbstractTree
 	private final int min_height;
 	private final int max_height;
 
-	public WorldGenTallThinPine(boolean notify, WoodBlocks wood, int min_height, int max_height)
+	public WorldGenTallThinPine(boolean notify, Block log, Block leaf, int min_height, int max_height)
 	{
 		super(notify);
 
-		this.log_block = wood.log;
-		this.leaf_block = wood.leaf;
+		this.log_block = log;
+		this.leaf_block = leaf;
 
 		this.min_height = min_height;
 		this.max_height = max_height;

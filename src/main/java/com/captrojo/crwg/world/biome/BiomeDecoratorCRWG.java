@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.func.WorldCPosIntSupplier;
 import com.captrojo.crwg.world.gen.feature.WorldGenSeafloorBlockCircle;
 
 import net.minecraft.crash.CrashReport;
@@ -59,6 +60,7 @@ public class BiomeDecoratorCRWG
 	public float brown_mushroom_chance = 0.25F;
 	public float red_mushroom_chance = 0.125F;
 
+	public WorldCPosIntSupplier sup_trees = this::getTrees;
 	public int trees = 0;
 	public float extra_tree_chance = 0.0F;
 	public int big_mushrooms = 0;
@@ -347,7 +349,7 @@ public class BiomeDecoratorCRWG
 		}
 
 		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.TREE)) {
-			int t = this.trees;
+			int t = this.sup_trees.get(world, x0, z0, rand);
 			if (this.extra_tree_chance > 0.0f && rand.nextFloat() <= this.extra_tree_chance) {
 				t++;
 			}
@@ -472,5 +474,10 @@ public class BiomeDecoratorCRWG
 	private int randCoord(Random rand, int c)
 	{
 		return c + rand.nextInt(16) + 8;
+	}
+
+	private int getTrees(World world, int x0, int z0, Random rand)
+	{
+		return this.trees;
 	}
 }

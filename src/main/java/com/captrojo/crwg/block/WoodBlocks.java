@@ -2,18 +2,13 @@ package com.captrojo.crwg.block;
 
 import java.util.List;
 
-import com.captrojo.crwg.block.data.Colorizer;
-import com.captrojo.crwg.block.data.SaplingArrangement;
 import com.captrojo.crwg.item.ItemDoorCRWG;
-import com.captrojo.crwg.item.ItemLeavesCRWG;
 import com.captrojo.crwg.item.ItemLogCRWG;
 import com.captrojo.crwg.item.ItemSignCRWG;
 import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.main.GameRegistry2;
 import com.captrojo.crwg.tileentity.TESignCRWG;
 import com.captrojo.crwg.tileentity.TESignCRWG.Sign;
-import com.captrojo.crwg.util.WorldFunction;
-import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -22,21 +17,21 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public enum WoodBlocks
 {
-	BALD_CYPRESS("bald_cypress", Sign.BALD_CYPRESS, TreeGens::getBaldCypressSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x5bd626, 0.5F)),
-	CEDAR("cedar", Sign.CEDAR, TreeGens::getCedarSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x4c964c, 0.66F)),
-	CHROMATICUS_RED("red_chromaticus", Sign.CHROMATICUS_RED, TreeGens::getChromaticusRedSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0xc17ca4, 0.66F)),
-	CHROMATICUS_GREEN("green_chromaticus", Sign.CHROMATICUS_GREEN, TreeGens::getChromaticusGreenSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x7cc194, 0.66F)),
-	CHROMATICUS_BLUE("blue_chromaticus", Sign.CHROMATICUS_BLUE, TreeGens::getChromaticusBlueSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x7cbec1, 0.66F)),
-	CHROMATICUS_VIOLET("violet_chromaticus", Sign.CHROMATICUS_VIOLET, TreeGens::getChromaticusVioletSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x887cc1, 0.66F)),
-	ENCHANTED_ASH("enchanted_ash", Sign.ENCHANTED_ASH, TreeGens::getEnchantedAshSaplingGen, SaplingArrangement.TWOBYTWO, Colorizer.NONE),
-	PALM("palm", Sign.PALM, TreeGens::getPalmSaplingGen, SaplingArrangement.SINGLE, Colorizer.BIOME_FOLIAGE),
-	PINE("pine", Sign.PINE, TreeGens::getPineSaplingGen, SaplingArrangement.SINGLE, Colorizer.fixed(0x609970)),
-	TAMARACK("tamarack", Sign.TAMARACK, TreeGens::getTamarackSaplingGen, SaplingArrangement.SINGLE, Colorizer.biomeFoliageAvg(0x5db73c, 0.5F)),
-	VIOLET("violet", Sign.VIOLET, TreeGens::getVioletSaplingGen, SaplingArrangement.SINGLE, Colorizer.BIOME_FOLIAGE);
+	BALD_CYPRESS("bald_cypress", Sign.BALD_CYPRESS),
+	CEDAR("cedar", Sign.CEDAR),
+	CHROMATICUS_RED("red_chromaticus", Sign.CHROMATICUS_RED),
+	CHROMATICUS_GREEN("green_chromaticus", Sign.CHROMATICUS_GREEN),
+	CHROMATICUS_BLUE("blue_chromaticus", Sign.CHROMATICUS_BLUE),
+	CHROMATICUS_VIOLET("violet_chromaticus", Sign.CHROMATICUS_VIOLET),
+	ENCHANTED_ASH("enchanted_ash", Sign.ENCHANTED_ASH),
+	PALM("palm", Sign.PALM),
+	PINE("pine", Sign.PINE),
+	TAMARACK("tamarack", Sign.TAMARACK),
+	VIOLET("violet", Sign.VIOLET),
+	WILLOW("willow", Sign.WILLOW);
 
 	public final String name;
 
@@ -54,15 +49,9 @@ public enum WoodBlocks
 	public BlockSignCRWG sign_standing; /* this one has the item mapped to it */
 	public BlockSignCRWG sign_wall;
 
-	public BlockSaplingCRWG sapling;
-	public BlockLeavesCRWG leaf;
-
 	WoodBlocks(
 		String name,
-		TESignCRWG.Sign sign,
-		WorldFunction<WorldGenerator> sapling_gen_func,
-		SaplingArrangement sapling_arrangement,
-		Colorizer leaf_colorizer
+		TESignCRWG.Sign sign
 	)
 	{
 		this.name = name;
@@ -113,12 +102,6 @@ public enum WoodBlocks
 			.setResistance(5.0F)
 			.setStepSound(Block.soundTypeWood);
 		this.sign_wall.setHarvestLevel("axe", 0);
-
-		this.sapling = (BlockSaplingCRWG) (new BlockSaplingCRWG(name + "_sapling", sapling_gen_func, sapling_arrangement))
-			.setBlockTextureName(CRWG.ident("saplings/" + name))
-			.setStepSound(Block.soundTypeGrass);
-
-		this.leaf = new BlockLeavesCRWG(name, this.sapling, leaf_colorizer);
 	}
 
 	void registerBlocks()
@@ -137,9 +120,6 @@ public enum WoodBlocks
 		Item item = new ItemSignCRWG(this.name + "_sign", "wood/" + this.name + "_sign", this.sign_standing, this.sign_wall);
 		GameRegistry2.registerBlock(this.sign_standing, item, this.sign_standing.getUnlocalizedName());
 		GameRegistry2.registerBlock(this.sign_wall, null, this.sign_wall.getUnlocalizedName());
-
-		GameRegistry.registerBlock(this.sapling, this.sapling.getUnlocalizedName());
-		GameRegistry2.registerBlock(this.leaf, new ItemLeavesCRWG(this.leaf), this.leaf.getUnlocalizedName());
 	}
 
 	public void addWoodBlocksToList(List<ItemStack> list)

@@ -30,14 +30,12 @@ public class TabBlocks extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public void displayAllReleventItems(List<ItemStack> list)
 	{
+		/* We add blocks manually because new blocks/items will have effectively scrambled
+		 * IDs when loading an existing world, and that makes the creative tab look ugly.
+		 */
+
 		for (WoodBlocks type : WoodBlocks.values()) {
 			type.addWoodBlocksToList(list);
-		}
-		for (WoodBlocks type : WoodBlocks.values()) {
-			type.leaf.getSubBlocks(Item.getItemFromBlock(type.leaf), this, list);
-		}
-		for (WoodBlocks type : WoodBlocks.values()) {
-			type.sapling.getSubBlocks(Item.getItemFromBlock(type.sapling), this, list);
 		}
 
 		for (Field field : ModBlocks.class.getFields()) {

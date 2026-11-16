@@ -1,4 +1,4 @@
-package com.captrojo.crwg.util;
+package com.captrojo.crwg.util.func;
 
 import java.util.Random;
 

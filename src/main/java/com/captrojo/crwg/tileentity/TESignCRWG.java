@@ -14,6 +14,7 @@ public class TESignCRWG extends TileEntitySign
 	public static enum Sign
 	{
 		BALD_CYPRESS("bald_cypress_sign"),
+		WILLOW("black_willow_sign"),
 		CEDAR("cedar_sign"),
 		CHROMATICUS_RED("red_chromaticus_sign"),
 		CHROMATICUS_GREEN("green_chromaticus_sign"),

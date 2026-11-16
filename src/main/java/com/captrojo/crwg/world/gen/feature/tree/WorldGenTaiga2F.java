@@ -2,7 +2,6 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.util.YConst;
 
 import net.minecraft.block.Block;
@@ -19,9 +18,9 @@ public class WorldGenTaiga2F extends WorldGenTaiga2
 	final Block leaf_block;
 	final int leaf_meta;
 
-	public WorldGenTaiga2F(boolean notify, WoodBlocks wood)
+	public WorldGenTaiga2F(boolean notify, Block log, Block leaf)
 	{
-		this(notify, wood.log, 0, wood.leaf, 0);
+		this(notify, log, 0, leaf, 0);
 	}
 
 	public WorldGenTaiga2F(boolean notify, Block log, int log_meta, Block leaf, int leaf_meta)

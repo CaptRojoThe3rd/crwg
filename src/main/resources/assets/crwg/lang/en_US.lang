@@ -191,6 +191,27 @@ tile.violet_sign.name=Violet Sign
 tile.violet_sapling.name=Violet Sapling
 tile.violet_leaves.name=Violet Leaves
 
+tile.willow_log.regular.name=Willow Log
+tile.willow_log.regular_stripped.name=Stripped Willow Log
+tile.willow_log.fullbark.name=Willow Wood
+tile.willow_log.fullbark_stripped.name=Stripped Willow Wood
+tile.willow_planks.name=Willow Planks
+tile.willow_slab.name=Willow Slab
+tile.willow_stairs.name=Willow Stairs
+tile.willow_fence.name=Willow Fence
+tile.willow_fence_gate.name=Willow Fence Gate
+tile.willow_button.name=Willow Button
+tile.willow_pressure_plate.name=Willow Pressure Plate
+tile.willow_door.name=Willow Door
+tile.willow_trapdoor.name=Willow Trap Door
+tile.willow_sign.name=Willow Sign
+tile.willow_sapling.name=Willow Sapling
+tile.willow_leaves.name=Willow Leaves
+tile.black_willow_sapling.name=Black Willow Sapling
+tile.black_willow_leaves.name=Black Willow Leaves
+tile.white_willow_sapling.name=White Willow Sapling
+tile.white_willow_leaves.name=White Willow Leaves
+
 tile.silty_dirt.name=Silty Dirt
 tile.coarse_silty_dirt.name=Coarse Silty Dirt
 tile.silty_grass.name=Silty Grass Block

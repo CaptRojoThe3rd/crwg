@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.captrojo.crwg.block.data.SaplingArrangement;
-import com.captrojo.crwg.util.WorldFunction;
+import com.captrojo.crwg.util.func.WorldFunction;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,14 +23,29 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 public class BlockSaplingCRWG extends BlockSapling
 {
 	final WorldFunction<WorldGenerator> func_gen;
-	final SaplingArrangement arrangement;
+	SaplingArrangement arrangement;
 
-	public BlockSaplingCRWG(String name, WorldFunction<WorldGenerator> func_gen, SaplingArrangement arrangement)
+	public BlockSaplingCRWG(String name, WorldFunction<WorldGenerator> func_gen)
 	{
 		this.setBlockName(name);
 		this.setCreativeTab(null);
+		this.setStepSound(Block.soundTypeGrass);
+
 		this.func_gen = func_gen;
+		this.arrangement = SaplingArrangement.SINGLE;
+	}
+
+	public BlockSaplingCRWG setSaplingArrangement(SaplingArrangement arrangement)
+	{
 		this.arrangement = arrangement;
+		return this;
+	}
+
+	@Override
+	public BlockSaplingCRWG setBlockTextureName(String texture_name)
+	{
+		super.setBlockTextureName(texture_name);
+		return this;
 	}
 
 	/**
@@ -83,7 +98,7 @@ public class BlockSaplingCRWG extends BlockSapling
 	@Override
 	protected boolean canPlaceBlockOn(Block ground)
 	{
-		if (this == WoodBlocks.PALM.sapling && ground == Blocks.sand) {
+		if (this == ModBlocks.sapling_palm && ground == Blocks.sand) {
 			return true;
 		}
 		return super.canPlaceBlockOn(ground);

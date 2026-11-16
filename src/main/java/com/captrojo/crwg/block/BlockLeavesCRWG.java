@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.captrojo.crwg.block.data.Colorizer;
-import com.captrojo.crwg.main.CRWG;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,29 +19,28 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockLeavesCRWG extends BlockLeaves
 {
-	final String[] a_wood_name;
 	final Block sapling;
-	
 	Colorizer colorizer = Colorizer.BIOME_FOLIAGE;
 
-	public BlockLeavesCRWG(String wood_name, Block sapling, Colorizer colorizer)
+	public BlockLeavesCRWG(String name, Block sapling)
 	{
-		this.setBlockName(wood_name + "_leaves");
+		this.setBlockName(name);
 		this.setCreativeTab(null);
 		this.setStepSound(Block.soundTypeGrass);
 
 		this.sapling = sapling;
-		this.a_wood_name = new String[] {wood_name};
-		
-		this.colorizer = colorizer;
+	}
 
-		this.textureName = CRWG.ident("leaves/" + wood_name);
+	public BlockLeavesCRWG setColorizer(Colorizer colorizer)
+	{
+		this.colorizer = colorizer;
+		return this;
 	}
 
 	@Override
 	public String[] func_150125_e()
 	{
-		return this.a_wood_name;
+		return null;
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class BlockLeavesCRWG extends BlockLeaves
 		int i = this.field_150121_P ? 0 : 1;
 		return this.field_150129_M[i][0];
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta)

@@ -2,9 +2,8 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.util.BlockState;
-import com.captrojo.crwg.util.World1IFunction;
+import com.captrojo.crwg.util.func.World1IFunction;
 import com.captrojo.crwg.world.biome.data.SoilType;
 
 import net.minecraft.block.Block;
@@ -111,10 +110,11 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		int max_height,
 		boolean thick,
 		boolean podzol,
-		WoodBlocks wood
+		Block log,
+		Block leaf
 	)
 	{
-		this(notify, min_height, max_height, thick, podzol, wood.log, 0, wood.leaf, 0);
+		this(notify, min_height, max_height, thick, podzol, log, 0, leaf, 0);
 	}
 
 	public WorldGenTallTree(

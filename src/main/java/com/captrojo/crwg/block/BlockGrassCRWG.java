@@ -88,6 +88,7 @@ public class BlockGrassCRWG extends BlockGrass
 				int z1 = z + rand.nextInt(3) - 1;
 				if (
 					world.getBlock(x1, y1, z1) == this.dirt_block &&
+					world.getBlockMetadata(x1, y1, z1) == 0 &&
 					world.getBlockLightValue(x1, y1 + 1, z1) >= 4 &&
 					world.getBlockLightOpacity(x1, y1 + 1, z1) <= 2
 				) {
