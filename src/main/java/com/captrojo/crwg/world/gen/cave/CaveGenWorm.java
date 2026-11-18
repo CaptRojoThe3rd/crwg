@@ -37,15 +37,15 @@ public class CaveGenWorm extends CaveGenBase
 
 		final double MAX_H_LVL = (double) YConst.MAX_H_LVL;
 
-		int x0 = chunk_x << 4;
-		int z0 = chunk_z << 4;
+		int cx0 = chunk_x << 4;
+		int cz0 = chunk_z << 4;
 
-		int x8 = x0 + 8;
-		int z8 = z0 + 8;
-		double chk_x_n = (double) x8 - 16.0;
-		double chk_x_p = (double) x8 + 16.0;
-		double chk_z_n = (double) z8 - 16.0;
-		double chk_z_p = (double) z8 + 16.0;
+		int cx8 = cx0 + 8;
+		int cz8 = cz0 + 8;
+		double chk_x_n = (double) cx8 - 16.0;
+		double chk_x_p = (double) cx8 + 16.0;
+		double chk_z_n = (double) cz8 - 16.0;
+		double chk_z_p = (double) cz8 + 16.0;
 
 		final int min_β = -30000;
 		final int max_β = 30000;
@@ -101,8 +101,8 @@ public class CaveGenWorm extends CaveGenBase
 
 			int hxi = MathHelper.floor_double(head_x);
 			int hzi = MathHelper.floor_double(head_z);
-			int hxi0 = hxi - x0;
-			int hzi0 = hzi - z0;
+			int hxi0 = hxi - cx0;
+			int hzi0 = hzi - cz0;
 
 			int xn = hxi0 - 8;
 			int xp = hxi0 + 8;
@@ -162,9 +162,9 @@ public class CaveGenWorm extends CaveGenBase
 						int iy = MathHelper.floor_double(dy);
 						int iz = MathHelper.floor_double(dz);
 
-						int xa = ix - x0;
+						int xa = ix - cx0;
 						int ya = iy;
-						int za = iz - z0;
+						int za = iz - cz0;
 
 						if (xa < 0 || xa >= 16) {
 							continue;
@@ -188,19 +188,19 @@ public class CaveGenWorm extends CaveGenBase
 	public void generate(World world, int r_chunk_x, int r_chunk_z, int chunk_x, int chunk_z, GenArrays arrays)
 	{
 		Random rand = this.rand;
-		int rx0 = r_chunk_x << 4;
-		int rz0 = r_chunk_z << 4;
+		int rcx0 = r_chunk_x << 4;
+		int rcz0 = r_chunk_z << 4;
 
 		int head_α = rand.nextInt(65536);
-		double head_x = (double) rx0 + (rand.nextDouble() * 16.0);
+		double head_x = (double) rcx0 + (rand.nextDouble() * 16.0);
 		double head_y = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * (YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL));
-		double head_z = (double) rz0 + (rand.nextDouble() * 16.0);
+		double head_z = (double) rcz0 + (rand.nextDouble() * 16.0);
 		this.generateWorm(world, head_α, 0, head_x, head_y, head_z, chunk_x, chunk_z, arrays, true);
 
 		head_α = rand.nextInt(65536);
-		head_x = (double) rx0 + (rand.nextDouble() * 16.0);
+		head_x = (double) rcx0 + (rand.nextDouble() * 16.0);
 		head_y = YConst.MIN_CAVE_H_LVL + (rand.nextDouble() * (YConst.SEA_LVL_H - YConst.MIN_CAVE_H_LVL));
-		head_z = (double) rz0 + (rand.nextDouble() * 16.0);
+		head_z = (double) rcz0 + (rand.nextDouble() * 16.0);
 		this.generateWorm(world, head_α, 0, head_x, head_y, head_z, chunk_x, chunk_z, arrays, true);
 	}
 }

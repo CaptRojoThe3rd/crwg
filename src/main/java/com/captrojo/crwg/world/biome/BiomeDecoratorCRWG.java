@@ -27,8 +27,8 @@ public class BiomeDecoratorCRWG
 {
 	private World _cur_world;
 	private Random _cur_rand;
-	private int _cur_x0;
-	private int _cur_z0;
+	private int _cur_cx0;
+	private int _cur_cz0;
 
 	private final BiomeCRWGBase biome;
 
@@ -155,12 +155,12 @@ public class BiomeDecoratorCRWG
 		}
 	}
 
-	private ReportedException crash(int x0, int z0, Throwable t)
+	private ReportedException crash(int cx0, int cz0, Throwable t)
 	{
 		CrashReport crash = CrashReport.makeCrashReport(t, t.getMessage());
 		CrashReportCategory cat = crash.makeCategory("DecorationChunk");
-		cat.addCrashSection("x0", Integer.valueOf(x0));
-		cat.addCrashSection("z0", Integer.valueOf(z0));
+		cat.addCrashSection("cx0", Integer.valueOf(cx0));
+		cat.addCrashSection("cz0", Integer.valueOf(cz0));
 		cat.addCrashSection("biome", this.biome.biomeName);
 		cat.addCrashSection("biome id", Integer.valueOf(this.biome.biomeID));
 		cat.addCrashSection("biome id (hex)", Integer.toString(this.biome.biomeID, 16));
@@ -181,83 +181,83 @@ public class BiomeDecoratorCRWG
 		this.gen_emerald = new WorldGenMinable(Blocks.emerald_ore, this.emerald_size);
 	}
 
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		if (this._cur_world != null) {
-			CRWG.log.error("Already decorating! Chunk: {}, {} (Pos: {}, {})", x0 >> 4, z0 >> 4, x0, z0);
+			CRWG.log.error("Already decorating! Chunk: {}, {} (Pos: {}, {})", cx0 >> 4, cz0 >> 4, cx0, cz0);
 			Thread.dumpStack();
 			if (!GeneralConfig.yeet_decorator_crash) {
-				throw this.crash(x0, z0, new RuntimeException("Already decorating!!"));
+				throw this.crash(cx0, cz0, new RuntimeException("Already decorating!!"));
 			}
 			return;
 		}
 		if (!this.initialized) {
-			throw this.crash(x0, z0, new RuntimeException("CRWG decorator not initialized"));
+			throw this.crash(cx0, cz0, new RuntimeException("CRWG decorator not initialized"));
 		}
 		this._cur_world = world;
 		this._cur_rand = rand;
-		this._cur_x0 = x0;
-		this._cur_z0 = z0;
-		this.genDecorations(world, rand, x0, z0);
+		this._cur_cx0 = cx0;
+		this._cur_cz0 = cz0;
+		this.genDecorations(world, rand, cx0, cz0);
 		this._cur_world = null;
 	}
 
-	protected void genDecorations(World world, Random rand, int x0, int z0)
+	protected void genDecorations(World world, Random rand, int cx0, int cz0)
 	{
 		int x, y, z;
 
-		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Pre(world, rand, x0, z0));
+		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Pre(world, rand, cx0, cz0));
 
-		if (TerrainGen.generateOre(world, rand, this.gen_dirt_blob, x0, z0, GenerateMinable.EventType.DIRT)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_dirt_blob, cx0, cz0, GenerateMinable.EventType.DIRT)) {
 			this.genOreEvenly(this.gen_dirt_blob, this.dirt_blob_min_y, this.dirt_blob_max_y, this.diamond_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_gravel_blob, x0, z0, GenerateMinable.EventType.GRAVEL)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_gravel_blob, cx0, cz0, GenerateMinable.EventType.GRAVEL)) {
 			this.genOreEvenly(this.gen_gravel_blob, this.gravel_blob_min_y, this.gravel_blob_max_y, this.gravel_blob_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_coal, x0, z0, GenerateMinable.EventType.COAL)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_coal, cx0, cz0, GenerateMinable.EventType.COAL)) {
 			this.genOreEvenly(this.gen_coal, this.coal_min_y, this.coal_max_y, this.coal_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_iron, x0, z0, GenerateMinable.EventType.IRON)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_iron, cx0, cz0, GenerateMinable.EventType.IRON)) {
 			this.genOreEvenly(this.gen_iron, this.iron_min_y, this.iron_max_y, this.iron_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_gold, x0, z0, GenerateMinable.EventType.GOLD)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_gold, cx0, cz0, GenerateMinable.EventType.GOLD)) {
 			this.genOreEvenly(this.gen_gold, this.gold_min_y, this.gold_max_y, this.gold_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_redstone, x0, z0, GenerateMinable.EventType.REDSTONE)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_redstone, cx0, cz0, GenerateMinable.EventType.REDSTONE)) {
 			this.genOreEvenly(this.gen_redstone, this.redstone_min_y, this.redstone_max_y, this.redstone_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_lapis, x0, z0, GenerateMinable.EventType.LAPIS)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_lapis, cx0, cz0, GenerateMinable.EventType.LAPIS)) {
 			this.genOreEvenly(this.gen_lapis, this.lapis_min_y, this.lapis_max_y, this.lapis_amount);
 		}
-		if (TerrainGen.generateOre(world, rand, this.gen_diamond, x0, z0, GenerateMinable.EventType.DIAMOND)) {
+		if (TerrainGen.generateOre(world, rand, this.gen_diamond, cx0, cz0, GenerateMinable.EventType.DIAMOND)) {
 			this.genOreEvenly(this.gen_diamond, this.diamond_min_y, this.diamond_max_y, this.diamond_amount);
 		}
 		this.genOreEvenly(this.gen_emerald, this.emerald_min_y, this.emerald_max_y, this.emerald_amount);
 
-		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(world, rand, x0, z0));
+		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(world, rand, cx0, cz0));
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.SAND)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.SAND)) {
 			for (int i = 0; i < this.underwater_sand; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getTopSolidOrLiquidBlock(x, z);
 				this.gen_underwater_sand.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.CLAY)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.CLAY)) {
 			for (int i = 0; i < this.underwater_clay; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getTopSolidOrLiquidBlock(x, z);
 				this.gen_underwater_clay.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.SAND_PASS2)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.SAND_PASS2)) {
 			for (int i = 0; i < this.underwater_gravel; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getTopSolidOrLiquidBlock(x, z);
 				this.gen_underwater_gravel.generate(world, rand, x, y, z);
 			}
@@ -267,33 +267,33 @@ public class BiomeDecoratorCRWG
 			if (rand.nextFloat() < this.boulder_chance) {
 				continue;
 			}
-			x = this.randCoord(rand, x0);
-			z = this.randCoord(rand, z0);
+			x = this.randCoord(rand, cx0);
+			z = this.randCoord(rand, cz0);
 			y = world.getHeightValue(x, z);
 			WorldGenerator gen = biome.getBoulderGen(world, x, y, z, rand);
 			gen.generate(world, rand, x, y, z);
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.FLOWERS)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.FLOWERS)) {
 			for (int i = 0; i < this.flowers; i++) {
 				if (rand.nextFloat() > this.flower_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getFlowerGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.GRASS)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.GRASS)) {
 			for (int i = 0; i < this.grass; i++) {
 				if (rand.nextFloat() > this.grass_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getGrassGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
@@ -303,59 +303,59 @@ public class BiomeDecoratorCRWG
 				if (rand.nextFloat() > this.tall_grass_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getTallGrassGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.DEAD_BUSH)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.DEAD_BUSH)) {
 			for (int i = 0; i < this.shrubs; i++) {
 				if (rand.nextFloat() > this.shrub_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getBushGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.LILYPAD)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.LILYPAD)) {
 			for (int i = 0; i < this.waterlilies; i++) {
 				if (rand.nextFloat() > this.waterlily_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getWaterlilyGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.SHROOM)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.SHROOM)) {
 			for (int i = 0; i < this.mushrooms; i++) {
 				if (rand.nextFloat() <= this.mushroom_chance) {
-					this.genMushrooms(world, rand, x0, z0, false);
+					this.genMushrooms(world, rand, cx0, cz0, false);
 				}
 			}
 			if (rand.nextFloat() <= this.mushroom_chance) {
-				this.genMushrooms(world, rand, x0, z0, true);
+				this.genMushrooms(world, rand, cx0, cz0, true);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.TREE)) {
-			int t = this.sup_trees.get(world, x0, z0, rand);
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.TREE)) {
+			int t = this.sup_trees.get(world, cx0, cz0, rand);
 			if (this.extra_tree_chance > 0.0f && rand.nextFloat() <= this.extra_tree_chance) {
 				t++;
 			}
 			for (int i = 0; i < t; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 
 				WorldGenAbstractTree tree = this.biome.getTreeGen(world, x, y, z, rand);
@@ -367,14 +367,14 @@ public class BiomeDecoratorCRWG
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.BIG_SHROOM)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.BIG_SHROOM)) {
 			int s = this.big_mushrooms;
 			if (this.extra_big_mushroom_chance > 0.0f && rand.nextFloat() <= this.extra_big_mushroom_chance) {
 				s++;
 			}
 			for (int i = 0; i < s; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 
 				WorldGenerator gen = this.biome.getBigMushroomGen(world, x, y, z, rand);
@@ -382,39 +382,39 @@ public class BiomeDecoratorCRWG
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.REED)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.REED)) {
 			for (int i = 0; i < this.reeds; i++) {
 				if (rand.nextFloat() > this.reed_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getReedGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.PUMPKIN)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.PUMPKIN)) {
 			for (int i = 0; i < this.pumpkins; i++) {
 				if (rand.nextFloat() > this.pumpkin_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getPumpkinGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 		}
 
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.CACTUS)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.CACTUS)) {
 			for (int i = 0; i < this.cacti; i++) {
 				if (rand.nextFloat() > this.cacti_chance) {
 					continue;
 				}
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = world.getHeightValue(x, z);
 				WorldGenerator gen = this.biome.getCactusGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
@@ -423,17 +423,17 @@ public class BiomeDecoratorCRWG
 
 		/* The EventType is LAKE, but we actually are placing singular liquid blocks. */
 		/* Good job, Forge. */
-		if (TerrainGen.decorate(world, rand, x0, z0, Decorate.EventType.LAKE)) {
+		if (TerrainGen.decorate(world, rand, cx0, cz0, Decorate.EventType.LAKE)) {
 			for (int i = 0; i < this.liquid_waters; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = rand.nextInt(world.getHeight() - 8) + 8;
 				WorldGenerator gen = this.biome.getLiquidWaterGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
 			}
 			for (int i = 0; i < this.liquid_lavas; i++) {
-				x = this.randCoord(rand, x0);
-				z = this.randCoord(rand, z0);
+				x = this.randCoord(rand, cx0);
+				z = this.randCoord(rand, cz0);
 				y = rand.nextInt(world.getHeight() - 8) + 8;
 				WorldGenerator gen = this.biome.getLiquidLavaGen(world, x, y, z, rand);
 				gen.generate(world, rand, x, y, z);
@@ -445,9 +445,9 @@ public class BiomeDecoratorCRWG
 	{
 		int x, y, z;
 		for (int i = 0; i < amount; i++) {
-			x = this._cur_rand.nextInt(16) + this._cur_x0;
+			x = this._cur_rand.nextInt(16) + this._cur_cx0;
 			y = this._cur_rand.nextInt(max_y - min_y) + min_y;
-			z = this._cur_rand.nextInt(16) + this._cur_z0;
+			z = this._cur_rand.nextInt(16) + this._cur_cz0;
 			gen.generate(this._cur_world, this._cur_rand, x, y, z);
 		}
 	}
@@ -476,7 +476,7 @@ public class BiomeDecoratorCRWG
 		return c + rand.nextInt(16) + 8;
 	}
 
-	private int getTrees(World world, int x0, int z0, Random rand)
+	private int getTrees(World world, int cx0, int cz0, Random rand)
 	{
 		return this.trees;
 	}

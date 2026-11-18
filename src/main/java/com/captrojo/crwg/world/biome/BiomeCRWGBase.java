@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
-import com.captrojo.crwg.config.BiomeConfig;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.util.YConst;
@@ -44,7 +43,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public abstract class BiomeCRWGBase extends BiomeGenBase
 {
-	static final ArrayList<BiomeCRWGBase> BIOMES = new ArrayList<BiomeCRWGBase>();
+	public static final ArrayList<BiomeCRWGBase> BIOMES = new ArrayList<BiomeCRWGBase>();
 
 	public static final WorldGenBigMushroom Gen_BigMushroom = new WorldGenBigMushroomF();
 
@@ -129,25 +128,13 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		}
 	}
 
-	public static int getAdjID(int id)
-	{
-		int page = id >>> 8;
-		id &= 0xff;
-		if (page == 0x01) {
-			return id + (BiomeConfig.id_page_b << 8);
-		} else if (page == 0x02) {
-			return id + (BiomeConfig.id_page_c << 8);
-		}
-		return id + (BiomeConfig.id_page_a << 8);
-	}
-
 	public BiomeDecoratorCRWG decorator;
 	public BiomeDecoratorCRWG decorator_hills;
 	public BiomeDecoratorCRWG decorator_highlands;
 
 	public BiomeCRWGBase(int id, String name, int color, float temperature, float rainfall)
 	{
-		super(BiomeCRWGBase.getAdjID(id));
+		super(id, false);
 		BiomeCRWGBase.BIOMES.add(this);
 
 		this.setBiomeName(name);
@@ -162,6 +149,11 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		this.worldGeneratorTrees = null;
 		this.worldGeneratorBigTree = null;
 		this.worldGeneratorSwamp = null;
+	}
+	
+	public final void register()
+	{
+		BiomeGenBase.getBiomeGenArray()[this.biomeID] = this;
 	}
 
 	protected void copyToHigherDecorators()
@@ -378,19 +370,19 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		return BiomeCRWGBase.Gen_Liquid_Lava;
 	}
 
-	public void decorate(World world, WorldCRWG world_crwg, Random rand, int x0, int z0)
+	public void decorate(World world, WorldCRWG world_crwg, Random rand, int cx0, int cz0)
 	{
-		LandType land_type = world_crwg.crwg$getLandType(x0 + 15, z0 + 15);
+		LandType land_type = world_crwg.crwg$getLandType(cx0 + 15, cz0 + 15);
 		switch (land_type) {
 		case HILLS:
-			this.decorator_hills.decorate(world, rand, x0, z0);
+			this.decorator_hills.decorate(world, rand, cx0, cz0);
 			break;
 		case HIGHLANDS:
 		case FOOTHILLS:
-			this.decorator_highlands.decorate(world, rand, x0, z0);
+			this.decorator_highlands.decorate(world, rand, cx0, cz0);
 			break;
 		default:
-			this.decorator.decorate(world, rand, x0, z0);
+			this.decorator.decorate(world, rand, cx0, cz0);
 			break;
 		}
 	}
@@ -427,9 +419,9 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		WorldCRWG world_crwg = (WorldCRWG) (Object) world;
-		this.decorate(world, world_crwg, rand, x0, z0);
+		this.decorate(world, world_crwg, rand, cx0, cz0);
 	}
 }

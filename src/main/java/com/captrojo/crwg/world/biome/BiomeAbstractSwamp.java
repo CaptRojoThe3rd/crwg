@@ -82,14 +82,14 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 	}
 	
 	@Override
-	public void decorate(World world, WorldCRWG world_crwg, Random rand, int x0, int z0)
+	public void decorate(World world, WorldCRWG world_crwg, Random rand, int cx0, int cz0)
 	{
 		for (int i = 0; i < this.cattails; i++) {
 			if (rand.nextFloat() > this.cattail_chance) {
 				continue;
 			}
-			int x = x0 + 8 + rand.nextInt(16);
-			int z = z0 + 8 + rand.nextInt(16);
+			int x = cx0 + 8 + rand.nextInt(16);
+			int z = cz0 + 8 + rand.nextInt(16);
 			int y = world_crwg.crwg$getGndHeight(x, z);
 			if (y != 128) {
 				continue;
@@ -97,6 +97,6 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 			Gen_Cattail.generate(world, rand, x, y, z);
 		}
 		
-		super.decorate(world, world_crwg, rand, x0, z0);
+		super.decorate(world, world_crwg, rand, cx0, cz0);
 	}
 }

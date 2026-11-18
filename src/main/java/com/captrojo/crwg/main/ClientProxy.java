@@ -20,20 +20,13 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy
 {
 	@Override
-	public void loadConfig()
-	{
-		super.loadConfig();
-		ModConfig.load(new File(CRWG.dir_config + File.separator + "client.cfg"));
-
-		ClientConfig.init();
-
-		ModConfig.save();
-	}
-
-	@Override
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
+
+		ModConfig.load(new File(CRWG.dir_config + File.separator + "client.cfg"));
+		ClientConfig.init();
+		ModConfig.save();
 
 		ClientEvents.instance = new ClientEvents();
 		MinecraftForge.EVENT_BUS.register(ClientEvents.instance);

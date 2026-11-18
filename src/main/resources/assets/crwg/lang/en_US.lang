@@ -19,6 +19,7 @@ tile.bald_cypress_door.name=Bald Cypress Door
 tile.bald_cypress_trapdoor.name=Bald Cypress Trap Door
 tile.bald_cypress_sign.name=Bald Cypress Sign
 tile.bald_cypress_sapling.name=Bald Cypress Sapling
+tile.bald_cypress_sapling.desc=§7§oTaxodium distichum
 tile.bald_cypress_leaves.name=Bald Cypress Leaves
 
 tile.cedar_log.regular.name=Cedar Log
@@ -172,6 +173,7 @@ tile.tamarack_door.name=Tamarack Door
 tile.tamarack_trapdoor.name=Tamarack Trap Door
 tile.tamarack_sign.name=Tamarack Sign
 tile.tamarack_sapling.name=Tamarack Sapling
+tile.tamarack_sapling.desc=§7§oLarix laricina
 tile.tamarack_leaves.name=Tamarack Leaves
 
 tile.violet_log.regular.name=Violet Log
@@ -205,11 +207,11 @@ tile.willow_pressure_plate.name=Willow Pressure Plate
 tile.willow_door.name=Willow Door
 tile.willow_trapdoor.name=Willow Trap Door
 tile.willow_sign.name=Willow Sign
-tile.willow_sapling.name=Willow Sapling
-tile.willow_leaves.name=Willow Leaves
 tile.black_willow_sapling.name=Black Willow Sapling
+tile.black_willow_sapling.desc=§7§oSalix nigra
 tile.black_willow_leaves.name=Black Willow Leaves
 tile.white_willow_sapling.name=White Willow Sapling
+tile.white_willow_sapling.desc=§7§oSalix alba
 tile.white_willow_leaves.name=White Willow Leaves
 
 tile.silty_dirt.name=Silty Dirt

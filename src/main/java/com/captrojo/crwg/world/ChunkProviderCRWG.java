@@ -193,8 +193,8 @@ public class ChunkProviderCRWG implements IChunkProvider
 	public Chunk provideChunk(int chunk_x, int chunk_z)
 	{
 		this.rand.setSeed((long) chunk_x * 341873128712L + (long) chunk_z * 132897987541L);
-		final int x0 = chunk_x << 4;
-		final int z0 = chunk_z << 4;
+		final int cx0 = chunk_x << 4;
+		final int cz0 = chunk_z << 4;
 
 		this.wcm = (WorldChunkManagerCRWG) this.world.getWorldChunkManager();
 //		GenArrays arrays = this.wcm.generateArrays(chunk_x << 4, chunk_z << 4, 16, 16);
@@ -231,8 +231,8 @@ public class ChunkProviderCRWG implements IChunkProvider
 					this.rand,
 					arrays.ablock,
 					arrays.ameta,
-					x0 + x,
-					z0 + z,
+					cx0 + x,
+					cz0 + z,
 					arrays,
 					gen_vals
 				);
@@ -263,9 +263,9 @@ public class ChunkProviderCRWG implements IChunkProvider
 	public void populate(IChunkProvider chunk_prov, int chunk_x, int chunk_z)
 	{
 		BlockFalling.fallInstantly = true;
-		int x0 = chunk_x << 4;
-		int z0 = chunk_z << 4;
-		BiomeGenBase biome = this.world.getBiomeGenForCoords(x0 + 15, z0 + 15);
+		int cx0 = chunk_x << 4;
+		int cz0 = chunk_z << 4;
+		BiomeGenBase biome = this.world.getBiomeGenForCoords(cx0 + 15, cz0 + 15);
 
 		this.rand.setSeed(this.world.getSeed());
 		long l1 = this.rand.nextLong() / 2L * 2L + 1L;
@@ -324,26 +324,26 @@ public class ChunkProviderCRWG implements IChunkProvider
 //			(new WorldGenDungeons()).generate(this.world, this.rand, x, y, z);
 //		}
 
-		biome.decorate(this.world, this.rand, x0, z0);
+		biome.decorate(this.world, this.rand, cx0, cz0);
 
 //		if (TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ANIMALS)) {
 //			SpawnerAnimals.performWorldGenSpawning(this.world, biome, x0 + 8, z0 + 8, 16, 16, this.rand);
 //		}
 
-		x0 += 8;
-		z0 += 8;
+		cx0 += 8;
+		cz0 += 8;
 
 		if (TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, Populate.EventType.ICE)) {
 			for (x = 0; x < 16; x++) {
 				for (z = 0; z < 16; z++) {
-					y = this.world.getPrecipitationHeight(x0 + x, z0 + z);
+					y = this.world.getPrecipitationHeight(cx0 + x, cz0 + z);
 
-					if (this.world.isBlockFreezable(x + x0, y - 1, z + z0)) {
-						this.world.setBlock(x + x0, y - 1, z + z0, Blocks.ice, 0, 2);
+					if (this.world.isBlockFreezable(x + cx0, y - 1, z + cz0)) {
+						this.world.setBlock(x + cx0, y - 1, z + cz0, Blocks.ice, 0, 2);
 					}
 
-					if (this.world.func_147478_e(x + x0, y, z + z0, true)) {
-						this.world.setBlock(x + x0, y, z + z0, Blocks.snow_layer, 0, 2);
+					if (this.world.func_147478_e(x + cx0, y, z + cz0, true)) {
+						this.world.setBlock(x + cx0, y, z + cz0, Blocks.snow_layer, 0, 2);
 					}
 				}
 			}

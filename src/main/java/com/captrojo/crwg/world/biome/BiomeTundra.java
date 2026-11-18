@@ -44,21 +44,21 @@ public class BiomeTundra extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		if (this.is_ice_spikes) {
 			int i, x, z;
 			for (i = 0; i < 3; i++) {
-				x = x0 + rand.nextInt(16) + 8;
-				z = z0 + rand.nextInt(16) + 8;
+				x = cx0 + rand.nextInt(16) + 8;
+				z = cz0 + rand.nextInt(16) + 8;
 				this.gen_ice_spike.generate(world, rand, x, world.getHeightValue(x, z), z);
 			}
 			for (i = 0; i < 2; i++) {
-				x = x0 + rand.nextInt(16) + 8;
-				z = z0 + rand.nextInt(16) + 8;
+				x = cx0 + rand.nextInt(16) + 8;
+				z = cz0 + rand.nextInt(16) + 8;
 				this.gen_ice_path.generate(world, rand, x, world.getHeightValue(x, z), z);
 			}
 		}
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 	}
 }

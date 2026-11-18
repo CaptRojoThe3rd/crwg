@@ -104,6 +104,14 @@ public class GenLayerLongBiomes extends GenLayerLong
 						biome = ModBiomes.marsh_yellow;
 					}
 					break;
+				case BOG:
+					s = (species >>> 20) & 1;
+					if (s == 0) {
+						biome = ModBiomes.bog_green;
+					} else {
+						biome = ModBiomes.bog_yellow;
+					}
+					break;
 				case FEN:
 					s = (species >>> 20) & 1;
 					if (s == 0) {

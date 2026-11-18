@@ -63,16 +63,16 @@ public class BiomeJungle extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 
 		final int y = YConst.SEA_LVL_Y + 64;
-		final int x1 = x0 + 8;
-		final int z1 = z0 + 8;
+		final int cx8 = cx0 + 8;
+		final int cz8 = cz0 + 8;
 		for (int i = 0; i < 50; i++) {
-			int x = x1 + rand.nextInt(16);
-			int z = z1 + rand.nextInt(16);
+			int x = cx8 + rand.nextInt(16);
+			int z = cz8 + rand.nextInt(16);
 			BiomeCRWGBase.Gen_Vines.generate(world, rand, x, y, z);
 		}
 	}

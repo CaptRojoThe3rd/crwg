@@ -75,24 +75,24 @@ public class BiomeGrassland extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 
 		int i;
 		int x, y, z;
 
 		for (i = 0; i < 2; i++) {
-			x = x0 + rand.nextInt(16) + 8;
-			z = z0 + rand.nextInt(16) + 8;
+			x = cx0 + rand.nextInt(16) + 8;
+			z = cz0 + rand.nextInt(16) + 8;
 			y = world.getHeightValue(x, z);
 			BiomeCRWGBase.Gen_DPlant_TallGrass.generate(world, rand, x, y, z);
 		}
 
 		if (this.type == TYPE_SUNFLOWER) {
 			for (i = 0; i < 3; i++) {
-				x = x0 + rand.nextInt(16) + 8;
-				z = z0 + rand.nextInt(16) + 8;
+				x = cx0 + rand.nextInt(16) + 8;
+				z = cz0 + rand.nextInt(16) + 8;
 				y = world.getHeightValue(x, z);
 				BiomeCRWGBase.Gen_DPlant_Sunflower.generate(world, rand, x, y, z);
 			}

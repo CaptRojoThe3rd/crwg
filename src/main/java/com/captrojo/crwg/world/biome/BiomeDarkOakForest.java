@@ -31,13 +31,13 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		/* We generate trees here to ensure they are spaced nicely and create a canopy */
 		for (int xt = 0; xt < 4; xt++) {
 			for (int zt = 0; zt < 4; zt++) {
-				int x = x0 + (xt * 4) + 9 + rand.nextInt(3);
-				int z = z0 + (zt * 4) + 9 + rand.nextInt(3);
+				int x = cx0 + (xt * 4) + 9 + rand.nextInt(3);
+				int z = cz0 + (zt * 4) + 9 + rand.nextInt(3);
 				int y = world.getHeightValue(x, z);
 
 				if (rand.nextInt(20) == 0) {
@@ -51,7 +51,7 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 			}
 		}
 
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 	}
 
 	@Override

@@ -33,9 +33,9 @@ public class BiomeMarsh extends BiomeAbstractSwamp
 		this.decorator.tall_grass = 30;
 	}
 
-	private int getTreeCount(World world, int x0, int z0, Random rand)
+	private int getTreeCount(World world, int cx0, int cz0, Random rand)
 	{
-		double d = BiomeGenBase.plantNoise.func_151601_a((double) x0 / 256.0, (double) z0 / 256.0);
+		double d = BiomeGenBase.plantNoise.func_151601_a((double) cx0 / 256.0, (double) cz0 / 256.0);
 		if (d < -0.333) {
 			return 7;
 		}

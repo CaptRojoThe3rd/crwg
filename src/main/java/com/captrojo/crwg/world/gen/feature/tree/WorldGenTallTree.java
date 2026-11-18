@@ -7,6 +7,7 @@ import com.captrojo.crwg.util.func.World1IFunction;
 import com.captrojo.crwg.world.biome.data.SoilType;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -145,7 +146,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 	private void placeBlock(World world, int x, int y, int z, Block block, int meta)
 	{
 		Block existing = world.getBlock(x, y, z);
-		if (existing.isAir(world, x, y, z) || existing.isLeaves(world, x, y, z)) {
+		if (existing.isAir(world, x, y, z) || existing.isLeaves(world, x, y, z) || existing instanceof BlockBush) {
 			this.setBlockAndNotifyAdequately(world, x, y, z, block, meta);
 		}
 	}

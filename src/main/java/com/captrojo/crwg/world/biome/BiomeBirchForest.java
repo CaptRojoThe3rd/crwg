@@ -51,14 +51,14 @@ public class BiomeBirchForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		int tall_flowers = rand.nextInt(5) - 2;
 		for (int i = 0; i < tall_flowers; i++) {
 			WorldGenerator gen = rand.nextBoolean() ? BiomeCRWGBase.Gen_DPlant_Lilac : BiomeCRWGBase.Gen_DPlant_Peony;
-			gen.generate(world, rand, x0, world.getHeightValue(x0, z0), z0);
+			gen.generate(world, rand, cx0, world.getHeightValue(cx0, cz0), cz0);
 		}
 
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 	}
 }

@@ -148,7 +148,7 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int x0, int z0)
+	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
 		int tall_flowers = rand.nextInt(5) - 3;
 		if (this.flower_forest) {
@@ -156,9 +156,9 @@ public class BiomeOakForest extends BiomeCRWGBase
 		}
 		for (int i = 0; i < tall_flowers; i++) {
 			int f = rand.nextInt(FLOWER_FOREST_DOUBLE_PLANTS.length);
-			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, x0, world.getHeightValue(x0, z0), z0);
+			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, cx0, world.getHeightValue(cx0, cz0), cz0);
 		}
-		super.decorate(world, rand, x0, z0);
+		super.decorate(world, rand, cx0, cz0);
 	}
 
 	@Override

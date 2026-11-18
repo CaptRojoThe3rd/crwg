@@ -48,8 +48,8 @@ public class CaveGenBubble extends CaveGenBase
 	{
 		Random rand = this.rand;
 
-		int rx0 = r_chunk_x << 4;
-		int rz0 = r_chunk_z << 4;
+		int rcx0 = r_chunk_x << 4;
+		int rcz0 = r_chunk_z << 4;
 
 		int min_x = Integer.MAX_VALUE;
 		int max_x = Integer.MIN_VALUE;
@@ -63,9 +63,9 @@ public class CaveGenBubble extends CaveGenBase
 		int[] z_points = new int[5];
 		int[] pt_sizes = new int[5];
 
-		int hx = rx0 + rand.nextInt(16);
+		int hx = rcx0 + rand.nextInt(16);
 		int hy = 20 + YConst.MIN_CAVE_H_LVL + rand.nextInt((YConst.MAX_CAVE_H_LVL - YConst.MIN_CAVE_H_LVL) / 4);
-		int hz = rz0 + rand.nextInt(16);
+		int hz = rcz0 + rand.nextInt(16);
 
 		for (int p = 0; p < 5; p++) {
 			x_points[p] = hx;
@@ -102,33 +102,33 @@ public class CaveGenBubble extends CaveGenBase
 			}
 		}
 
-		int x0 = chunk_x << 4;
-		int z0 = chunk_z << 4;
-		int x16 = x0 + 16;
-		int z16 = z0 + 16;
-		if (min_x > x16) {
+		int cx0 = chunk_x << 4;
+		int cz0 = chunk_z << 4;
+		int cx16 = cx0 + 16;
+		int cz16 = cz0 + 16;
+		if (min_x > cx16) {
 			return;
 		}
-		if (max_x < x0) {
+		if (max_x < cx0) {
 			return;
 		}
-		if (min_z > z16) {
+		if (min_z > cz16) {
 			return;
 		}
-		if (max_z < z0) {
+		if (max_z < cz0) {
 			return;
 		}
-		if (min_x < x0) {
-			min_x = x0;
+		if (min_x < cx0) {
+			min_x = cx0;
 		}
-		if (max_x > x16) {
-			max_x = x16;
+		if (max_x > cx16) {
+			max_x = cx16;
 		}
-		if (min_z < z0) {
-			min_z = z0;
+		if (min_z < cz0) {
+			min_z = cz0;
 		}
-		if (max_z < z16) {
-			min_z = z16;
+		if (max_z < cz16) {
+			min_z = cz16;
 		}
 
 		for (int x = min_x; x < max_x; x++) {
@@ -155,8 +155,8 @@ public class CaveGenBubble extends CaveGenBase
 
 						boolean b = this.luts[s][xr][yr][zr];
 						if (b) {
-							int xa = x - x0;
-							int za = z - z0;
+							int xa = x - cx0;
+							int za = z - cz0;
 							int idx = xa | (za << 4) | (y << 8);
 							this.dig(arrays, idx, y);
 							break p_loop;
