@@ -1,6 +1,5 @@
 package com.captrojo.crwg.world.biome;
 
-import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.gen.longlayer.GenLayerLongBiomes;
 
@@ -145,10 +144,10 @@ public abstract class ModBiomes
 		ocean_cold = new BiomeCRWGOcean(0x003, "Cold Ocean", 0x080860, 0.3F, 0.5F);
 		ocean_frozen = (new BiomeCRWGOcean(0x004, "Frozen Ocean", 0x181850, 0.1F, 0.5F)).setEnableSnow();
 
-		beach_frozen = new BiomeCRWGBeach(0x005, "Cold Beach", 0xa2a284, 0.0F, 0.4F, BlockState.STONE, false);
-		beach_gravel = new BiomeCRWGBeach(0x006, "Gravel Beach", 0xa3a392, 0.2F, 0.4F, BlockState.GRAVEL, false);
-		beach = new BiomeCRWGBeach(0x007, "Beach", 0xc6c66f, 0.8F, 0.4F, BlockState.SAND, false);
-		beach_tropical = new BiomeCRWGBeach(0x008, "Tropical Beach", 0xe9f46b, 1.2F, 0.3F, BlockState.SAND, true);
+		beach_frozen = new BiomeCRWGBeach(0x005, "Cold Beach", 0xa2a284, 0.0F, 0.4F, BiomeCRWGBeach.TYPE_STONE);
+		beach_gravel = new BiomeCRWGBeach(0x006, "Gravel Beach", 0xa3a392, 0.2F, 0.4F, BiomeCRWGBeach.TYPE_GRAVEL);
+		beach = new BiomeCRWGBeach(0x007, "Beach", 0xc6c66f, 0.8F, 0.4F, BiomeCRWGBeach.TYPE_NORMAL);
+		beach_tropical = new BiomeCRWGBeach(0x008, "Tropical Beach", 0xe9f46b, 1.2F, 0.3F, BiomeCRWGBeach.TYPE_TROPICAL);
 
 		river = new BiomeCRWGRiver(0x009, "River", 0x0000ff, 0.5F, 0.5F, false);
 		river_frozen = (new BiomeCRWGRiver(0x00a, "Frozen River", 0x5050ff, 0.0F, 0.5F, false)).setEnableSnow();

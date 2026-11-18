@@ -225,12 +225,16 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 				} else if (below_sea_level) {
 					sea_gnd_lockout = true;
 					tmp = this.getFillerBlock(world, x, y, z, rand, vals, false);
-					ablock[idx] = tmp.block;
-					ameta[idx] = (short) tmp.meta;
+					if (tmp != null) {
+						ablock[idx] = tmp.block;
+						ameta[idx] = (short) tmp.meta;
+					}
 				} else {
 					tmp = this.getTopBlock(world, x, y, z, rand, vals);
-					ablock[idx] = tmp.block;
-					ameta[idx] = (short) tmp.meta;
+					if (tmp != null) {
+						ablock[idx] = tmp.block;
+						ameta[idx] = (short) tmp.meta;
+					}
 				}
 				continue;
 			} else if (fill_remain > 0) {
@@ -240,8 +244,10 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 					ablock[idx] = Blocks.gravel;
 				} else {
 					tmp = this.getFillerBlock(world, x, y, z, rand, vals, low);
-					ablock[idx] = tmp.block;
-					ameta[idx] = (short) tmp.meta;
+					if (tmp != null) {
+						ablock[idx] = tmp.block;
+						ameta[idx] = (short) tmp.meta;
+					}
 
 					if (fill_remain == 0) {
 						tmp = this.getExtFillerBlock(world, x, y, z, rand, vals, tmp);

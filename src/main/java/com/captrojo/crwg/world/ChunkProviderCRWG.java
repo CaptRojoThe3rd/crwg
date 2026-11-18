@@ -4,6 +4,8 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINE
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
+import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,31 +29,37 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.ChunkPosition;
+import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.feature.WorldGenDungeons;
 import net.minecraft.world.gen.structure.MapGenMineshaft;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.MapGenStronghold;
 import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderCRWG implements IChunkProvider
 {
-	World world;
-	WorldChunkManagerCRWG wcm;
-	Random rand;
-	boolean map_features_enabled;
+	private World world;
+	private WorldChunkManagerCRWG wcm;
+	private Random rand;
+	private final boolean map_features_enabled;
 
-	CaveGenBase cavegen_worm = new CaveGenWorm();
+	private CaveGenBase cavegen_worm = new CaveGenWorm();
 
 	private MapGenStronghold mapgen_stronghold;
 	private MapGenVillage mapgen_village;
 	private MapGenMineshaft mapgen_mineshaft;
 	/* Desert/jungle temples and witch huts */
 	private MapGenScatteredFeature mapgen_scattered_feature;
+
+	private WorldGenDungeons worldgen_dungeons = new WorldGenDungeons();
 
 	{
 		this.mapgen_stronghold = new MapGenStronghold();
@@ -82,7 +90,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		BiomeCRWGBase.initAllBiomesWithWorldSeed(seed);
 	}
 
-	Block[] initBlockArray(Random rand)
+	private Block[] initBlockArray(Random rand)
 	{
 		Block[] ablock = new Block[16 * 16 * YConst.CHUNK_HEIGHT];
 
@@ -114,7 +122,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		return ablock;
 	}
 
-	void genTerrain(int chunk_x, int chunk_z, Block[] ablock, GenArrays arrays)
+	private void genTerrain(int chunk_x, int chunk_z, Block[] ablock, GenArrays arrays)
 	{
 		final double[][] noise_arrays = {
 			arrays.deep_ocean_noise,
@@ -274,9 +282,9 @@ public class ChunkProviderCRWG implements IChunkProvider
 
 		boolean village_flag = false;
 
-//		MinecraftForge.EVENT_BUS.post(
-//			new PopulateChunkEvent.Pre(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag)
-//		);
+		MinecraftForge.EVENT_BUS.post(
+			new PopulateChunkEvent.Pre(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag)
+		);
 
 		if (this.map_features_enabled) {
 			this.mapgen_mineshaft.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
@@ -285,50 +293,23 @@ public class ChunkProviderCRWG implements IChunkProvider
 			this.mapgen_scattered_feature.generateStructuresInChunk(this.world, this.rand, chunk_x, chunk_z);
 		}
 
-//		boolean do_gen;
-//		int i;
+		int i;
 		int x, y, z;
 
-//		if (
-//			biome != BiomeGenBase.desert &&
-//			biome != BiomeGenBase.desertHills &&
-//			!village_flag &&
-//			this.rand.nextInt(4) == 0 &&
-//			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAKE)
-//		) {
-//			x = x0 + this.rand.nextInt(16) + 8;
-//			y = this.rand.nextInt(512);
-//			z = z0 + this.rand.nextInt(16) + 8;
-//			(new WorldGenLakes(Blocks.water)).generate(this.world, this.rand, x, y, z);
-//		}
-
-//		if (
-//			TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, LAVA) &&
-//			!village_flag &&
-//			this.rand.nextInt(8) == 0
-//		) {
-//			x = x0 + this.rand.nextInt(16) + 8;
-//			y = this.rand.nextInt(this.rand.nextInt(504) + 8);
-//			z = z0 + this.rand.nextInt(16) + 8;
-//
-//			if (y < 127 || this.rand.nextInt(10) == 0) {
-//				(new WorldGenLakes(Blocks.lava)).generate(this.world, this.rand, x, y, z);
-//			}
-//		}
-
-//		do_gen = TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, DUNGEON);
-//		for (i = 0; do_gen && i < 8; i++) {
-//			x = x0 + this.rand.nextInt(16) + 8;
-//			y = this.rand.nextInt(512);
-//			z = z0 + this.rand.nextInt(16) + 8;
-//			(new WorldGenDungeons()).generate(this.world, this.rand, x, y, z);
-//		}
+		if (TerrainGen.populate(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag, DUNGEON)) {
+			for (i = 0; i < 8; i++) {
+				x = cx0 + this.rand.nextInt(16) + 8;
+				y = this.rand.nextInt(512);
+				z = cz0 + this.rand.nextInt(16) + 8;
+				this.worldgen_dungeons.generate(this.world, this.rand, x, y, z);
+			}
+		}
 
 		biome.decorate(this.world, this.rand, cx0, cz0);
 
-//		if (TerrainGen.populate(chunk_prov, world, rand, chunk_x, chunk_z, village_flag, ANIMALS)) {
-//			SpawnerAnimals.performWorldGenSpawning(this.world, biome, x0 + 8, z0 + 8, 16, 16, this.rand);
-//		}
+		if (TerrainGen.populate(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag, ANIMALS)) {
+			SpawnerAnimals.performWorldGenSpawning(this.world, biome, cx0 + 8, cz0 + 8, 16, 16, this.rand);
+		}
 
 		cx0 += 8;
 		cz0 += 8;
@@ -349,7 +330,9 @@ public class ChunkProviderCRWG implements IChunkProvider
 			}
 		}
 
-//		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(chunk_prov, world, rand, chunk_x, chunk_z, village_flag));
+		MinecraftForge.EVENT_BUS.post(
+			new PopulateChunkEvent.Post(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag)
+		);
 
 		BlockFalling.fallInstantly = false;
 	}

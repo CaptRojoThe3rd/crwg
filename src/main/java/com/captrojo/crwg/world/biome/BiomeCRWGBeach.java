@@ -11,14 +11,19 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class BiomeCRWGBeach extends BiomeCRWGBase
 {
-	final BlockState top_block;
+	static final int TYPE_STONE = 0;
+	static final int TYPE_GRAVEL = 1;
+	static final int TYPE_NORMAL = 2;
+	static final int TYPE_TROPICAL = 3;
 
-	public BiomeCRWGBeach(int id, String name, int color, float temperature, float rainfall, BlockState block, boolean tropical)
+	private final int type;
+
+	public BiomeCRWGBeach(int id, String name, int color, float temperature, float rainfall, int type)
 	{
 		super(id, name, color, temperature, rainfall);
-		this.top_block = block;
+		this.type = type;
 
-		if (tropical) {
+		if (type == TYPE_TROPICAL) {
 			this.decorator.extra_tree_chance = 0.75f;
 		}
 	}
@@ -26,13 +31,19 @@ public class BiomeCRWGBeach extends BiomeCRWGBase
 	@Override
 	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
 	{
-		return this.top_block;
+		if (this.type == TYPE_STONE) {
+			return BlockState.STONE;
+		}
+		if (this.type == TYPE_GRAVEL) {
+			return BlockState.GRAVEL;
+		}
+		return BlockState.SAND;
 	}
 
 	@Override
 	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
 	{
-		return this.top_block;
+		return this.getTopBlock(world, x, y, z, rand, vals);
 	}
 
 	@Override
