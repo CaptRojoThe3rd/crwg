@@ -1,13 +1,18 @@
 package com.captrojo.crwg.main;
 
 import com.captrojo.crwg.block.ModBlocks;
+import com.captrojo.crwg.compat.EHLFuncs;
+import com.captrojo.crwg.world.WorldChunkManagerCRWG;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 public class CommonEvents
@@ -71,6 +76,25 @@ public class CommonEvents
 			this.makeFarmland(world, x, y, z, ModBlocks.clay_dirt, 0);
 			event.setResult(Result.ALLOW);
 			return;
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event)
+	{
+		if (event.player.worldObj.isRemote) {
+			return;
+		}
+		WorldChunkManager wcm = event.player.worldObj.getWorldChunkManager();
+		if (wcm instanceof WorldChunkManagerCRWG) {
+			event.player.addChatMessage(
+				new ChatComponentText("§7Loaded world with CaptRojo's World Gen " + CRWG.VERSION_NAME)
+			);
+			if (CRWG.funcs instanceof EHLFuncs) {
+				event.player.addChatMessage(
+					new ChatComponentText("§7Please caution the poor extended height limit code.")
+				);
+			}
 		}
 	}
 

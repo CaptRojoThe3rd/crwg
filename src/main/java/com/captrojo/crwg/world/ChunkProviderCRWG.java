@@ -299,7 +299,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 		if (TerrainGen.populate(chunk_prov, this.world, this.rand, chunk_x, chunk_z, village_flag, DUNGEON)) {
 			for (i = 0; i < 8; i++) {
 				x = cx0 + this.rand.nextInt(16) + 8;
-				y = this.rand.nextInt(512);
+				y = this.rand.nextInt(192);
 				z = cz0 + this.rand.nextInt(16) + 8;
 				this.worldgen_dungeons.generate(this.world, this.rand, x, y, z);
 			}

@@ -65,7 +65,7 @@ public class EHLFuncs implements ICRWGFuncs
 		if (!this.isWithinWorld(x, z)) {
 			return false;
 		}
-		if (y < this.getMinYLevel() || y > this.getMaxYLevel()) {
+		if (y < 0 || y > 511) {
 			return false;
 		}
 		return true;
@@ -81,71 +81,5 @@ public class EHLFuncs implements ICRWGFuncs
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public int getMinYLevel()
-	{
-		return 0;
-	}
-
-	@Override
-	public int getMaxYLevel()
-	{
-		return 511;
-	}
-
-	@Override
-	public int getSeaLevel()
-	{
-		return 127;
-	}
-
-	@Override
-	public int getExtraUndergroundSize()
-	{
-		return 0;
-	}
-
-	@Override
-	public boolean shouldGenerateCaves()
-	{
-		return true;
-	}
-
-	@Override
-	public int getMinCaveHeight()
-	{
-		return 0;
-	}
-
-	@Override
-	public int getMaxCaveHeight()
-	{
-		return 320;
-	}
-
-	@Override
-	public boolean shouldGenerateRavines()
-	{
-		return true;
-	}
-
-	@Override
-	public int getRavineHeight1()
-	{
-		return 100;
-	}
-
-	@Override
-	public int getRavineHeight2()
-	{
-		return 8;
-	}
-
-	@Override
-	public int getRavineHeight3()
-	{
-		return 20;
 	}
 }
