@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.main.CRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.util.func.WorldCPosIntSupplier;
 import com.captrojo.crwg.world.gen.feature.WorldGenSeafloorBlockCircle;
 
@@ -88,48 +89,48 @@ public class BiomeDecoratorCRWG
 
 	public int dirt_blob_amount = 40;
 	public int dirt_blob_size = 32;
-	public int dirt_blob_min_y = 0;
-	public int dirt_blob_max_y = 512;
+	public int dirt_blob_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int dirt_blob_max_y = 512 - YConst.NEG_Y_OFFS;
 
 	public int gravel_blob_amount = 20;
 	public int gravel_blob_size = 32;
-	public int gravel_blob_min_y = 0;
-	public int gravel_blob_max_y = 512;
+	public int gravel_blob_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int gravel_blob_max_y = 512 - YConst.NEG_Y_OFFS;
 
 	public int coal_amount = 40;
 	public int coal_size = 32;
-	public int coal_min_y = 0;
-	public int coal_max_y = 256;
+	public int coal_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int coal_max_y = 256 - YConst.NEG_Y_OFFS;
 
 	public int iron_amount = 40;
 	public int iron_size = 8;
-	public int iron_min_y = 0;
-	public int iron_max_y = 192;
+	public int iron_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int iron_max_y = 192 - YConst.NEG_Y_OFFS;
 
 	public int gold_amount = 20;
 	public int gold_size = 8;
-	public int gold_min_y = 0;
-	public int gold_max_y = 72;
+	public int gold_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int gold_max_y = 72 - YConst.NEG_Y_OFFS;
 
 	public int redstone_amount = 16;
 	public int redstone_size = 7;
-	public int redstone_min_y = 0;
-	public int redstone_max_y = 56;
+	public int redstone_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int redstone_max_y = 56 - YConst.NEG_Y_OFFS;
 
 	public int lapis_amount = 2;
 	public int lapis_size = 6;
-	public int lapis_min_y = 0;
-	public int lapis_max_y = 56;
+	public int lapis_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int lapis_max_y = 56 - YConst.NEG_Y_OFFS;
 
 	public int diamond_amount = 2;
 	public int diamond_size = 7;
-	public int diamond_min_y = 0;
-	public int diamond_max_y = 56;
+	public int diamond_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int diamond_max_y = 56 - YConst.NEG_Y_OFFS;
 
 	public int emerald_amount = 0;
 	public int emerald_size = 2;
-	public int emerald_min_y = 0;
-	public int emerald_max_y = 64;
+	public int emerald_min_y = 0 - YConst.NEG_Y_OFFS;
+	public int emerald_max_y = 64 - YConst.NEG_Y_OFFS;
 
 	public BiomeDecoratorCRWG(BiomeCRWGBase biome)
 	{

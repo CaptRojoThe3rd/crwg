@@ -37,7 +37,7 @@ public abstract class ConfigurableMixins
 				category += split[i];
 			}
 		}
-		if (!this.config.getBoolean(setting_name, category, true, name)) {
+		if (!this.config.getBoolean(setting_name, category, !name.contains(".joke."), name)) {
 			System.out.println("CRWG mixin " + name + " is disabled");
 			return;
 		}

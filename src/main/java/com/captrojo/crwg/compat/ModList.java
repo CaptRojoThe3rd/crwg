@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Loader;
 
 public enum ModList
 {
+	CUBIC_CHUNKS("cubicchunks"),
 	NEI("NotEnoughItems");
 
 	public final String id;

@@ -36,4 +36,9 @@ public interface ICRWGFuncs
 	boolean isWithinWorld(int x, int y, int z);
 
 	boolean isWithinWorld(int x, int z);
+	
+	/**
+	 * Init the values in YConst.
+	 */
+	void initYConst();
 }

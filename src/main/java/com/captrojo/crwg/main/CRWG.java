@@ -48,10 +48,10 @@ public class CRWG
 
 //	public static final String VERSION = "v1.0.0.0";
 //	public static final String VERSIONS_ACCEPTED = "v1.0.0.*";
-//	public static final String VERSION_NAME = "v1.0.0.0 (Build #0001) [" + GeneratedTags.VERSION + "]";
-//	public static final String VERSION = "X0001";
-//	public static final String VERSIONS_ACCEPTED = "X0001";
-//	public static final String VERSION_NAME = "Build #0001 [" + GeneratedTags.VERSION + "]";
+//	public static final String VERSION_NAME = "v1.0.0.0 (Build #0002) [" + GeneratedTags.VERSION + "]";
+//	public static final String VERSION = "X0002";
+//	public static final String VERSIONS_ACCEPTED = "X0002";
+//	public static final String VERSION_NAME = "Build #0002 [" + GeneratedTags.VERSION + "]";
 	public static final String VERSION = GeneratedTags.VERSION;
 	public static final String VERSIONS_ACCEPTED = GeneratedTags.VERSION;
 	public static final String VERSION_NAME = GeneratedTags.VERSION;

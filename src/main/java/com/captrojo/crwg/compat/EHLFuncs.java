@@ -1,6 +1,7 @@
 package com.captrojo.crwg.compat;
 
 import com.captrojo.crwg.mixins.interfaces.ChunkCRWG;
+import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.falsepattern.endlessids.mixin.helpers.ChunkBiomeHook;
 
@@ -81,5 +82,27 @@ public class EHLFuncs implements ICRWGFuncs
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void initYConst()
+	{
+		YConst.MIN_Y_LVL = 0;
+		YConst.MAX_Y_LVL = 511;
+		YConst.SEA_LVL_Y = 127;
+
+		YConst.MIN_H_LVL = 0;
+		YConst.MAX_H_LVL = 511;
+		YConst.SEA_LVL_H = 127;
+
+		YConst.BOTTOM_H_LVL = 0;
+		YConst.MIN_CAVE_H_LVL = 0;
+		YConst.MAX_CAVE_H_LVL = 320;
+		YConst.EXT_CAVE_H = 0;
+
+		YConst.CHUNK_HEIGHT = 512;
+		YConst.SUBCHUNK_COUNT = 32;
+		YConst.MIN_CHUNK_Y = 0;
+		YConst.MAX_CHUNK_Y = 31;
 	}
 }

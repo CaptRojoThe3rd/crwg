@@ -3,7 +3,9 @@ package com.captrojo.crwg.main;
 import java.io.File;
 
 import com.captrojo.crwg.block.ModBlocks;
+import com.captrojo.crwg.compat.CubicFuncs;
 import com.captrojo.crwg.compat.EHLFuncs;
+import com.captrojo.crwg.compat.ModList;
 import com.captrojo.crwg.config.BiomeConfig;
 import com.captrojo.crwg.config.GeneralConfig;
 import com.captrojo.crwg.config.ModConfig;
@@ -31,7 +33,12 @@ public class CommonProxy
 	{
 		CRWG.log.info("CaptRojo's World Gen " + CRWG.VERSION_NAME);
 
-		CRWG.funcs = new EHLFuncs();
+		if (ModList.CUBIC_CHUNKS.isLoaded()) {
+			CRWG.funcs = new CubicFuncs();
+		} else {
+			CRWG.funcs = new EHLFuncs();
+		}
+		CRWG.funcs.initYConst();
 
 		CRWG.dir_config = event.getModConfigurationDirectory().getPath() + File.separator + "crwg";
 		File f = new File(CRWG.dir_config);

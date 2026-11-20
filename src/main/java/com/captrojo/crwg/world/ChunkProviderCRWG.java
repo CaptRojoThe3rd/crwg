@@ -191,28 +191,16 @@ public class ChunkProviderCRWG implements IChunkProvider
 		arrays.gnd_height_avg /= 256;
 	}
 
-	@Override
-	public boolean chunkExists(int chunk_x, int chunk_z)
-	{
-		return true;
-	}
-
-	@Override
-	public Chunk provideChunk(int chunk_x, int chunk_z)
+	public GenArrays provideArrays(int chunk_x, int chunk_z)
 	{
 		this.rand.setSeed((long) chunk_x * 341873128712L + (long) chunk_z * 132897987541L);
 		final int cx0 = chunk_x << 4;
 		final int cz0 = chunk_z << 4;
 
 		this.wcm = (WorldChunkManagerCRWG) this.world.getWorldChunkManager();
-//		GenArrays arrays = this.wcm.generateArrays(chunk_x << 4, chunk_z << 4, 16, 16);
 		GenArrays arrays = this.wcm.calcArrays(chunk_x, chunk_z);
 
 		BiomeGenBase[] abiome = arrays.biome_array;
-		short[] abiomeid = new short[256];
-		for (int i = 0; i < 256; i++) {
-			abiomeid[i] = (short) arrays.biome_id_array[i];
-		}
 
 		arrays.ablock = this.initBlockArray(rand);
 		arrays.ameta = new short[16 * 16 * 512];
@@ -255,7 +243,24 @@ public class ChunkProviderCRWG implements IChunkProvider
 			this.mapgen_scattered_feature.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
 		}
 
-		Chunk chunk = CRWG.funcs.createChunkFromArrays(this.world, chunk_x, chunk_z, arrays.ablock, arrays.ameta, abiome, abiomeid, arrays);
+		return arrays;
+	}
+
+	@Override
+	public boolean chunkExists(int chunk_x, int chunk_z)
+	{
+		return true;
+	}
+
+	@Override
+	public Chunk provideChunk(int chunk_x, int chunk_z)
+	{
+		GenArrays arrays = this.provideArrays(chunk_x, chunk_z);
+		short[] abiome = new short[256];
+		for (int i = 0; i < 256; i++) {
+			abiome[i] = (short) arrays.biome_id_array[i];
+		}
+		Chunk chunk = CRWG.funcs.createChunkFromArrays(this.world, chunk_x, chunk_z, arrays.ablock, arrays.ameta, arrays.biome_array, abiome, arrays);
 		return chunk;
 	}
 
@@ -366,7 +371,11 @@ public class ChunkProviderCRWG implements IChunkProvider
 	@Override
 	public List<BiomeGenBase.SpawnListEntry> getPossibleCreatures(EnumCreatureType type, int x, int y, int z)
 	{
-		return new ArrayList<BiomeGenBase.SpawnListEntry>();
+		BiomeGenBase biome = this.world.getBiomeGenForCoords(x, z);
+		if (type == EnumCreatureType.monster && this.mapgen_scattered_feature.func_143030_a(x, y, z)) {
+			return this.mapgen_scattered_feature.getScatteredFeatureSpawnList();
+		}
+		return biome.getSpawnableList(type);
 	}
 
 	@Override
