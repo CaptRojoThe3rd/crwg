@@ -18,7 +18,7 @@ Cubic Chunks support is here!
 * [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
 
 Unfortunately, Cubic Chunks doesn't have the best performance currently. If you don't have the
-greatest PC, you can continue using my Extended Height Limit forks of ChunkAPI and EndlessIDs
+greatest PC, you can still use my Extended Height Limit forks of ChunkAPI and EndlessIDs
 instead of Cubic Chunks. Please note that they are a bit buggy.
 
 * [Chunk API (E.H.L.)](https://github.com/CaptRojoThe3rd/ChunkAPI)
