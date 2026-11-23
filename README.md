@@ -12,6 +12,7 @@ provides small (few hundred blocks max) islands that are separated by large ocea
 
 Cubic Chunks support is here!
 
+* [Cubic Chunks](https://github.com/GTNewHorizons/CubicChunks1710)
 * [Chunk API](https://github.com/LegacyModdingMC/ChunkAPI)
 * [Endless IDs](https://github.com/GTMEGA/EndlessIDs)
 * [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
