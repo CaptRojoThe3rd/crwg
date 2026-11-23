@@ -10,13 +10,18 @@ provides small (few hundred blocks max) islands that are separated by large ocea
 
 ## Dependencies
 
-I haven't written Cubic Chunks support yet, so the mod still uses my "extended height limit" forks
-of ChunkAPI and EndlessIDs. (They aren't very good; I'd wait for Cubic Chunks support before you
-consider using this mod in your modpack.)
+Cubic Chunks support is here!
+
+* [Chunk API](https://github.com/LegacyModdingMC/ChunkAPI)
+* [Endless IDs](https://github.com/GTMEGA/EndlessIDs)
+* [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
+
+Unfortunately, Cubic Chunks doesn't have the best performance currently. If you don't have the
+greatest PC, you can continue using my Extended Height Limit forks of ChunkAPI and EndlessIDs
+instead of Cubic Chunks. Please note that they are a bit buggy.
 
 * [Chunk API (E.H.L.)](https://github.com/CaptRojoThe3rd/ChunkAPI)
 * [Endless IDs (E.H.L.)](https://github.com/CaptRojoThe3rd/EndlessIDs)
-* [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
 
 ## Gallery
 
