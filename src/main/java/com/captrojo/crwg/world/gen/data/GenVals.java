@@ -1,5 +1,7 @@
 package com.captrojo.crwg.world.gen.data;
 
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+
 public class GenVals
 {
 	public static final GenVals DUMMY = new GenVals();
@@ -7,6 +9,8 @@ public class GenVals
 	static {
 		DUMMY.gnd_height = 128;
 	}
+
+	public BlockPos pos = new BlockPos();
 
 	public int species;
 

@@ -4,7 +4,15 @@ import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
+import com.captrojo.crwg.world.gen.feature.AbstractFeature;
+import com.captrojo.crwg.world.gen.feature.Feature;
+import com.captrojo.crwg.world.gen.feature.FeatureDoublePlant;
+import com.captrojo.crwg.world.gen.feature.FeatureFlowers;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.block.BlockFlower;
 import net.minecraft.entity.passive.EntityWolf;
@@ -12,13 +20,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenFlowers;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeOakForest extends BiomeCRWGBase
 {
-	private static final WorldGenFlowers[] FLOWER_FOREST_FLOWERS_A = {
+	private static final FeatureFlowers[] FLOWER_FOREST_FLOWERS_A = {
 		BiomeCRWGBase.Gen_Flower_Poppy,
 		BiomeCRWGBase.Gen_Flower_Allium,
 		BiomeCRWGBase.Gen_Flower_Houstonia,
@@ -33,7 +38,7 @@ public class BiomeOakForest extends BiomeCRWGBase
 		BiomeCRWGBase.Gen_Flower_WoodlandSage
 	};
 
-	private static final WorldGenFlowers[] FLOWER_FOREST_FLOWERS_B = {
+	private static final FeatureFlowers[] FLOWER_FOREST_FLOWERS_B = {
 		BiomeCRWGBase.Gen_Flower_Sage,
 		BiomeCRWGBase.Gen_Flower_WoodlandSage,
 
@@ -45,51 +50,34 @@ public class BiomeOakForest extends BiomeCRWGBase
 		BiomeCRWGBase.Gen_Flower_SalmonPinkHyacinth
 	};
 
-	private static final WorldGenerator[] FLOWER_FOREST_DOUBLE_PLANTS = {
+	private static final FeatureDoublePlant[] FLOWER_FOREST_DOUBLE_PLANTS = {
 		BiomeCRWGBase.Gen_DPlant_Lilac,
 		BiomeCRWGBase.Gen_DPlant_Peony,
 		BiomeCRWGBase.Gen_DPlant_RoseBush,
 		BiomeCRWGBase.Gen_DPlant_PurpleNightshade
 	};
 
-	public static final int NORMAL = 0;
-	public static final int CHAPARRAL = 1;
-	public static final int FLOWER = 2;
-	public static final int FLOWER_CHAPARRAL = 3;
+	public static final byte NORMAL = 0;
+	public static final byte CHAPARRAL = 1;
+	public static final byte FLOWER = 2;
+	public static final byte FLOWER_CHAPARRAL = 3;
 
+	private final int type;
 	final boolean chaparral;
 	final boolean flower_forest;
 
-	public BiomeOakForest(int id, String name, int color, float temperature, float rainfall, int type)
+	public BiomeOakForest(final BiomeInfo info, final float temperature, final float rainfall, final byte type)
 	{
-		super(id, name, color, temperature, rainfall);
+		super(info, temperature, rainfall);
+		this.type = type;
 
 		this.chaparral = (type == CHAPARRAL || type == FLOWER_CHAPARRAL);
 		this.flower_forest = (type == FLOWER || type == FLOWER_CHAPARRAL);
 
-		this.decorator.boulders = 1;
-		this.decorator.boulder_chance = 0.05F;
-
 		if (type == NORMAL) {
-			this.decorator.trees = 10;
-			this.decorator.flowers = 3;
-			this.decorator.grass = 12;
-
 			this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityWolf.class, 5, 4, 4));
-		} else if (type == CHAPARRAL) {
-			this.decorator.trees = 1;
-			this.decorator.flowers = 5;
-			this.decorator.grass = 8;
 		} else if (type == FLOWER) {
-			this.decorator.trees = 7;
-			this.decorator.flowers = 60;
-			this.decorator.grass = 2;
-
 			this.spawnableCreatureList.add(new BiomeGenBase.SpawnListEntry(EntityWolf.class, 5, 2, 3));
-		} else if (type == FLOWER_CHAPARRAL) {
-			this.decorator.trees = 1;
-			this.decorator.flowers = 25;
-			this.decorator.grass = 2;
 		}
 
 		if (type == FLOWER || type == FLOWER_CHAPARRAL) {
@@ -99,11 +87,9 @@ public class BiomeOakForest extends BiomeCRWGBase
 			}
 			this.addFlower(ModBlocks.flower_woodland_sage, 0, 10);
 		}
-
-		this.copyToHigherDecorators();
 	}
 
-	private WorldGenFlowers[] getFlowerArray(World world, int x, int y, int z)
+	private FeatureFlowers[] getFlowerArray(final World world, final int x, final int y, final int z)
 	{
 		WorldCRWG world_crwg = (WorldCRWG) (Object) world;
 		int s = world_crwg.crwg$getSubspeciesVal(x, z);
@@ -111,7 +97,36 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
+
+		optns.boulders = 1;
+		optns.boulder_chance = 0.05F;
+
+		if (this.type == NORMAL) {
+			optns.trees = 10;
+			optns.flowers = 3;
+			optns.grass = 12;
+		} else if (this.type == CHAPARRAL) {
+			optns.trees = 1;
+			optns.flowers = 5;
+			optns.grass = 8;
+		} else if (this.type == FLOWER) {
+			optns.trees = 7;
+			optns.flowers = 60;
+			optns.grass = 2;
+		} else if (this.type == FLOWER_CHAPARRAL) {
+			optns.trees = 1;
+			optns.flowers = 25;
+			optns.grass = 2;
+		}
+
+		this.decorator.setAllOptions(optns);
+	}
+
+	@Override
+	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.chaparral) {
 			return (rand.nextInt(10) == 0) ? TreeGens.Oak_Big : TreeGens.Oak;
@@ -120,11 +135,12 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenerator getFlowerGen(World world, int x, int y, int z, Random rand)
+	public Feature getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.flower_forest) {
-			WorldGenerator[] flower_arr = this.getFlowerArray(world, x, y, z);
-			double d = (1.0 + BiomeGenBase.plantNoise.func_151601_a((double) x / 96.0, (double) z / 96.0)) / 2.0;
+			AbstractFeature[] flower_arr = this.getFlowerArray(world, origin.x, origin.y, origin.z);
+			double d = BiomeGenBase.plantNoise.func_151601_a((double) origin.x / 96.0, (double) origin.z / 96.0);
+			d = (d + 1.0) / 2.0;
 			d = MathHelper.clamp_double(d, 0.0, 0.9999);
 			int i = (int) (d * (double) flower_arr.length);
 			return flower_arr[i];
@@ -132,11 +148,11 @@ public class BiomeOakForest extends BiomeCRWGBase
 		if (rand.nextBoolean()) {
 			return BiomeCRWGBase.Gen_Flower_WoodlandSage;
 		}
-		return super.getFlowerGen(world, x, y, z, rand);
+		return super.getFlowerGen(world, rand, origin);
 	}
 
 	@Override
-	public WorldGenerator getGrassGen(World world, int x, int y, int z, Random rand)
+	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(4) == 0) {
 			return BiomeCRWGBase.Gen_TallGrass;
@@ -150,13 +166,14 @@ public class BiomeOakForest extends BiomeCRWGBase
 	@Override
 	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
+		final BlockPos pos = new BlockPos(cx0 + 8, world.getHeightValue(cx0 + 8, cz0 + 8), cz0 + 8);
 		int tall_flowers = rand.nextInt(5) - 3;
 		if (this.flower_forest) {
 			tall_flowers += 2;
 		}
 		for (int i = 0; i < tall_flowers; i++) {
 			int f = rand.nextInt(FLOWER_FOREST_DOUBLE_PLANTS.length);
-			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, cx0, world.getHeightValue(cx0, cz0), cz0);
+			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, pos);
 		}
 		super.decorate(world, rand, cx0, cz0);
 	}
@@ -168,10 +185,10 @@ public class BiomeOakForest extends BiomeCRWGBase
 			super.plantFlower(world, rand, x, y, z);
 			return;
 		}
-		WorldGenFlowers[] flower_arr = this.getFlowerArray(world, x, y, z);
-		WorldGenFlowers flower = flower_arr[rand.nextInt(flower_arr.length)];
-		if (flower.field_150552_a.canBlockStay(world, x, y, z)) {
-			world.setBlock(x, y, z, flower.field_150552_a, 0, 3);
+		FeatureFlowers[] flower_arr = this.getFlowerArray(world, x, y, z);
+		FeatureFlowers flower = flower_arr[rand.nextInt(flower_arr.length)];
+		if (flower.block.canBlockStay(world, x, y, z)) {
+			world.setBlock(x, y, z, flower.block, flower.meta, 3);
 		}
 	}
 }

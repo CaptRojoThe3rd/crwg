@@ -34,6 +34,8 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
+	api("com.github.GTNewHorizons:GTNHLib:0.11.58:dev")
+
 	implementation("com.falsepattern:falsepatternlib-mc1.7.10:1.12.2")
 //	implementation(deobf("https://github.com/CaptRojoThe3rd/ChunkAPI/releases/download/0.8.4-EHL/chunkapi-mc1.7.10-0.8.4-EHL.jar"))
 //	implementation(deobf("https://github.com/CaptRojoThe3rd/EndlessIDs/releases/download/1.7.4-EHL.1/endlessids-mc1.7.10-1.7.4-EHL.1.jar"))
@@ -43,13 +45,10 @@ dependencies {
 
 	implementation("com.github.GTNewHorizons:CubicChunks1710:0.2.0:dev") { transitive = false }
 	/* since we set Cubic Chunks to not bring its dependencies, we have to do it ourselves */
-	implementation("com.github.GTNewHorizons:GTNHLib:0.11.24:dev") { transitive = false }
 	implementation("com.github.GTNewHorizons:RegionLib:v0.1.0-GTNH:dev") { transitive = false }
-	implementation("org.joml:joml:1.10.8") { transitive = false }	
-	/* die */
 	compileOnly("org.jetbrains:annotations:26.0.2")
-	compileOnly('org.projectlombok:lombok:1.18.34')
-	annotationProcessor('org.projectlombok:lombok:1.18.34')
+	compileOnly("org.projectlombok:lombok:1.18.34") { transitive = false } /* die */
+	annotationProcessor('org.projectlombok:lombok:1.18.34') /* regenerate and die again */
 
 	implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.130-GTNH:dev")
 }

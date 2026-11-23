@@ -14,7 +14,7 @@ public class WorldGenBigTreeF extends WorldGenBigTree
 	private Block log_block = Blocks.log;
 	private Block leaf_block = Blocks.leaves;
 
-	public WorldGenBigTreeF(boolean notify)
+	public WorldGenBigTreeF(final boolean notify)
 	{
 		this(notify, 5, 17);
 	}
@@ -46,7 +46,7 @@ public class WorldGenBigTreeF extends WorldGenBigTree
 	}
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z)
+	public boolean generate(final World world, final Random rand, final int x, final int y, final int z)
 	{
 		if (this.worldObj != null) {
 			return false; /* because for some reason Mojang wrote it this way */
@@ -56,7 +56,7 @@ public class WorldGenBigTreeF extends WorldGenBigTree
 	}
 
 	@Override
-	protected void setBlockAndNotifyAdequately(World world, int x, int y, int z, Block block, int meta)
+	protected void setBlockAndNotifyAdequately(final World world, final int x, final int y, final int z, Block block, int meta)
 	{
 		if (block == Blocks.log) {
 			block = this.log_block;

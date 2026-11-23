@@ -54,9 +54,4 @@ public class LongCache
 		used_small_arrays.clear();
 		used_large_arrays.clear();
 	}
-
-	public static synchronized String getCacheSizes()
-	{
-		return "cache: " + free_large_arrays.size() + ", tcache: " + free_small_arrays.size() + ", allocated: " + used_large_arrays.size() + ", tallocated: " + used_small_arrays.size();
-	}
 }

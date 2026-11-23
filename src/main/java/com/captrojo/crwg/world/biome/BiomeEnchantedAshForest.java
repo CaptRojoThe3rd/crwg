@@ -4,19 +4,23 @@ import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
+import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeEnchantedAshForest extends BiomeCRWGBase
 {
-	static final WorldGenerator[] FLOWERS = {
+	private static final Feature[] FLOWERS = {
 		BiomeCRWGBase.Gen_Flower_Allium,
 
 		BiomeCRWGBase.Gen_Flower_Sage,
@@ -27,17 +31,9 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 		BiomeCRWGBase.Gen_Flower_PinkHyacinth
 	};
 
-	public BiomeEnchantedAshForest(int id, String name, int color, float temperature, float rainfall)
+	public BiomeEnchantedAshForest(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		super(id, name, color, temperature, rainfall);
-
-		this.decorator.flowers = 3;
-		this.decorator.grass = 5;
-		this.decorator.waterlilies = 2;
-
-		this.decorator.trees = 5;
-
-		this.copyToHigherDecorators();
+		super(info, temperature, rainfall);
 
 		this.addFlower(Blocks.red_flower, 1, 3);
 		this.addFlower(Blocks.red_flower, 2, 10);
@@ -51,7 +47,21 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
+
+		optns.flowers = 3;
+		optns.grass = 5;
+		optns.waterlilies = 2;
+
+		optns.trees = 5;
+
+		this.decorator.setAllOptions(optns);
+	}
+
+	@Override
+	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(10) == 0) {
 			return TreeGens.Spruce_Tiny;
@@ -60,7 +70,7 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenerator getFlowerGen(World world, int x, int y, int z, Random rand)
+	public Feature getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(15) == 0) {
 			return BiomeCRWGBase.Gen_Flower_BlueOrchid;
@@ -69,7 +79,7 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenerator getGrassGen(World world, int x, int y, int z, Random rand)
+	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextBoolean()) {
 			return BiomeCRWGBase.Gen_TallGrass;
@@ -81,21 +91,22 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(World world, WorldCRWG world_crwg, Random rand, int cx0, int cz0)
+	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
 	{
+		final WorldCRWG world_crwg = (WorldCRWG) world;
+		final BlockPos pos = new BlockPos();
 		for (int i = 0; i < 2; i++) {
-			int x = cx0 + 8 + rand.nextInt(16);
-			int z = cz0 + 8 + rand.nextInt(16);
-			int y = world_crwg.crwg$getGndHeight(x, z);
-			BiomeCRWGBase.Gen_ShallowPond.generate(world, rand, x, y, z);
+			pos.x = cx0 + 8 + rand.nextInt(16);
+			pos.z = cz0 + 8 + rand.nextInt(16);
+			pos.y = world_crwg.crwg$getGndHeight(pos.x, pos.z);
+			BiomeCRWGBase.Gen_ShallowPond.generate(world, rand, pos);
 		}
-
-		super.decorate(world, world_crwg, rand, cx0, cz0);
+		super.decorate(world, rand, cx0, cz0);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getBiomeGrassColor(int x, int y, int z)
+	public int getBiomeGrassColor(final int x, final int y, final int z)
 	{
 		double d0 = BiomeGenBase.plantNoise.func_151601_a((double) x * 0.0225, (double) z * 0.0225);
 		if (d0 < -0.3) {

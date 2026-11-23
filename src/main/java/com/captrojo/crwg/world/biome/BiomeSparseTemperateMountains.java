@@ -2,16 +2,21 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.util.YConst;
+import com.captrojo.crwg.util.block.BlockStates;
 import com.captrojo.crwg.world.biome.data.SoilIdx;
 import com.captrojo.crwg.world.biome.data.SoilType;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
+import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 import com.captrojo.crwg.world.gen.layer.GenLayerRand;
 
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
+
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerSmooth;
 import net.minecraft.world.gen.layer.GenLayerZoom;
@@ -19,67 +24,73 @@ import net.minecraft.world.gen.layer.IntCache;
 
 public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 {
-	static final SoilIdx[] TOP_BLOCKS = {SoilIdx.GRASS, SoilIdx.GRASS, SoilIdx.COARSE_DIRT, null};
-	static final SoilIdx[] FILL_BLOCKS = {SoilIdx.DIRT, SoilIdx.DIRT, SoilIdx.COARSE_DIRT, null};
+	private static final SoilIdx[] TOP_BLOCKS = {SoilIdx.GRASS, SoilIdx.GRASS, SoilIdx.COARSE_DIRT, null};
+	private static final SoilIdx[] FILL_BLOCKS = {SoilIdx.DIRT, SoilIdx.DIRT, SoilIdx.COARSE_DIRT, null};
 
-	GenLayer genlayer_soil;
-	
+	private final GenLayer genlayer_soil;
+
+	public BiomeSparseTemperateMountains(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		this.genlayer_soil = new GenLayerRand(100L, TOP_BLOCKS.length);
-		this.genlayer_soil = GenLayerZoom.magnify(110L, this.genlayer_soil, 4);
-		this.genlayer_soil = new GenLayerSmooth(120L, this.genlayer_soil);
-	}
+		super(info, temperature, rainfall);
 
-	public BiomeSparseTemperateMountains(int id, String name)
-	{
-		super(id, name, 0x607060, 0.6f, 0.5f);
-
-		this.decorator.trees = 0;
-		this.decorator.extra_tree_chance = 0.4f;
-		this.decorator.grass = 5;
-		this.decorator.flowers = 2;
-
-		this.decorator.liquid_waters = 0;
-		this.decorator.liquid_lavas = 0;
-
-		this.decorator.emerald_amount = 2;
+		GenLayer layer = new GenLayerRand(100L, TOP_BLOCKS.length);
+		layer = GenLayerZoom.magnify(110L, layer, 4);
+		layer = new GenLayerSmooth(120L, layer);
+		this.genlayer_soil = layer;
 	}
 
 	@Override
-	public void initWithWorldSeed(long world_seed)
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
+
+		optns.grass = 5;
+		optns.flowers = 2;
+
+		optns.trees = 0;
+		optns.extra_tree_chance = 0.4F;
+
+		optns.liquid_waters = 0;
+		optns.liquid_lavas = 0;
+
+		this.decorator.setAllOptions(optns);
+	}
+
+	@Override
+	public void initWithWorldSeed(final long world_seed)
 	{
 		super.initWithWorldSeed(world_seed);
 		this.genlayer_soil.initWorldGenSeed(world_seed);
 	}
 
 	@Override
-	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
+	public BlockState getTopBlock(final World world, final Random rand, final GenVals vals)
 	{
 		IntCache.resetIntCache();
-		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
-		if (a <= 1 && y > (YConst.SEA_LVL_Y + 192)) {
-			return BlockState.STONE;
+		int a = this.genlayer_soil.getInts(vals.pos.x, vals.pos.z, 1, 1)[0];
+		if (a <= 1 && vals.pos.y > (YConst.SEA_LVL_Y + 192)) {
+			return BlockStates.STONE;
 		}
-		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, rand, vals);
 		BlockState block = soil.get(TOP_BLOCKS[a]);
 		if (block == null) {
-			return BlockState.GRAVEL;
+			return BlockStates.GRAVEL;
 		}
 		return block;
 	}
 
 	@Override
-	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
+	public BlockState getFillerBlock(final World world, final Random rand, final GenVals vals, final boolean low)
 	{
 		IntCache.resetIntCache();
-		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
-		if (a <= 1 && y > (YConst.SEA_LVL_Y + 192)) {
-			return BlockState.STONE;
+		int a = this.genlayer_soil.getInts(vals.pos.x, vals.pos.z, 1, 1)[0];
+		if (a <= 1 && vals.pos.y > (YConst.SEA_LVL_Y + 192)) {
+			return BlockStates.STONE;
 		}
-		SoilType soil = this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species);
+		SoilType soil = this.getSoilType(world, rand, vals);
 		BlockState block = soil.get(FILL_BLOCKS[a]);
 		if (block == null) {
-			return BlockState.STONE;
+			return BlockStates.STONE;
 		}
 		if (low) {
 			return soil.get(SoilIdx.COARSE_DIRT);
@@ -88,7 +99,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return rand.nextBoolean() ? TreeGens.Spruce : TreeGens.Oak_Big;
 	}

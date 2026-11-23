@@ -3,37 +3,26 @@ package com.captrojo.crwg.world.biome;
 import java.util.Random;
 
 import com.captrojo.crwg.util.YConst;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
+import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeJungle extends BiomeCRWGBase
 {
-	public BiomeJungle(int id, String name, int color, float temperature, float rainfall, int sparseness)
+	private final byte sparseness;
+
+	public BiomeJungle(final BiomeInfo info, final float temperature, final float rainfall, final int sparseness)
 	{
-		super(id, name, color, temperature, rainfall);
-
-		if (sparseness == 0) {
-			this.decorator.trees = 35;
-			this.decorator.grass = 25;
-			this.decorator.flowers = 4;
-		} else if (sparseness == 1) {
-			this.decorator.trees = 12;
-			this.decorator.grass = 17;
-			this.decorator.flowers = 3;
-		} else {
-			this.decorator.trees = 5;
-			this.decorator.grass = 10;
-			this.decorator.flowers = 2;
-		}
-		this.decorator.pumpkin_chance = 0.0625F;
-
-		this.copyToHigherDecorators();
+		super(info, temperature, rainfall);
+		this.sparseness = (byte) sparseness;
 
 		if (sparseness < 1) {
 			this.spawnableMonsterList.add(new BiomeGenBase.SpawnListEntry(EntityOcelot.class, 2, 1, 1));
@@ -42,7 +31,30 @@ public class BiomeJungle extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
+
+		if (this.sparseness == 0) {
+			optns.trees = 35;
+			optns.grass = 25;
+			optns.flowers = 4;
+		} else if (this.sparseness == 1) {
+			optns.trees = 12;
+			optns.grass = 17;
+			optns.flowers = 3;
+		} else {
+			optns.trees = 5;
+			optns.grass = 10;
+			optns.flowers = 2;
+		}
+		optns.pumpkin_chance = 0.0625F;
+
+		this.decorator.setAllOptions(optns);
+	}
+
+	@Override
+	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(10) == 0) {
 			return TreeGens.Oak_Big;
@@ -57,23 +69,24 @@ public class BiomeJungle extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenerator getPumpkinGen(World world, int x, int y, int z, Random rand)
+	public Feature getPumpkinGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Melon;
 	}
 
 	@Override
-	public void decorate(World world, Random rand, int cx0, int cz0)
+	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
 	{
 		super.decorate(world, rand, cx0, cz0);
 
-		final int y = YConst.SEA_LVL_Y + 64;
+		final BlockPos pos = new BlockPos();
+		pos.y = YConst.SEA_LVL_Y + 64;
 		final int cx8 = cx0 + 8;
 		final int cz8 = cz0 + 8;
 		for (int i = 0; i < 50; i++) {
-			int x = cx8 + rand.nextInt(16);
-			int z = cz8 + rand.nextInt(16);
-			BiomeCRWGBase.Gen_Vines.generate(world, rand, x, y, z);
+			pos.x = cx8 + rand.nextInt(16);
+			pos.z = cz8 + rand.nextInt(16);
+			BiomeCRWGBase.Gen_Vines.generate(world, rand, pos);
 		}
 	}
 }

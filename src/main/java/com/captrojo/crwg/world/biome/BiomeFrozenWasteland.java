@@ -2,37 +2,37 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.block.BlockStates;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
+
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
 
 public class BiomeFrozenWasteland extends BiomeWasteland
 {
-	public BiomeFrozenWasteland(int id, String name, int color, float temperature, float rainfall)
+	public BiomeFrozenWasteland(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		super(id, name, color, temperature, rainfall);
-
-		this.decorator.lapis_amount *= 1.5;
-
-		this.copyToHigherDecorators();
+		super(info, temperature, rainfall);
 	}
 
 	@Override
-	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
+	public BlockState getTopBlock(final World world, final Random rand, final GenVals vals
+	)
 	{
-		return BlockState.SNOW_BLOCK;
+		return BlockStates.SNOW_BLOCK;
 	}
 
 	@Override
-	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
+	public BlockState getFillerBlock(final World world, final Random rand, final GenVals vals, final boolean low)
 	{
-		return BlockState.SNOW_BLOCK;
+		return BlockStates.SNOW_BLOCK;
 	}
 
 	@Override
-	public BlockState getExtFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, BlockState filler)
+	public BlockState getExtFillerBlock(final World world, final Random rand, final GenVals vals, final BlockState filler)
 	{
-		return BlockState.GRAVEL;
+		return BlockStates.GRAVEL;
 	}
 }

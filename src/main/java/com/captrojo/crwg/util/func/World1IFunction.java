@@ -5,5 +5,5 @@ import net.minecraft.world.World;
 @FunctionalInterface
 public interface World1IFunction
 {
-	void run(World world, int x, int y, int z, int i);
+	void run(final World world, int x, int y, int z, int i);
 }

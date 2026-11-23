@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.gen.feature;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockChks;
+import com.captrojo.crwg.util.block.BlockChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -27,9 +27,9 @@ public class WorldGenSeafloorBlockCircle extends WorldGenerator
 		this.clay = clay;
 	}
 
-	boolean isValidBlock(Block block)
+	private boolean isValidBlock(Block block)
 	{
-		if (BlockChks.isDirt(block)) {
+		if (BlockChecks.isAnyDirt(block)) {
 			return true;
 		}
 		return this.clay ? (block == Blocks.clay) : (block instanceof BlockGrass);
@@ -56,7 +56,7 @@ public class WorldGenSeafloorBlockCircle extends WorldGenerator
 				for (int y1 = (y - b0); y1 <= (y + b0); y1++) {
 					Block block = world.getBlock(x1, y1, z1);
 
-					if (BlockChks.isDirt(block) || block instanceof BlockGrass) {
+					if (this.isValidBlock(block)) {
 						world.setBlock(x1, y1, z1, this.block, 0, 2);
 					}
 				}

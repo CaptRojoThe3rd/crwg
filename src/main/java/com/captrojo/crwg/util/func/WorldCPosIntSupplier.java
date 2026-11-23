@@ -7,5 +7,5 @@ import net.minecraft.world.World;
 @FunctionalInterface
 public interface WorldCPosIntSupplier
 {
-	int get(World world, int cx0, int cz0, Random rand);
+	int get(final World world, int cx0, int cz0, final Random rand);
 }

@@ -2,36 +2,45 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.block.BlockStates;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
+
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
 
 public class BiomeWasteland extends BiomeCRWGBase
 {
-	public BiomeWasteland(int id, String name, int color, float temperature, float rainfall)
+	public BiomeWasteland(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		super(id, name, color, temperature, rainfall);
-
-		this.decorator.grass = 0;
-		this.decorator.flowers = 0;
-		this.decorator.reeds = 0;
-		this.decorator.pumpkins = 0;
-
-		this.copyToHigherDecorators();
-
+		super(info, temperature, rainfall);
 		this.spawnableCreatureList.clear();
 	}
 
 	@Override
-	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
+	public void initDecorators(final long world_seed)
 	{
-		return BlockState.GRAVEL;
+		DecoratorOptions optns = new DecoratorOptions();
+
+		optns.grass = 0;
+		optns.flowers = 0;
+		optns.reeds = 0;
+		optns.pumpkins = 0;
+
+		this.decorator.setAllOptions(optns);
 	}
 
 	@Override
-	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
+	public BlockState getTopBlock(final World world, final Random rand, final GenVals vals)
 	{
-		return BlockState.GRAVEL;
+		return BlockStates.GRAVEL;
+	}
+
+	@Override
+	public BlockState getFillerBlock(final World world, final Random rand, final GenVals vals, final boolean low)
+	{
+		return BlockStates.GRAVEL;
 	}
 }

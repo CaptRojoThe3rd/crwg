@@ -13,7 +13,7 @@ import com.captrojo.crwg.item.ModItems;
 import com.captrojo.crwg.recipe.ModCraftingRecipes;
 import com.captrojo.crwg.recipe.ModSmeltingRecipes;
 import com.captrojo.crwg.tileentity.ModTileEntities;
-import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.block.BlockStates;
 import com.captrojo.crwg.world.WorldTypeCRWG;
 import com.captrojo.crwg.world.biome.ModBiomes;
 import com.captrojo.crwg.world.chunk.ChunkDataMgr;
@@ -47,6 +47,8 @@ public class CommonProxy
 		}
 		ModConfig.load(new File(CRWG.dir_config + File.separator + "common.cfg"));
 		GeneralConfig.init();
+		BiomeConfig.init();
+		ModConfig.save();
 
 		ModBlocks.initBlocks();
 		ModBlocks.registerBlocks();
@@ -55,22 +57,17 @@ public class CommonProxy
 
 		ModTileEntities.registerTileEntities();
 
-		ModBiomes.initBiomes();
-		BiomeConfig.init();
-
 		WorldGenEvents.instance = new WorldGenEvents();
 		MinecraftForge.TERRAIN_GEN_BUS.register(WorldGenEvents.instance);
 
 		CommonEvents.instance = new CommonEvents();
 		MinecraftForge.EVENT_BUS.register(CommonEvents.instance);
 		FMLCommonHandler.instance().bus().register(CommonEvents.instance);
-
-		ModConfig.save();
 	}
 
 	public void init(FMLInitializationEvent event)
 	{
-		BlockState.initPreMade();
+		BlockStates.init();
 
 		ModCraftingRecipes.registerRecipes();
 		ModSmeltingRecipes.registerRecipes();

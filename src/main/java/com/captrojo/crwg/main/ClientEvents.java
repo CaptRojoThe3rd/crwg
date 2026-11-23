@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.WorldChunkManagerCRWG;
+import com.captrojo.crwg.world.biome.BiomeCRWGBase;
 import com.captrojo.crwg.world.biome.data.BiomeTypeCRWG;
 import com.captrojo.crwg.world.biome.data.LandType;
 import com.captrojo.crwg.world.biome.data.SoilType;
@@ -12,6 +13,7 @@ import com.captrojo.crwg.world.gen.data.GConst;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
@@ -108,6 +110,9 @@ public class ClientEvents
 			BiomeGenBase biome = chunk.getBiomeGenForWorldCoords(x & 0xf, z & 0xf, world.getWorldChunkManager());
 			if (biome_str == null) {
 				biome_str = biome.biomeName;
+			}
+			if (biome instanceof BiomeCRWGBase biome_crwg) {
+				biome_str = biome_crwg.info.getLocalizedName() + " [CRWG]";
 			}
 
 			event.left.add("biome: " + biome_str);

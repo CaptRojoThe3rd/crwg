@@ -4,64 +4,73 @@ import java.util.Random;
 
 import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.WorldGenDoublePlantF;
+import com.captrojo.crwg.world.gen.feature.AbstractFeature;
+import com.captrojo.crwg.world.gen.feature.FeatureDoublePlant;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeAbstractSwamp extends BiomeCRWGBase
 {
-	static final WorldGenerator Gen_Cattail = new WorldGenDoublePlantF(ModBlocks.dplant_cattail, 0);
-	
-	boolean generate_waterlilies = true;
-	double waterlily_chance = 0.1;
-	
-	int cattails = 5;
-	float cattail_chance = 0.5F;
+	private static final AbstractFeature Gen_Cattail = new FeatureDoublePlant(ModBlocks.dplant_cattail, 0);
 
-	public BiomeAbstractSwamp(int id, String name, int color, float temperature, float rainfall)
+	protected boolean generate_waterlilies = true;
+	protected double waterlily_chance = 0.1;
+
+	protected int cattails = 5;
+	protected float cattail_chance = 0.5F;
+
+	public BiomeAbstractSwamp(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		super(id, name, color, temperature, rainfall);
-
+		super(info, temperature, rainfall);
 		this.waterColorMultiplier = 0xcbfc7b;
+	}
 
-		this.decorator.underwater_gravel = 0;
-		this.decorator.underwater_sand = 0;
-		this.decorator.underwater_clay = 1;
+	@Override
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
 
-		this.decorator.trees = 2;
+		optns.underwater_gravel = 0;
+		optns.underwater_sand = 0;
+		optns.underwater_clay = 1;
 
-		this.decorator.grass = 5;
-		this.decorator.flowers = 1;
-		this.decorator.shrubs = 1;
+		optns.trees = 2;
 
-		this.decorator.mushrooms = 8;
+		optns.grass = 5;
+		optns.flowers = 1;
+		optns.shrubs = 1;
 
-		this.decorator.reeds = 10;
+		optns.mushrooms = 8;
+
+		optns.reeds = 10;
+
+		this.decorator.setAllOptions(optns);
 	}
 
 	@Override
 	public void genTerrainExt(
-		World world,
-		Random rand,
-		Block[] ablock,
-		short[] ameta,
-		int x,
-		int z,
-		GenArrays arrays,
-		GenVals vals
+		final World world,
+		final Random rand,
+		final GenArrays arrays,
+		final GenVals vals
 	)
 	{
 		if (this.generate_waterlilies) {
-			double d1 = BiomeGenBase.plantNoise.func_151601_a((double) x * 0.25, (double) z * 0.25);
+			double d1 = BiomeGenBase.plantNoise.func_151601_a((double) vals.pos.x * 0.25, (double) vals.pos.z * 0.25);
 			if (d1 > 0.0) {
-				int xc = x & 0xf;
-				int zc = z & 0xf;
+				final Block[] ablock = arrays.ablock;
+				final short[] ameta = arrays.ameta;
+				int xc = vals.pos.x & 0xf;
+				int zc = vals.pos.z & 0xf;
 				int xz = xc | (zc << 4);
 				if (d1 < this.waterlily_chance) {
 					if (vals.gnd_height < 128) {
@@ -78,25 +87,28 @@ public class BiomeAbstractSwamp extends BiomeCRWGBase
 			}
 		}
 
-		super.genTerrainExt(world, rand, ablock, ameta, x, z, arrays, vals);
+		super.genTerrainExt(world, rand, arrays, vals);
 	}
-	
+
 	@Override
-	public void decorate(World world, WorldCRWG world_crwg, Random rand, int cx0, int cz0)
+	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
 	{
+		final WorldCRWG world_crwg = (WorldCRWG) world;
+		final BlockPos pos = new BlockPos();
+
 		for (int i = 0; i < this.cattails; i++) {
 			if (rand.nextFloat() > this.cattail_chance) {
 				continue;
 			}
-			int x = cx0 + 8 + rand.nextInt(16);
-			int z = cz0 + 8 + rand.nextInt(16);
-			int y = world_crwg.crwg$getGndHeight(x, z);
-			if (y != 128) {
+			pos.x = cx0 + 8 + rand.nextInt(16);
+			pos.z = cz0 + 8 + rand.nextInt(16);
+			pos.y = world_crwg.crwg$getGndHeight(pos.x, pos.z);
+			if (pos.y != 128) {
 				continue;
 			}
-			Gen_Cattail.generate(world, rand, x, y, z);
+			Gen_Cattail.generate(world, rand, pos);
 		}
-		
-		super.decorate(world, world_crwg, rand, cx0, cz0);
+
+		super.decorate(world, rand, cx0, cz0);
 	}
 }

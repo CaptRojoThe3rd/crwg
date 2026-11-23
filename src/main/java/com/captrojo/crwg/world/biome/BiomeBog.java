@@ -1,16 +1,24 @@
 package com.captrojo.crwg.world.biome;
 
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BiomeBog extends BiomeAbstractSwamp
 {
-	final int grass_color;
-	final int foliage_color;
+	private final int grass_color;
+	private final int foliage_color;
 
-	public BiomeBog(int id, String name, int color, float temperature, float rainfall, int type)
+	public BiomeBog(
+		final BiomeInfo info,
+		final float temperature,
+		final float rainfall,
+		final int type
+	)
 	{
-		super(id, name, color, temperature, rainfall);
+		super(info, temperature, rainfall);
 
 		if (type == 0) {
 			this.grass_color = 0xaad14f;
@@ -19,24 +27,31 @@ public class BiomeBog extends BiomeAbstractSwamp
 			this.grass_color = 0x93772a;
 			this.foliage_color = 0x93852a;
 		}
+	}
 
-		this.decorator.flowers = 0;
-		this.decorator.grass = 20;
+	@Override
+	public void initDecorators(final long world_seed)
+	{
+		super.initDecorators(world_seed);
+		DecoratorOptions optns = this.decorator.optns_lowland;
 
-		this.decorator.reeds = 0;
-		this.decorator.pumpkins = 0;
+		optns.flowers = 0;
+		optns.grass = 20;
+
+		optns.reeds = 0;
+		optns.pumpkins = 0;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getBiomeGrassColor(int x, int y, int z)
+	public int getBiomeGrassColor(final int x, final int y, final int z)
 	{
 		return this.grass_color;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getBiomeFoliageColor(int x, int y, int z)
+	public int getBiomeFoliageColor(final int x, final int y, final int z)
 	{
 		return this.foliage_color;
 	}

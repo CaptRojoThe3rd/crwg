@@ -8,9 +8,9 @@ import net.minecraftforge.common.config.Configuration;
 
 public abstract class ConfigurableMixins
 {
-	Configuration config;
+	private Configuration config;
 
-	void loadConfig(String name)
+	void loadConfig(final String name)
 	{
 		File config_dir = new File(Launch.minecraftHome, "config" + File.separator + "crwg");
 		File config_file = new File(config_dir, name + ".cfg");
@@ -22,7 +22,7 @@ public abstract class ConfigurableMixins
 		this.config.save();
 	}
 
-	void addMixin(List<String> mixins, String name)
+	void addMixin(final List<String> mixins, final String name)
 	{
 		String category = "";
 		String setting_name = "";

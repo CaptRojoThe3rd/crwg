@@ -3,16 +3,17 @@ package com.captrojo.crwg.world.biome.data;
 import javax.annotation.Nullable;
 
 import com.captrojo.crwg.block.ModBlocks;
-import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.block.BlockStates;
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.block.Block;
 
 public enum SoilType
 {
-	NORMAL("Normal", BlockState.DIRT, BlockState.COARSE_DIRT, BlockState.GRASS, BlockState.MYCELIUM, BlockState.PODZOL, BlockState.FARMLAND),
-	SILTY("Silty", BlockState.SILTY_DIRT, BlockState.COARSE_SILTY_DIRT, BlockState.SILTY_GRASS, BlockState.SILTY_MYCELIUM, BlockState.SILTY_PODZOL, BlockState.SILTY_FARMLAND),
-	LOAMY("Loamy", BlockState.LOAMY_DIRT, BlockState.COARSE_LOAMY_DIRT, BlockState.LOAMY_GRASS, BlockState.LOAMY_MYCELIUM, BlockState.LOAMY_PODZOL, BlockState.LOAMY_FARMLAND),
-	CLAY("Clay", BlockState.CLAY_DIRT, BlockState.COARSE_CLAY_DIRT, BlockState.CLAY_GRASS, BlockState.CLAY_MYCELIUM, BlockState.CLAY_PODZOL, BlockState.CLAY_FARMLAND);
+	NORMAL("Normal", BlockStates.DIRT, BlockStates.COARSE_DIRT, BlockStates.GRASS, BlockStates.MYCELIUM, BlockStates.PODZOL, BlockStates.FARMLAND),
+	SILTY("Silty", BlockStates.SILTY_DIRT, BlockStates.COARSE_SILTY_DIRT, BlockStates.SILTY_GRASS, BlockStates.SILTY_MYCELIUM, BlockStates.SILTY_PODZOL, BlockStates.SILTY_FARMLAND),
+	LOAMY("Loamy", BlockStates.LOAMY_DIRT, BlockStates.COARSE_LOAMY_DIRT, BlockStates.LOAMY_GRASS, BlockStates.LOAMY_MYCELIUM, BlockStates.LOAMY_PODZOL, BlockStates.LOAMY_FARMLAND),
+	CLAY("Clay", BlockStates.CLAY_DIRT, BlockStates.COARSE_CLAY_DIRT, BlockStates.CLAY_GRASS, BlockStates.CLAY_MYCELIUM, BlockStates.CLAY_PODZOL, BlockStates.CLAY_FARMLAND);
 
 	/**
 	 * [s_temp][s_rain][species]
@@ -48,15 +49,15 @@ public enum SoilType
 	public static BlockState getPodzolFor(Block block)
 	{
 		if (block == ModBlocks.silty_dirt || block == ModBlocks.coarse_silty_dirt || block == ModBlocks.silty_grass || block == ModBlocks.silty_farmland) {
-			return BlockState.SILTY_PODZOL;
+			return BlockStates.SILTY_PODZOL;
 		}
 		if (block == ModBlocks.loamy_dirt || block == ModBlocks.coarse_loamy_dirt || block == ModBlocks.loamy_grass || block == ModBlocks.loamy_farmland) {
-			return BlockState.LOAMY_PODZOL;
+			return BlockStates.LOAMY_PODZOL;
 		}
 		if (block == ModBlocks.clay_dirt || block == ModBlocks.coarse_clay_dirt || block == ModBlocks.clay_grass || block == ModBlocks.clay_farmland) {
-			return BlockState.CLAY_PODZOL;
+			return BlockStates.CLAY_PODZOL;
 		}
-		return BlockState.PODZOL;
+		return BlockStates.PODZOL;
 	}
 
 	public final String name;

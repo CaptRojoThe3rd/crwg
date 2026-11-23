@@ -2,19 +2,20 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockState;
 import com.captrojo.crwg.util.func.World1IFunction;
 import com.captrojo.crwg.world.biome.data.SoilType;
+import com.captrojo.crwg.world.gen.feature.PlantFeature;
+
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenTallTree extends WorldGenAbstractTree
+public class WorldGenTallTree extends WorldGenerator implements PlantFeature
 {
 	/* log metadata */
 	private static final int NORTHSOUTH = 8;
@@ -100,34 +101,34 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 	private final Block leaf;
 	private final int leaf_meta;
 
-	public WorldGenTallTree(boolean notify)
+	public WorldGenTallTree(final boolean notify)
 	{
 		this(notify, 10, 20, false, false, Blocks.log, 1, Blocks.leaves, 1);
 	}
 
 	public WorldGenTallTree(
-		boolean notify,
-		int min_height,
-		int max_height,
-		boolean thick,
-		boolean podzol,
-		Block log,
-		Block leaf
+		final boolean notify,
+		final int min_height,
+		final int max_height,
+		final boolean thick,
+		final boolean podzol,
+		final Block log,
+		final Block leaf
 	)
 	{
 		this(notify, min_height, max_height, thick, podzol, log, 0, leaf, 0);
 	}
 
 	public WorldGenTallTree(
-		boolean notify,
-		int min_height,
-		int max_height,
-		boolean thick,
-		boolean podzol,
-		Block log,
-		int log_meta,
-		Block leaf,
-		int leaf_meta
+		final boolean notify,
+		final int min_height,
+		final int max_height,
+		final boolean thick,
+		final boolean podzol,
+		final Block log,
+		final int log_meta,
+		final Block leaf,
+		final int leaf_meta
 	)
 	{
 		super(notify);
@@ -143,15 +144,14 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		this.leaf_meta = leaf_meta;
 	}
 
-	private void placeBlock(World world, int x, int y, int z, Block block, int meta)
+	private void placeBlock(final World world, final int x, final int y, final int z, final Block block, final int meta)
 	{
-		Block existing = world.getBlock(x, y, z);
-		if (existing.isAir(world, x, y, z) || existing.isLeaves(world, x, y, z) || existing instanceof BlockBush) {
+		if (this.isReplaceableByLeaves(world, x, y, z)) {
 			this.setBlockAndNotifyAdequately(world, x, y, z, block, meta);
 		}
 	}
 
-	private void placeLeavesAround(World world, int x, int y, int z)
+	private void placeLeavesAround(final World world, final int x, final int y, final int z)
 	{
 		this.placeBlock(world, x - 1, y, z, this.leaf, this.leaf_meta);
 		this.placeBlock(world, x + 1, y, z, this.leaf, this.leaf_meta);
@@ -161,18 +161,18 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		this.placeBlock(world, x, y, z + 1, this.leaf, this.leaf_meta);
 	}
 
-	private void placeLogAndLeaves(World world, int x, int y, int z, int facing)
+	private void placeLogAndLeaves(final World world, final int x, final int y, final int z, final int facing)
 	{
 		this.placeBlock(world, x, y, z, this.log, this.log_meta | facing);
 		this.placeLeavesAround(world, x, y, z);
 	}
 
-	private int switchDir(int i)
+	private int switchDir(final int i)
 	{
 		return ((i & 1) == 0) ? NORTHSOUTH : EASTWEST;
 	}
 
-	private void buildBranch_N(World world, int x, int y, int z, int r)
+	private void buildBranch_N(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			z--;
@@ -180,7 +180,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_NNE(World world, int x, int y, int z, int r)
+	private void buildBranch_NNE(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			if ((i & 1) == 0) {
@@ -191,7 +191,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_NE(World world, int x, int y, int z, int r)
+	private void buildBranch_NE(final World world, int x, int y, int z, int r)
 	{
 		r -= (r / 3);
 		for (int i = 0; i < r; i++) {
@@ -201,7 +201,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_ENE(World world, int x, int y, int z, int r)
+	private void buildBranch_ENE(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x++;
@@ -212,7 +212,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_E(World world, int x, int y, int z, int r)
+	private void buildBranch_E(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x++;
@@ -220,7 +220,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_ESE(World world, int x, int y, int z, int r)
+	private void buildBranch_ESE(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x++;
@@ -231,7 +231,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_SE(World world, int x, int y, int z, int r)
+	private void buildBranch_SE(final World world, int x, int y, int z, int r)
 	{
 		r -= (r / 3);
 		for (int i = 0; i < r; i++) {
@@ -241,7 +241,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_SSE(World world, int x, int y, int z, int r)
+	private void buildBranch_SSE(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			if ((i & 1) == 0) {
@@ -252,7 +252,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_S(World world, int x, int y, int z, int r)
+	private void buildBranch_S(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			z++;
@@ -260,7 +260,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_SSW(World world, int x, int y, int z, int r)
+	private void buildBranch_SSW(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			if ((i & 1) == 0) {
@@ -271,7 +271,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_SW(World world, int x, int y, int z, int r)
+	private void buildBranch_SW(final World world, int x, int y, int z, int r)
 	{
 		r -= (r / 3);
 		for (int i = 0; i < r; i++) {
@@ -281,7 +281,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_WSW(World world, int x, int y, int z, int r)
+	private void buildBranch_WSW(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x--;
@@ -292,7 +292,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_W(World world, int x, int y, int z, int r)
+	private void buildBranch_W(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x--;
@@ -300,7 +300,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_WNW(World world, int x, int y, int z, int r)
+	private void buildBranch_WNW(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			x--;
@@ -311,7 +311,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_NW(World world, int x, int y, int z, int r)
+	private void buildBranch_NW(final World world, int x, int y, int z, int r)
 	{
 		r -= (r / 3);
 		for (int i = 0; i < r; i++) {
@@ -321,7 +321,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void buildBranch_NNW(World world, int x, int y, int z, int r)
+	private void buildBranch_NNW(final World world, int x, int y, int z, int r)
 	{
 		for (int i = 0; i < r; i++) {
 			if ((i & 1) == 0) {
@@ -332,7 +332,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	public void generatePodzol(World world, Random rand, int x, int y, int z)
+	public void generatePodzol(final World world, final Random rand, final int x, final int y, final int z)
 	{
 		this.placePodzolBlob(world, rand, x - 1, y, z - 1);
 		this.placePodzolBlob(world, rand, x + 2, y, z - 1);
@@ -350,7 +350,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void placePodzolBlob(World world, Random rand, int x, int y, int z)
+	private void placePodzolBlob(final World world, final Random rand, final int x, final int y, final int z)
 	{
 		for (int x1 = -2; x1 <= 2; ++x1) {
 			for (int z1 = -2; z1 <= 2; ++z1) {
@@ -361,14 +361,14 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 		}
 	}
 
-	private void placePodzolBlock(World world, int x, int y, int z)
+	private void placePodzolBlock(final World world, final int x, final int y, final int z)
 	{
 		for (int ya = y + 2; ya >= y - 3; --ya) {
 			Block existing = world.getBlock(x, ya, z);
 
 			if (existing.canSustainPlant(world, x, ya, z, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {
 				BlockState podzol = SoilType.getPodzolFor(existing);
-				this.setBlockAndNotifyAdequately(world, x, ya, z, podzol.block, podzol.meta);
+				this.setBlockAndNotifyAdequately(world, x, ya, z, podzol.getBlock(), podzol.getBlockMeta(0));
 				break;
 			}
 
@@ -379,7 +379,7 @@ public class WorldGenTallTree extends WorldGenAbstractTree
 	}
 
 	@Override
-	public boolean generate(World world, Random rand, int x, int y, int z)
+	public boolean generate(final World world, final Random rand, int x, int y, int z)
 	{
 		Block ground = world.getBlock(x, y - 1, z);
 		if (!ground.canSustainPlant(world, x, y, z, ForgeDirection.UP, (IPlantable) Blocks.sapling)) {

@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 @IFMLLoadingPlugin.MCVersion("1.7.10")
 public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin, IEarlyMixinLoader
 {
-	public static final MixinEnvironment.Side SIDE = MixinEnvironment.getCurrentEnvironment().getSide();
+	private static final MixinEnvironment.Side SIDE = MixinEnvironment.getCurrentEnvironment().getSide();
 
 	@Override
 	public String[] getASMTransformerClass()
@@ -37,7 +37,7 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 	}
 
 	@Override
-	public void injectData(Map<String, Object> data)
+	public void injectData(final Map<String, Object> data)
 	{
 	}
 
@@ -54,10 +54,10 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 	}
 
 	@Override
-	public @Nonnull List<String> getMixins(Set<String> loaded_core_mods)
+	public @Nonnull List<String> getMixins(final Set<String> loaded_core_mods)
 	{
 		this.loadConfig("early_mixins");
-		List<String> mixins = new ArrayList<>();
+		final List<String> mixins = new ArrayList<>();
 
 		boolean angelica = false;
 		for (String mod : loaded_core_mods) {
@@ -72,6 +72,8 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 		this.addMixin(mixins, "common.ChunkMixin");
 		this.addMixin(mixins, "common.WorldMixin");
 
+		this.addMixin(mixins, "common.WorldGeneratorMixin");
+
 		this.addMixin(mixins, "common.joke.MapGenVillageMixin");
 
 		if (SIDE == MixinEnvironment.Side.CLIENT) {
@@ -83,7 +85,6 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 		}
 
 		this.saveConfig();
-
 		return mixins;
 	}
 }

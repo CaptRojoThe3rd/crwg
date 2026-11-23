@@ -1,12 +1,10 @@
 package com.captrojo.crwg.item;
 
 import com.captrojo.crwg.main.CRWG;
-import com.captrojo.crwg.world.gen.feature.tree.WorldGenTallTree;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 
 /**
@@ -27,8 +25,6 @@ public class ItemDebug extends Item
 		if (world.isRemote) {
 			return true;
 		}
-
-		(new WorldGenTallTree(true)).generate(world, world.rand, x + Facing.offsetsXForSide[side], y + Facing.offsetsYForSide[side], z + Facing.offsetsZForSide[side]);
 		return true;
 	}
 }

@@ -2,9 +2,12 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
-import com.captrojo.crwg.util.BlockState;
+import com.captrojo.crwg.util.block.BlockStates;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
 import com.captrojo.crwg.world.gen.layer.GenLayerRand;
+
+import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -14,45 +17,44 @@ import net.minecraft.world.gen.layer.IntCache;
 
 public class BiomeMushroomMountains extends BiomeMushroomField
 {
-	GenLayer genlayer_soil;
+	private final GenLayer genlayer_soil;
 
+	public BiomeMushroomMountains(final BiomeInfo info, final float temperature, final float rainfall)
 	{
-		this.genlayer_soil = new GenLayerRand(100L, 2);
-		this.genlayer_soil = GenLayerZoom.magnify(110L, this.genlayer_soil, 5);
-		this.genlayer_soil = new GenLayerSmooth(120L, this.genlayer_soil);
-	}
+		super(info, temperature, rainfall, 1);
 
-	public BiomeMushroomMountains(int id, String name, int color, float temperature, float rainfall)
-	{
-		super(id, name, color, temperature, rainfall, 1);
+		GenLayer layer = new GenLayerRand(100L, 2);
+		layer = GenLayerZoom.magnify(110L, layer, 5);
+		layer = new GenLayerSmooth(120L, layer);
+		this.genlayer_soil = layer;
 	}
 
 	@Override
-	public void initWithWorldSeed(long world_seed)
+	public void initWithWorldSeed(final long world_seed)
 	{
 		super.initWithWorldSeed(world_seed);
 		this.genlayer_soil.initWorldGenSeed(world_seed);
 	}
 
 	@Override
-	public BlockState getTopBlock(World world, int x, int y, int z, Random rand, GenVals vals)
+	public BlockState getTopBlock(final World world, final Random rand, final GenVals vals)
 	{
 		IntCache.resetIntCache();
-		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
+		int a = this.genlayer_soil.getInts(vals.pos.x, vals.pos.z, 1, 1)[0];
 		if (a == 0) {
-			return BlockState.STONE;
+			return BlockStates.STONE;
 		}
-		return this.getSoilType(world, x, y, z, rand, vals.s_temp, vals.s_rain, vals.species).mycelium;
+		return this.getSoilType(world, rand, vals).mycelium;
 	}
 
 	@Override
-	public BlockState getFillerBlock(World world, int x, int y, int z, Random rand, GenVals vals, boolean low)
+	public BlockState getFillerBlock(final World world, final Random rand, final GenVals vals, final boolean low)
 	{
 		IntCache.resetIntCache();
-		int a = this.genlayer_soil.getInts(x, z, 1, 1)[0];
+		int a = this.genlayer_soil.getInts(vals.pos.x, vals.pos.z, 1, 1)[0];
 		if (a == 0) {
-			return BlockState.STONE;
+			return BlockStates.STONE;
 		}
-		return super.getFillerBlock(world, x, y, z, rand, vals, low);
+		return super.getFillerBlock(world, rand, vals, low);
 	}
 }

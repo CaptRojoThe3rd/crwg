@@ -1,6 +1,6 @@
 package com.captrojo.crwg.config;
 
-import com.captrojo.crwg.world.biome.BiomeCRWGBase;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
 
 public abstract class BiomeConfig
 {
@@ -8,10 +8,10 @@ public abstract class BiomeConfig
 	{
 		ModConfig._category = "Biome_IDs";
 
-		for (BiomeCRWGBase biome : BiomeCRWGBase.BIOMES) {
-			int id = biome.biomeID + 0x100;
-			id = ModConfig.getInt(String.format("%03x_", id - 0x100) + biome.biomeName.replace(' ', '_'), null, id);
-			biome.biomeID = id;
+		for (BiomeInfo biome_info : BiomeInfo.getInfoList()) {
+			int id = biome_info.id + 0x100;
+			id = ModConfig.getInt(String.format("%03x_", id - 0x100) + biome_info.unlocalized_name, null, id);
+			biome_info.id = id;
 		}
 	}
 }

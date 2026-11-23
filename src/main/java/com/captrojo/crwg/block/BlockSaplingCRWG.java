@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Random;
 
 import com.captrojo.crwg.block.data.SaplingArrangement;
-import com.captrojo.crwg.util.func.WorldFunction;
+import com.captrojo.crwg.util.func.WorldFunctionA;
+import com.captrojo.crwg.world.gen.feature.Feature;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,15 +21,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class BlockSaplingCRWG extends BlockSapling
 {
-	final WorldFunction<WorldGenerator> func_gen;
+	final WorldFunctionA<Feature> func_gen;
 	SaplingArrangement arrangement;
 
-	public BlockSaplingCRWG(String name, WorldFunction<WorldGenerator> func_gen)
+	public BlockSaplingCRWG(String name, WorldFunctionA<Feature> func_gen)
 	{
 		this.setBlockName(name);
 		this.setCreativeTab(null);
@@ -84,13 +87,13 @@ public class BlockSaplingCRWG extends BlockSapling
 		x += x_offs;
 		z += z_offs;
 
-		WorldGenerator gen = this.func_gen.get(world, rand, x, y, z);
+		Feature gen = this.func_gen.get(world, rand, x, y, z);
 		if (gen == null) {
 			return;
 		}
 
 		this.arrangement.clear(world, x, y, z);
-		if (!gen.generate(world, rand, x, y, z)) {
+		if (!gen.generate(world, rand, new BlockPos(x, y, z))) {
 			this.arrangement.unclear(world, x, y, z, this);
 		}
 	}

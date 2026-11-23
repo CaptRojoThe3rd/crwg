@@ -2,18 +2,23 @@ package com.captrojo.crwg.world.biome;
 
 import java.util.Random;
 
+import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
+import com.captrojo.crwg.world.biome.info.BiomeInfo;
+import com.captrojo.crwg.world.gen.feature.AbstractFeature;
+import com.captrojo.crwg.world.gen.feature.Feature;
+import com.captrojo.crwg.world.gen.feature.FeatureFlowers;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeRainbowForest extends BiomeCRWGBase
 {
-	static final WorldGenerator[] FLOWERS = {
+	private static final FeatureFlowers[] FLOWERS = {
 		BiomeCRWGBase.Gen_Flower_Allium,
 		BiomeCRWGBase.Gen_Flower_Houstonia,
 		BiomeCRWGBase.Gen_Flower_TulipRed,
@@ -29,29 +34,32 @@ public class BiomeRainbowForest extends BiomeCRWGBase
 		BiomeCRWGBase.Gen_Flower_SkyBlueLupine
 	};
 
-	final boolean jungle;
+	private final boolean jungle;
 
-	public BiomeRainbowForest(int id, String name, int color, float temperature, float rainfall, boolean jungle)
+	public BiomeRainbowForest(final BiomeInfo info, final float temperature, final float rainfall, final boolean jungle)
 	{
-		super(id, name, color, temperature, rainfall);
+		super(info, temperature, rainfall);
 		this.jungle = jungle;
-
-		this.decorator.flowers = 20;
-		this.decorator.grass = 10;
-
-		this.decorator.trees = 25;
-
-		this.decorator.pumpkins = 2;
-
-		this.decorator.coal_amount *= 1.5;
-
-		this.copyToHigherDecorators();
-
 		this.spawnableCreatureList.add(new SpawnListEntry(EntityChicken.class, 5, 7, 14));
 	}
 
 	@Override
-	public WorldGenAbstractTree getTreeGen(World world, int x, int y, int z, Random rand)
+	public void initDecorators(final long world_seed)
+	{
+		DecoratorOptions optns = new DecoratorOptions();
+
+		optns.flowers = 20;
+		optns.grass = 10;
+
+		optns.trees = 25;
+
+		optns.pumpkins = 2;
+
+		this.decorator.setAllOptions(optns);
+	}
+
+	@Override
+	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextBoolean()) {
 			switch (rand.nextInt(5)) {
@@ -95,16 +103,16 @@ public class BiomeRainbowForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public WorldGenerator getFlowerGen(World world, int x, int y, int z, Random rand)
+	public AbstractFeature getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
-		double d0 = (1.0 + BiomeGenBase.plantNoise.func_151601_a((double) x / 96.0, (double) z / 96.0)) / 2.0;
+		double d0 = (1.0 + BiomeGenBase.plantNoise.func_151601_a((double) origin.x / 96.0, (double) origin.z / 96.0)) / 2.0;
 		d0 = MathHelper.clamp_double(d0, 0.0, 0.9999);
 		int i0 = (int) (d0 * (double) FLOWERS.length);
 		return FLOWERS[i0];
 	}
 
 	@Override
-	public WorldGenerator getPumpkinGen(World world, int x, int y, int z, Random rand)
+	public Feature getPumpkinGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Melon;
 	}

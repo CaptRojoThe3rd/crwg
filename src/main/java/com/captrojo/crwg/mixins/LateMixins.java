@@ -19,9 +19,9 @@ public class LateMixins implements ILateMixinLoader
 
 	@Nonnull
 	@Override
-	public List<String> getMixins(Set<String> loaded_mods)
+	public List<String> getMixins(final Set<String> loaded_mods)
 	{
-		List<String> mixins = new ArrayList<>();
+		final List<String> mixins = new ArrayList<>();
 		return mixins;
 	}
 }

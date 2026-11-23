@@ -7,7 +7,6 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILL
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ANIMALS;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +17,8 @@ import com.captrojo.crwg.main.CRWG;
 import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.BiomeCRWGBase;
 import com.captrojo.crwg.world.biome.ModBiomes;
-import com.captrojo.crwg.world.gen.cave.CaveGenBase;
-import com.captrojo.crwg.world.gen.cave.CaveGenWorm;
+import com.captrojo.crwg.world.gen.cave.CaveBase;
+import com.captrojo.crwg.world.gen.cave.CaveWorm;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
 
@@ -51,7 +50,7 @@ public class ChunkProviderCRWG implements IChunkProvider
 	private Random rand;
 	private final boolean map_features_enabled;
 
-	private CaveGenBase cavegen_worm = new CaveGenWorm();
+	private CaveBase cavegen_worm = new CaveWorm();
 
 	private MapGenStronghold mapgen_stronghold;
 	private MapGenVillage mapgen_village;
@@ -221,26 +220,20 @@ public class ChunkProviderCRWG implements IChunkProvider
 				} else {
 					biome_crwg = ModBiomes.grassland;
 				}
+				
+				gen_vals.pos.x = cx0 + x;
+				gen_vals.pos.z = cz0 + z;
 
-				biome_crwg.genTerrainExt(
-					this.world,
-					this.rand,
-					arrays.ablock,
-					arrays.ameta,
-					cx0 + x,
-					cz0 + z,
-					arrays,
-					gen_vals
-				);
+				biome_crwg.genTerrainExt(this.world, this.rand, arrays, gen_vals);
 				continue;
 			}
 		}
 
 		if (this.map_features_enabled) {
-			this.mapgen_mineshaft.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
-			this.mapgen_village.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
-			this.mapgen_stronghold.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
-			this.mapgen_scattered_feature.func_151539_a(this, this.world, chunk_x, chunk_z, arrays.ablock);
+			this.mapgen_mineshaft.func_151539_a(this, this.world, chunk_x, chunk_z, null);
+			this.mapgen_village.func_151539_a(this, this.world, chunk_x, chunk_z, null);
+			this.mapgen_stronghold.func_151539_a(this, this.world, chunk_x, chunk_z, null);
+			this.mapgen_scattered_feature.func_151539_a(this, this.world, chunk_x, chunk_z, null);
 		}
 
 		return arrays;
