@@ -16,6 +16,7 @@ Cubic Chunks support is here!
 * [Chunk API](https://github.com/LegacyModdingMC/ChunkAPI)
 * [Endless IDs](https://github.com/GTMEGA/EndlessIDs)
 * [UniMixins](https://github.com/LegacyModdingMC/UniMixins)
+* [GTNHLib](https://github.com/GTNewHorizons/GTNHLib)
 
 Unfortunately, Cubic Chunks doesn't have the best performance currently. If you don't have the
 greatest PC, you can still use my Extended Height Limit forks of ChunkAPI and EndlessIDs
