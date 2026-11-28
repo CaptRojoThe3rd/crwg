@@ -4,11 +4,11 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeRiver extends BiomeCRWGBase
 {
@@ -32,7 +32,7 @@ public class BiomeRiver extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getWaterlilyGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getWaterlilyGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return rand.nextBoolean() ? BiomeCRWGBase.Gen_Waterlily : BiomeCRWGBase.Gen_Waterlily_Small;
 	}

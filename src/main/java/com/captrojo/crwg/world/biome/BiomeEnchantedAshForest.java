@@ -6,7 +6,6 @@ import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -17,10 +16,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeEnchantedAshForest extends BiomeCRWGBase
 {
-	private static final Feature[] FLOWERS = {
+	private static final WorldGenerator[] FLOWERS = {
 		BiomeCRWGBase.Gen_Flower_Allium,
 
 		BiomeCRWGBase.Gen_Flower_Sage,
@@ -61,7 +61,7 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(10) == 0) {
 			return TreeGens.Spruce_Tiny;
@@ -70,7 +70,7 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getFlowerGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(15) == 0) {
 			return BiomeCRWGBase.Gen_Flower_BlueOrchid;
@@ -79,7 +79,7 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextBoolean()) {
 			return BiomeCRWGBase.Gen_TallGrass;
@@ -94,12 +94,12 @@ public class BiomeEnchantedAshForest extends BiomeCRWGBase
 	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
 	{
 		final WorldCRWG world_crwg = (WorldCRWG) world;
-		final BlockPos pos = new BlockPos();
+		int x, y, z;
 		for (int i = 0; i < 2; i++) {
-			pos.x = cx0 + 8 + rand.nextInt(16);
-			pos.z = cz0 + 8 + rand.nextInt(16);
-			pos.y = world_crwg.crwg$getGndHeight(pos.x, pos.z);
-			BiomeCRWGBase.Gen_ShallowPond.generate(world, rand, pos);
+			x = cx0 + 8 + rand.nextInt(16);
+			z = cz0 + 8 + rand.nextInt(16);
+			y = world_crwg.crwg$getGndHeight(x, z);
+			BiomeCRWGBase.Gen_ShallowPond.generate(world, rand, x, y, z);
 		}
 		super.decorate(world, rand, cx0, cz0);
 	}

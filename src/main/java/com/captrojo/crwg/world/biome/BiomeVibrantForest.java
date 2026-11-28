@@ -5,12 +5,12 @@ import java.util.Random;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeVibrantForest extends BiomeCRWGBase
 {
@@ -30,7 +30,7 @@ public class BiomeVibrantForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		WorldCRWG world_crwg = (WorldCRWG) (Object) world;
 

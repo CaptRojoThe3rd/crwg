@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -13,6 +12,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeDarkOakForest extends BiomeCRWGBase
 {
@@ -31,7 +31,7 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(3) == 0) {
 			return TreeGens.Birch;
@@ -51,10 +51,10 @@ public class BiomeDarkOakForest extends BiomeCRWGBase
 				pos.y = world.getHeightValue(pos.x, pos.z);
 
 				if (rand.nextInt(20) == 0) {
-					BiomeCRWGBase.Gen_BigMushroom.generate(world, rand, pos);
+					BiomeCRWGBase.Gen_BigMushroom.generate(world, rand, pos.x, pos.y, pos.z);
 				} else {
-					Feature tree = this.getTreeGen(world, rand, pos);
-					tree.generate(world, rand, pos);
+					WorldGenerator tree = this.getTreeGen(world, rand, pos);
+					tree.generate(world, rand, pos.x, pos.y, pos.z);
 				}
 			}
 		}

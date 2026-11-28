@@ -2,7 +2,7 @@ package com.captrojo.crwg.world.gen.feature.tree;
 
 import java.util.Random;
 
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -11,7 +11,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenTallThinPineTree extends WorldGenerator implements PlantFeature
+public class WorldGenTallThinPineTree extends WorldGenerator
 {
 	private final Block log_block;
 	private final Block leaf_block;
@@ -38,7 +38,7 @@ public class WorldGenTallThinPineTree extends WorldGenerator implements PlantFea
 
 	public void placeBlock(final World world, final int x, final int y, final int z, final Block block, final int meta)
 	{
-		if (this.isReplaceableByLeaves(world, x, y, z)) {
+		if (PlacementChecks.isReplaceableByLeaves(world, x, y, z)) {
 			this.setBlockAndNotifyAdequately(world, x, y, z, block, meta);
 		}
 	}

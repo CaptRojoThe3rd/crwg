@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeGrassland extends BiomeCRWGBase
 {
@@ -52,8 +52,8 @@ public class BiomeGrassland extends BiomeCRWGBase
 		optns.grass = 10;
 		optns.shrubs = 1;
 
-		optns.trees = 0;
-		optns.extra_tree_chance = 0.05F;
+		optns.trees = 1;
+		optns.tree_chance = 0.05F;
 
 		if (this.type == TYPE_DRY) {
 			optns.pumpkins = 0;
@@ -63,7 +63,7 @@ public class BiomeGrassland extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.type == TYPE_DRY) {
 			return TreeGens.Acacia_Shrub;
@@ -75,7 +75,7 @@ public class BiomeGrassland extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.type != TYPE_DRY && rand.nextInt(5) == 0) {
 			return BiomeCRWGBase.Gen_Clover;
@@ -84,27 +84,8 @@ public class BiomeGrassland extends BiomeCRWGBase
 	}
 
 	@Override
-	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
+	public WorldGenerator getTallGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
-		super.decorate(world, rand, cx0, cz0);
-
-		final BlockPos pos = new BlockPos();
-		int i;
-
-		for (i = 0; i < 2; i++) {
-			pos.x = cx0 + rand.nextInt(16) + 8;
-			pos.z = cz0 + rand.nextInt(16) + 8;
-			pos.y = world.getHeightValue(pos.x, pos.z);
-			BiomeCRWGBase.Gen_DPlant_TallGrass.generate(world, rand, pos);
-		}
-
-		if (this.type == TYPE_SUNFLOWER) {
-			for (i = 0; i < 3; i++) {
-				pos.x = cx0 + rand.nextInt(16) + 8;
-				pos.z = cz0 + rand.nextInt(16) + 8;
-				pos.y = world.getHeightValue(pos.x, pos.z);
-				BiomeCRWGBase.Gen_DPlant_Sunflower.generate(world, rand, pos);
-			}
-		}
+		return BiomeCRWGBase.Gen_DPlant_TallGrass;
 	}
 }

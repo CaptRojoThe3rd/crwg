@@ -3,15 +3,13 @@ package com.captrojo.crwg.world.gen.feature.ore;
 import java.util.Random;
 
 import com.captrojo.crwg.util.block.BlockReplacer;
-import com.captrojo.crwg.world.gen.feature.AbstractFeature;
+import com.captrojo.crwg.world.gen.feature.WorldGenFeature;
 import com.captrojo.crwg.world.gen.placement.HeightProvider;
-
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 
-public abstract class FeatureAbstractOre extends AbstractFeature
+public abstract class FeatureAbstractOre extends WorldGenFeature
 {
 	private final HeightProvider height_prov;
 	protected final BlockReplacer block_replacer;
@@ -32,7 +30,7 @@ public abstract class FeatureAbstractOre extends AbstractFeature
 		this.discard_on_exposure_chance = discard_on_exposure_chance;
 	}
 
-	protected abstract void doGeneration(final World world, final Random rand, final BlockPos origin);
+	protected abstract void doGeneration(final World world, final Random rand, int x, int y, int z);
 
 	protected boolean shouldDiscard(final World world, final Random rand, final int x, final int y, final int z)
 	{
@@ -56,10 +54,10 @@ public abstract class FeatureAbstractOre extends AbstractFeature
 	}
 
 	@Override
-	public boolean generate(final World world, final Random rand, final BlockPos origin)
+	public boolean generate(final World world, final Random rand, int x, int y, int z)
 	{
-		origin.y = this.height_prov.getHeight(rand);
-		this.doGeneration(world, rand, origin);
+		y = this.height_prov.getHeight(rand);
+		this.doGeneration(world, rand, x, y, z);
 		return true;
 	}
 }

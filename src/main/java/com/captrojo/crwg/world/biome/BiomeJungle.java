@@ -5,7 +5,6 @@ import java.util.Random;
 import com.captrojo.crwg.util.YConst;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -14,6 +13,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeJungle extends BiomeCRWGBase
 {
@@ -54,7 +54,7 @@ public class BiomeJungle extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(10) == 0) {
 			return TreeGens.Oak_Big;
@@ -69,7 +69,7 @@ public class BiomeJungle extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getPumpkinGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getPumpkinGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Melon;
 	}
@@ -79,14 +79,13 @@ public class BiomeJungle extends BiomeCRWGBase
 	{
 		super.decorate(world, rand, cx0, cz0);
 
-		final BlockPos pos = new BlockPos();
-		pos.y = YConst.SEA_LVL_Y + 64;
+		final int y = YConst.SEA_LVL_Y + 64;
 		final int cx8 = cx0 + 8;
 		final int cz8 = cz0 + 8;
 		for (int i = 0; i < 50; i++) {
-			pos.x = cx8 + rand.nextInt(16);
-			pos.z = cz8 + rand.nextInt(16);
-			BiomeCRWGBase.Gen_Vines.generate(world, rand, pos);
+			int x = cx8 + rand.nextInt(16);
+			int z = cz8 + rand.nextInt(16);
+			BiomeCRWGBase.Gen_Vines.generate(world, rand, x, y, z);
 		}
 	}
 }

@@ -9,7 +9,6 @@ import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 import com.captrojo.crwg.world.gen.layer.GenLayerRand;
 
@@ -17,6 +16,7 @@ import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerSmooth;
 import net.minecraft.world.gen.layer.GenLayerZoom;
@@ -47,8 +47,8 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 		optns.grass = 5;
 		optns.flowers = 2;
 
-		optns.trees = 0;
-		optns.extra_tree_chance = 0.4F;
+		optns.trees = 1;
+		optns.tree_chance = 0.4F;
 
 		optns.liquid_waters = 0;
 		optns.liquid_lavas = 0;
@@ -99,7 +99,7 @@ public class BiomeSparseTemperateMountains extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return rand.nextBoolean() ? TreeGens.Spruce : TreeGens.Oak_Big;
 	}

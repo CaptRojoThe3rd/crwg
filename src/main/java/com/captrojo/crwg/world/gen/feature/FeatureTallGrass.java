@@ -2,12 +2,10 @@ package com.captrojo.crwg.world.gen.feature;
 
 import java.util.Random;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-public class FeatureTallGrass extends AbstractFeature
+public class FeatureTallGrass extends WorldGenFeature
 {
 	private final Block block;
 	private final int meta;
@@ -26,15 +24,15 @@ public class FeatureTallGrass extends AbstractFeature
 	}
 
 	@Override
-	public boolean generate(final World world, final Random rand, final BlockPos origin)
+	public boolean generate(final World world, final Random rand, int ox, int oy, int oz)
 	{
 		for (int l = 0; l < 128; l++) {
 			if (rand.nextInt(7) != 0) {
 				continue;
 			}
 
-			int x = origin.x + rand.nextInt(8) - rand.nextInt(8);
-			int z = origin.z + rand.nextInt(8) - rand.nextInt(8);
+			int x = ox + rand.nextInt(8) - rand.nextInt(8);
+			int z = oz + rand.nextInt(8) - rand.nextInt(8);
 			int y = world.getHeightValue(x, z);
 
 			if (world.isAirBlock(x, y, z) && this.block.canBlockStay(world, x, y, z)) {

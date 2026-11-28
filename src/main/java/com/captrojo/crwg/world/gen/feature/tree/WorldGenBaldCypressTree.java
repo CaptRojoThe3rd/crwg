@@ -5,7 +5,7 @@ import java.util.Random;
 import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.block.WoodBlocks;
 import com.captrojo.crwg.util.YConst;
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -16,7 +16,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenBaldCypressTree extends WorldGenerator implements PlantFeature
+public class WorldGenBaldCypressTree extends WorldGenerator
 {
 	/* log metadata */
 	private static final int BARK = 12;
@@ -46,7 +46,7 @@ public class WorldGenBaldCypressTree extends WorldGenerator implements PlantFeat
 			return;
 		}
 		if (
-			this.isReplaceableByLeaves(world, x, y, z)
+			PlacementChecks.isReplaceableByLeaves(world, x, y, z)
 			|| existing == Blocks.waterlily
 			|| existing == ModBlocks.small_waterlily
 		) {

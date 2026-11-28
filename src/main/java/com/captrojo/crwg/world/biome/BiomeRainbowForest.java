@@ -4,9 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.AbstractFeature;
-import com.captrojo.crwg.world.gen.feature.Feature;
-import com.captrojo.crwg.world.gen.feature.FeatureFlowers;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -15,10 +12,11 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeRainbowForest extends BiomeCRWGBase
 {
-	private static final FeatureFlowers[] FLOWERS = {
+	private static final WorldGenerator[] FLOWERS = {
 		BiomeCRWGBase.Gen_Flower_Allium,
 		BiomeCRWGBase.Gen_Flower_Houstonia,
 		BiomeCRWGBase.Gen_Flower_TulipRed,
@@ -59,7 +57,7 @@ public class BiomeRainbowForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextBoolean()) {
 			switch (rand.nextInt(5)) {
@@ -103,7 +101,7 @@ public class BiomeRainbowForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public AbstractFeature getFlowerGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		double d0 = (1.0 + BiomeGenBase.plantNoise.func_151601_a((double) origin.x / 96.0, (double) origin.z / 96.0)) / 2.0;
 		d0 = MathHelper.clamp_double(d0, 0.0, 0.9999);
@@ -112,7 +110,7 @@ public class BiomeRainbowForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getPumpkinGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getPumpkinGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Melon;
 	}

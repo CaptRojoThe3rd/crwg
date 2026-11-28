@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -12,6 +11,7 @@ import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeSavanna extends BiomeCRWGBase
 {
@@ -30,14 +30,14 @@ public class BiomeSavanna extends BiomeCRWGBase
 		optns.grass = 20;
 		optns.tall_grass = 7;
 
-		optns.trees = 1;
-		optns.extra_tree_chance = 0.1F;
+		optns.trees = 2;
+		optns.tree_chance = 0.55F;
 
 		this.decorator.setAllOptions(optns);
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(5) == 0) {
 			return TreeGens.Oak;

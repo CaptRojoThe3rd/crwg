@@ -3,7 +3,6 @@ package com.captrojo.crwg.world.gen.feature.tree;
 import java.util.Random;
 
 import com.captrojo.crwg.util.YConst;
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -12,7 +11,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenSmallSpruceTree extends WorldGenerator implements PlantFeature
+public class WorldGenSmallSpruceTree extends WorldGenerator
 {
 	private final Block log_block;
 	private final int log_meta;

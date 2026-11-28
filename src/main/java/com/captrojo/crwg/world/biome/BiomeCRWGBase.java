@@ -11,7 +11,6 @@ import com.captrojo.crwg.world.biome.decoration.Decorator;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenArrays;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.FeatureBlockBlob;
 import com.captrojo.crwg.world.gen.feature.FeatureBush;
 import com.captrojo.crwg.world.gen.feature.FeatureCactus;
@@ -22,6 +21,8 @@ import com.captrojo.crwg.world.gen.feature.FeatureShallowPond;
 import com.captrojo.crwg.world.gen.feature.FeatureTallGrass;
 import com.captrojo.crwg.world.gen.feature.FeatureWaterlily;
 import com.captrojo.crwg.world.gen.feature.WorldGenBigMushroom;
+import com.captrojo.crwg.world.gen.feature.WorldGenFeature;
+import com.captrojo.crwg.world.gen.feature.WorldGenUnderwaterBlockBlob;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -36,22 +37,25 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenLiquids;
 import net.minecraft.world.gen.feature.WorldGenReed;
 import net.minecraft.world.gen.feature.WorldGenVines;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public abstract class BiomeCRWGBase extends BiomeGenBase
 {
 	public static final ArrayList<BiomeCRWGBase> BIOMES = new ArrayList<BiomeCRWGBase>();
 
-	public static final Feature Gen_BigMushroom = (Feature) new WorldGenBigMushroom();
+	public static final WorldGenerator Gen_BigMushroom = new WorldGenBigMushroom();
 
-	public static final Feature Gen_Boulder_MossyCobble = new FeatureBlockBlob(Blocks.mossy_cobblestone);
+	public static final WorldGenerator Gen_Boulder_MossyCobble = new FeatureBlockBlob(Blocks.mossy_cobblestone);
 
-	public static final Feature Gen_Bush = new FeatureBush(ModBlocks.bush);
-	public static final Feature Gen_Bush_Dead = new FeatureBush(Blocks.deadbush);
+	public static final WorldGenerator Gen_Bush = new FeatureBush(ModBlocks.bush);
+	public static final WorldGenerator Gen_Bush_Dead = new FeatureBush(Blocks.deadbush);
 
-	public static final Feature Gen_Cactus = new FeatureCactus();
+	public static final WorldGenerator Gen_Cactus = new FeatureCactus();
 
-	public static final Feature Gen_Clover = new FeatureTallGrass(ModBlocks.clover, 15, 1);
-	public static final Feature Gen_Clover_Large = new FeatureTallGrass(ModBlocks.clover_large, 0);
+	private static final WorldGenFeature Gen_Cattail = new FeatureDoublePlant(ModBlocks.dplant_cattail, 0);
+
+	public static final WorldGenerator Gen_Clover = new FeatureTallGrass(ModBlocks.clover, 15, 1);
+	public static final WorldGenerator Gen_Clover_Large = new FeatureTallGrass(ModBlocks.clover_large, 0);
 
 	public static final FeatureDoublePlant Gen_DPlant_Sunflower = new FeatureDoublePlant(0);
 	public static final FeatureDoublePlant Gen_DPlant_Lilac = new FeatureDoublePlant(1);
@@ -89,33 +93,37 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	public static final FeatureFlowers Gen_Flower_PinkHyacinth = new FeatureFlowers(ModBlocks.flower_hyacinth_pink, 0);
 	public static final FeatureFlowers Gen_Flower_SalmonPinkHyacinth = new FeatureFlowers(ModBlocks.flower_hyacinth_salmonpink, 0);
 
-	public static final Feature Gen_Liquid_Water = (Feature) new WorldGenLiquids(Blocks.flowing_water);
-	public static final Feature Gen_Liquid_Lava = (Feature) new WorldGenLiquids(Blocks.flowing_lava);
+	public static final WorldGenerator Gen_Liquid_Water = new WorldGenLiquids(Blocks.flowing_water);
+	public static final WorldGenerator Gen_Liquid_Lava = new WorldGenLiquids(Blocks.flowing_lava);
 
-	public static final Feature Gen_Melon = new FeatureMelon(Blocks.melon_block);
+	public static final WorldGenerator Gen_Melon = new FeatureMelon(Blocks.melon_block);
 
-	public static final Feature Gen_Mushroom_Brown = new FeatureFlowers(Blocks.brown_mushroom, 0);
-	public static final Feature Gen_Mushroom_Red = new FeatureFlowers(Blocks.red_mushroom, 0);
+	public static final WorldGenerator Gen_Mushroom_Brown = new FeatureFlowers(Blocks.brown_mushroom, 0);
+	public static final WorldGenerator Gen_Mushroom_Red = new FeatureFlowers(Blocks.red_mushroom, 0);
 
-	public static final Feature Gen_Plant_PurpleBush = new FeatureFlowers(ModBlocks.purple_bush, 0);
+	public static final WorldGenerator Gen_Plant_PurpleBush = new FeatureFlowers(ModBlocks.purple_bush, 0);
 
-	public static final Feature Gen_Pumpkin = new FeatureMelon(Blocks.pumpkin);
+	public static final WorldGenerator Gen_Pumpkin = new FeatureMelon(Blocks.pumpkin);
 
-	public static final Feature Gen_ShallowPond = new FeatureShallowPond();
+	public static final WorldGenerator Gen_ShallowPond = new FeatureShallowPond();
 
-	public static final Feature Gen_ShortGrass_Dry_A = new FeatureTallGrass(ModBlocks.dry_short_grass, 0);
-	public static final Feature Gen_ShortGrass_Dry_B = new FeatureTallGrass(ModBlocks.dry_short_grass, 1);
-	public static final Feature Gen_ShortGrass_Dry_C = new FeatureTallGrass(ModBlocks.dry_short_grass, 2);
-	public static final Feature Gen_ShortGrass_Dry_D = new FeatureTallGrass(ModBlocks.dry_short_grass, 3);
+	public static final WorldGenerator Gen_ShortGrass_Dry_A = new FeatureTallGrass(ModBlocks.dry_short_grass, 0);
+	public static final WorldGenerator Gen_ShortGrass_Dry_B = new FeatureTallGrass(ModBlocks.dry_short_grass, 1);
+	public static final WorldGenerator Gen_ShortGrass_Dry_C = new FeatureTallGrass(ModBlocks.dry_short_grass, 2);
+	public static final WorldGenerator Gen_ShortGrass_Dry_D = new FeatureTallGrass(ModBlocks.dry_short_grass, 3);
 
-	public static final Feature Gen_Sugarcane = (Feature) new WorldGenReed();
+	public static final WorldGenerator Gen_Sugarcane = new WorldGenReed();
 
-	public static final Feature Gen_TallGrass = new FeatureTallGrass(Blocks.tallgrass, 1);
+	public static final WorldGenerator Gen_TallGrass = new FeatureTallGrass(Blocks.tallgrass, 1);
 
-	public static final Feature Gen_Vines = (Feature) new WorldGenVines();
+	public static final WorldGenerator Gen_UnderwaterSand = new WorldGenUnderwaterBlockBlob(Blocks.sand, 7, false);
+	public static final WorldGenerator Gen_UnderwaterClay = new WorldGenUnderwaterBlockBlob(Blocks.clay, 4, true);
+	public static final WorldGenerator Gen_UnderwaterGravel = new WorldGenUnderwaterBlockBlob(Blocks.gravel, 6, false);
 
-	public static final Feature Gen_Waterlily = new FeatureWaterlily();
-	public static final Feature Gen_Waterlily_Small = new FeatureWaterlily(ModBlocks.small_waterlily);
+	public static final WorldGenerator Gen_Vines = new WorldGenVines();
+
+	public static final WorldGenerator Gen_Waterlily = new FeatureWaterlily();
+	public static final WorldGenerator Gen_Waterlily_Small = new FeatureWaterlily(ModBlocks.small_waterlily);
 
 	public static void initAllBiomesWithWorldSeed(final long world_seed)
 	{
@@ -150,6 +158,7 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 	{
 		this.decorator = new Decorator(this, world_seed);
 		this.initDecorators(world_seed);
+		this.decorator.compileDecorations();
 	}
 
 	public void genTerrainExt(
@@ -278,77 +287,105 @@ public abstract class BiomeCRWGBase extends BiomeGenBase
 		return null;
 	}
 
-	public Feature getBoulderGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getUnderwaterSandGen(final World world, final Random rand, final BlockPos pos)
+	{
+		return BiomeCRWGBase.Gen_UnderwaterSand;
+	}
+
+	public WorldGenerator getUnderwaterClayGen(final World world, final Random rand, final BlockPos pos)
+	{
+		return BiomeCRWGBase.Gen_UnderwaterClay;
+	}
+
+	public WorldGenerator getUnderwaterGravelGen(final World world, final Random rand, final BlockPos pis)
+	{
+		return BiomeCRWGBase.Gen_UnderwaterGravel;
+	}
+
+	public WorldGenerator getBoulderGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Boulder_MossyCobble;
 	}
 
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return (rand.nextInt(10) == 0) ? TreeGens.Oak_Big : TreeGens.Oak;
 	}
 
-	public Feature getBigMushroomGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getBigMushroomGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_BigMushroom;
 	}
 
-	public Feature getFlowerGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getFlowerGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return (rand.nextInt(3) > 0) ? BiomeCRWGBase.Gen_Flower_Dandelion : BiomeCRWGBase.Gen_Flower_Poppy;
 	}
 
-	public Feature getGrassGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getGrassGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_TallGrass;
 	}
 
-	public Feature getTallGrassGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getTallGrassGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_DPlant_TallGrass;
 	}
 
-	public Feature getBushGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getCattailGen(final World world, final Random rand, final BlockPos pos)
+	{
+		return BiomeCRWGBase.Gen_Cattail;
+	}
+
+	public WorldGenerator getBushGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Bush;
 	}
 
-	public Feature getWaterlilyGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getWaterlilyGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Waterlily;
 	}
 
-	public Feature getBrownMushroomGen(final World world, final Random rand, final BlockPos pos, boolean always)
+	public WorldGenerator getMushroomGen(final World world, final Random rand, final BlockPos pos)
+	{
+		if (rand.nextInt(3) == 0) {
+			return BiomeCRWGBase.Gen_Mushroom_Red;
+		}
+		return BiomeCRWGBase.Gen_Mushroom_Brown;
+	}
+
+	public WorldGenerator getBrownMushroomGen(final World world, final Random rand, final BlockPos pos, boolean always)
 	{
 		return BiomeCRWGBase.Gen_Mushroom_Brown;
 	}
 
-	public Feature getRedMushroomGen(final World world, final Random rand, final BlockPos pos, boolean always)
+	public WorldGenerator getRedMushroomGen(final World world, final Random rand, final BlockPos pos, boolean always)
 	{
 		return BiomeCRWGBase.Gen_Mushroom_Red;
 	}
 
-	public Feature getReedGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getReedGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Sugarcane;
 	}
 
-	public Feature getPumpkinGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getPumpkinGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Pumpkin;
 	}
 
-	public Feature getCactusGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getCactusGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Cactus;
 	}
 
-	public Feature getLiquidWaterGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getLiquidWaterGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Liquid_Water;
 	}
 
-	public Feature getLiquidLavaGen(final World world, final Random rand, final BlockPos pos)
+	public WorldGenerator getLiquidLavaGen(final World world, final Random rand, final BlockPos pos)
 	{
 		return BiomeCRWGBase.Gen_Liquid_Lava;
 	}

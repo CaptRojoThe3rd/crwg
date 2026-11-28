@@ -14,13 +14,13 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 /**
  * Those gravel, sand, and clay blobs in shallow water
  */
-public class WorldGenSeafloorBlockCircle extends WorldGenerator
+public class WorldGenUnderwaterBlockBlob extends WorldGenerator
 {
 	protected final Block block;
 	protected final int size;
 	protected final boolean clay;
 
-	public WorldGenSeafloorBlockCircle(Block block, int size, boolean clay)
+	public WorldGenUnderwaterBlockBlob(Block block, int size, boolean clay)
 	{
 		this.block = block;
 		this.size = size;

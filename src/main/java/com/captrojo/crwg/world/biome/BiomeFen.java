@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -13,12 +12,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeFen extends BiomeAbstractSwamp
 {
-	private final Feature tree_1;
-	private final Feature tree_2;
-	private final Feature shrub;
+	private final WorldGenerator tree_1;
+	private final WorldGenerator tree_2;
+	private final WorldGenerator shrub;
 	private final int grass_color;
 	private final int foliage_color;
 
@@ -47,7 +47,7 @@ public class BiomeFen extends BiomeAbstractSwamp
 	public void initDecorators(final long world_seed)
 	{
 		super.initDecorators(world_seed);
-		DecoratorOptions optns = this.decorator.optns_lowland;
+		DecoratorOptions optns = this.decorator.getOptions(null);
 
 		optns.flowers = 0;
 		optns.grass = 10;
@@ -61,7 +61,7 @@ public class BiomeFen extends BiomeAbstractSwamp
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(12) == 0) {
 			return this.tree_1;

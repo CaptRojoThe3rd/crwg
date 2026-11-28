@@ -6,13 +6,13 @@ import com.captrojo.crwg.util.block.BlockStates;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeBeach extends BiomeCRWGBase
 {
@@ -28,8 +28,7 @@ public class BiomeBeach extends BiomeCRWGBase
 		final float temperature,
 		final float rainfall,
 		final byte type
-	)
-	{
+	) {
 		super(info, temperature, rainfall);
 		this.type = type;
 	}
@@ -40,7 +39,8 @@ public class BiomeBeach extends BiomeCRWGBase
 		DecoratorOptions optns = new DecoratorOptions();
 
 		if (this.type == TYPE_TROPICAL) {
-			optns.extra_tree_chance = 0.75F;
+			optns.trees = 1;
+			optns.tree_chance = 0.75F;
 		}
 
 		this.decorator.setAllOptions(optns);
@@ -65,7 +65,7 @@ public class BiomeBeach extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return TreeGens.Palm;
 	}

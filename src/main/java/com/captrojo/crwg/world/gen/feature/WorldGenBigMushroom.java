@@ -3,13 +3,14 @@ package com.captrojo.crwg.world.gen.feature;
 import java.util.Random;
 
 import com.captrojo.crwg.util.YConst;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-public class WorldGenBigMushroom extends WorldGenerator implements PlantFeature
+public class WorldGenBigMushroom extends WorldGenerator
 {
 	public WorldGenBigMushroom()
 	{
@@ -40,7 +41,7 @@ public class WorldGenBigMushroom extends WorldGenerator implements PlantFeature
 			for (x1 = x - chk_range; x1 <= x + chk_range; ++x1) {
 				for (z1 = z - chk_range; z1 <= z + chk_range; ++z1) {
 					if (y1 >= YConst.MIN_Y_LVL && y1 < YConst.MAX_Y_LVL) {
-						if (!this.isReplaceableByLeaves(world, x1, y1, z1)) {
+						if (!PlacementChecks.isReplaceableByLeaves(world, x1, y1, z1)) {
 							return false;
 						}
 					} else {
@@ -50,7 +51,7 @@ public class WorldGenBigMushroom extends WorldGenerator implements PlantFeature
 			}
 		}
 
-		if (!this.isValidSoil(world, x, y - 1, z)) {
+		if (!PlacementChecks.isValidSoil(world, x, y - 1, z)) {
 			return false;
 		}
 

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -14,6 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeCypressSwamp extends BiomeAbstractSwamp
 {
@@ -27,14 +27,14 @@ public class BiomeCypressSwamp extends BiomeAbstractSwamp
 	public void initDecorators(final long world_seed)
 	{
 		super.initDecorators(world_seed);
-		DecoratorOptions optns = this.decorator.optns_lowland;
+		DecoratorOptions optns = this.decorator.getOptions(null);
 		optns.trees = 4;
 		optns.grass = 6;
 		optns.flowers = 0;
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return TreeGens.Bald_Cypress;
 	}

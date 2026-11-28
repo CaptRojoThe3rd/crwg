@@ -4,12 +4,10 @@ import java.util.Random;
 
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
-
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-public class FeatureBush extends AbstractFeature
+public class FeatureBush extends WorldGenFeature
 {
 	private final Block block;
 
@@ -19,7 +17,7 @@ public class FeatureBush extends AbstractFeature
 	}
 
 	@Override
-	public boolean generate(final World world, final Random rand, final BlockPos origin)
+	public boolean generate(final World world, final Random rand, int ox, int oy, int oz)
 	{
 		WorldCRWG world_crwg = (WorldCRWG) (Object) world;
 
@@ -28,8 +26,8 @@ public class FeatureBush extends AbstractFeature
 				continue;
 			}
 
-			int x = origin.x + rand.nextInt(8) - rand.nextInt(8);
-			int z = origin.z + rand.nextInt(8) - rand.nextInt(8);
+			int x = ox + rand.nextInt(8) - rand.nextInt(8);
+			int z = oz + rand.nextInt(8) - rand.nextInt(8);
 			int y = world_crwg.crwg$getGndHeight(x, z);
 
 			if (world.isAirBlock(x, y, z) && this.block.canBlockStay(world, x, y, z)) {

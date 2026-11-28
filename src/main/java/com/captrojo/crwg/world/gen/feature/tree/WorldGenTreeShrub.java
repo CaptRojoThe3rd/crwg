@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.util.YConst;
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenTreeShrub extends WorldGenerator implements PlantFeature
+public class WorldGenTreeShrub extends WorldGenerator
 {
 	private final Block log_block;
 	private final int log_meta;
@@ -67,7 +67,7 @@ public class WorldGenTreeShrub extends WorldGenerator implements PlantFeature
 					if (!(Math.abs(xd) != rad || Math.abs(zd) != rad || rand.nextInt(2) != 0)) {
 						continue;
 					}
-					if (!this.isReplaceableByLeaves(world, x1, y1, z1)) {
+					if (!PlacementChecks.isReplaceableByLeaves(world, x1, y1, z1)) {
 						continue;
 					}
 					this.setBlockAndNotifyAdequately(world, x1, y1, z1, this.leaf_block, this.leaf_meta);

@@ -2,17 +2,15 @@ package com.captrojo.crwg.world.gen.feature;
 
 import java.util.Random;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class FeatureDoublePlant extends AbstractFeature
+public class FeatureDoublePlant extends WorldGenFeature
 {
-	private final BlockDoublePlant block;
-	private final int meta;
+	protected final BlockDoublePlant block;
+	protected final int meta;
 
 	public FeatureDoublePlant(int meta)
 	{
@@ -27,7 +25,7 @@ public class FeatureDoublePlant extends AbstractFeature
 	}
 
 	@Override
-	public boolean generate(final World world, final Random rand, final BlockPos origin)
+	public boolean generate(final World world, final Random rand, int ox, int oy, int oz)
 	{
 		boolean flag = false;
 
@@ -36,8 +34,8 @@ public class FeatureDoublePlant extends AbstractFeature
 				continue;
 			}
 
-			int x = origin.x + rand.nextInt(8) - rand.nextInt(8);
-			int z = origin.z + rand.nextInt(8) - rand.nextInt(8);
+			int x = ox + rand.nextInt(8) - rand.nextInt(8);
+			int z = oz + rand.nextInt(8) - rand.nextInt(8);
 			int y = world.getHeightValue(x, z);
 
 			if (world.isAirBlock(x, y, z) && this.block.canPlaceBlockAt(world, x, y, z)) {

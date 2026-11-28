@@ -3,7 +3,6 @@ package com.captrojo.crwg.world.biome;
 import java.util.Random;
 
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -15,6 +14,7 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeDarkSwamp extends BiomeAbstractSwamp
 {
@@ -29,13 +29,13 @@ public class BiomeDarkSwamp extends BiomeAbstractSwamp
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return TreeGens.Oak_Swamp;
 	}
 
 	@Override
-	public Feature getFlowerGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Flower_BlueOrchid;
 	}

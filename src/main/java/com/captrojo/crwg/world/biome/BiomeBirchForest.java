@@ -4,8 +4,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.AbstractFeature;
-import com.captrojo.crwg.world.gen.feature.Feature;
+import com.captrojo.crwg.world.gen.feature.WorldGenFeature;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
@@ -13,6 +12,7 @@ import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeBirchForest extends BiomeCRWGBase
 {
@@ -54,7 +54,7 @@ public class BiomeBirchForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.type == OLD_GROWTH) {
 			return rand.nextBoolean() ? TreeGens.Birch : TreeGens.Birch_Tall;
@@ -65,11 +65,10 @@ public class BiomeBirchForest extends BiomeCRWGBase
 	@Override
 	public void decorate(final World world, final Random rand, final int cx0, final int cz0)
 	{
-		final BlockPos pos = new BlockPos(cx0, 0, cz0);
 		int tall_flowers = rand.nextInt(5) - 2;
 		for (int i = 0; i < tall_flowers; i++) {
-			AbstractFeature gen = rand.nextBoolean() ? BiomeCRWGBase.Gen_DPlant_Lilac : BiomeCRWGBase.Gen_DPlant_Peony;
-			gen.generate(world, rand, pos);
+			WorldGenFeature gen = rand.nextBoolean() ? BiomeCRWGBase.Gen_DPlant_Lilac : BiomeCRWGBase.Gen_DPlant_Peony;
+			gen.generate(world, rand, cx0 + 8, 0, cz0 + 8);
 		}
 
 		super.decorate(world, rand, cx0, cz0);

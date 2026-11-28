@@ -1,0 +1,55 @@
+package com.captrojo.crwg.world.biome.decoration.decors;
+
+import java.util.Random;
+
+import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
+import com.captrojo.crwg.util.YConst;
+import com.captrojo.crwg.util.func.TriArgFloatProvider;
+import com.captrojo.crwg.util.func.TriArgIntProvider;
+import com.captrojo.crwg.util.func.TriArgProvider;
+import com.captrojo.crwg.world.biome.decoration.util.DecoCoords;
+
+import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
+
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
+
+public class RandXZGndDecoration extends Decoration
+{
+	private final TriArgProvider<World, Random, BlockPos, WorldGenerator> gen;
+	private final TriArgIntProvider<World, Random, DecoCoords> count;
+	private final TriArgFloatProvider<World, Random, DecoCoords> chance;
+
+	public RandXZGndDecoration(
+		final EventType event_type,
+		final String event_desc,
+		final TriArgProvider<World, Random, BlockPos, WorldGenerator> gen,
+		final TriArgIntProvider<World, Random, DecoCoords> count,
+		final TriArgFloatProvider<World, Random, DecoCoords> chance
+	) {
+		super(event_type, event_desc);
+		this.gen = gen;
+		this.count = count;
+		this.chance = chance;
+	}
+
+	@Override
+	public void decorate(final World world, final Random rand, final DecoCoords dpos)
+	{
+		final WorldCRWG world_crwg = (WorldCRWG) world;
+		final BlockPos pos = new BlockPos();
+		final int count = this.count.getInt(world, rand, dpos);
+		final float chance = this.chance.getFloat(world, rand, dpos);
+		for (int c = 0; c < count; c++) {
+			if (chance < 1.0F && rand.nextFloat() > chance) {
+				continue;
+			}
+			dpos.applyRandPos(pos);
+			pos.y = Math.max(world_crwg.crwg$getGndHeight(pos.x, pos.z), YConst.SEA_LVL_Y);
+			WorldGenerator gen = this.gen.get(world, rand, pos);
+			gen.generate(world, rand, pos.x, pos.y, pos.z);
+		}
+	}
+}

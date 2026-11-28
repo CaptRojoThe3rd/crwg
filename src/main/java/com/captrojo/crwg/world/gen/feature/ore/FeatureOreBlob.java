@@ -6,7 +6,6 @@ import com.captrojo.crwg.util.MathUtil;
 import com.captrojo.crwg.util.block.BlockReplacer;
 import com.captrojo.crwg.world.gen.placement.HeightProvider;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.util.MathHelper;
@@ -25,15 +24,15 @@ public class FeatureOreBlob extends FeatureAbstractOre
 	}
 
 	@Override
-	protected void doGeneration(final World world, final Random rand, final BlockPos origin)
+	protected void doGeneration(final World world, final Random rand, final int ox, final int oy, final int oz)
 	{
 		float α = rand.nextFloat() * (float) Math.PI;
-		double x_max = (double) ((float) origin.x + MathHelper.sin(α) * (float) this.size / 8.0F);
-		double x_min = (double) ((float) origin.x - MathHelper.sin(α) * (float) this.size / 8.0F);
-		double z_max = (double) ((float) origin.z + MathHelper.cos(α) * (float) this.size / 8.0F);
-		double z_min = (double) ((float) origin.z - MathHelper.cos(α) * (float) this.size / 8.0F);
-		double y_r1 = (double) (origin.y + rand.nextInt(3) - 2);
-		double y_r2 = (double) (origin.y + rand.nextInt(3) - 2);
+		double x_max = (double) ((float) ox + MathHelper.sin(α) * (float) this.size / 8.0F);
+		double x_min = (double) ((float) ox - MathHelper.sin(α) * (float) this.size / 8.0F);
+		double z_max = (double) ((float) oz + MathHelper.cos(α) * (float) this.size / 8.0F);
+		double z_min = (double) ((float) oz - MathHelper.cos(α) * (float) this.size / 8.0F);
+		double y_r1 = (double) (oy + rand.nextInt(3) - 2);
+		double y_r2 = (double) (oy + rand.nextInt(3) - 2);
 
 		for (int l = 0; l <= this.size; ++l) {
 			double dx = x_max + (x_min - x_max) * (double) l / (double) this.size;

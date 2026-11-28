@@ -2,20 +2,18 @@ package com.captrojo.crwg.world.gen.feature;
 
 import java.util.Random;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 
-public class FeatureShallowPond extends AbstractFeature
+public class FeatureShallowPond extends WorldGenFeature
 {
 	private final int radius = 4;
 	private final int radius_variance = 3;
 
 	@Override
-	public boolean generate(final World world, final Random rand, final BlockPos origin)
+	public boolean generate(final World world, final Random rand, int ox, int oy, int oz)
 	{
 		final int max_rad = this.radius + this.radius_variance;
 
@@ -28,23 +26,23 @@ public class FeatureShallowPond extends AbstractFeature
 					continue;
 				}
 
-				int x1 = origin.x + xo;
-				int z1 = origin.z + zo;
+				int x1 = ox + xo;
+				int z1 = oz + zo;
 
-				if (!world.isAirBlock(x1, origin.y + 1, z1)) {
+				if (!world.isAirBlock(x1, oy + 1, z1)) {
 					continue;
 				}
 
 				for (int d = 0; d < 4; d++) {
 					int x2 = x1 + Direction.offsetX[d];
 					int z2 = z1 + Direction.offsetZ[d];
-					Block block = world.getBlock(x2, origin.y, z2);
+					Block block = world.getBlock(x2, oy, z2);
 					if (!block.isOpaqueCube() && !block.getMaterial().isLiquid()) {
 						continue z_loop;
 					}
 				}
 
-				world.setBlock(x1, origin.y, z1, Blocks.water, 0, 2);
+				world.setBlock(x1, oy, z1, Blocks.water, 0, 2);
 			}
 		}
 

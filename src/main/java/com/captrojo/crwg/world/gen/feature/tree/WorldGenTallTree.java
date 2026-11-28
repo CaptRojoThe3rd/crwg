@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.captrojo.crwg.util.func.World1IFunction;
 import com.captrojo.crwg.world.biome.data.SoilType;
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
@@ -15,7 +15,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenTallTree extends WorldGenerator implements PlantFeature
+public class WorldGenTallTree extends WorldGenerator
 {
 	/* log metadata */
 	private static final int NORTHSOUTH = 8;
@@ -146,7 +146,7 @@ public class WorldGenTallTree extends WorldGenerator implements PlantFeature
 
 	private void placeBlock(final World world, final int x, final int y, final int z, final Block block, final int meta)
 	{
-		if (this.isReplaceableByLeaves(world, x, y, z)) {
+		if (PlacementChecks.isReplaceableByLeaves(world, x, y, z)) {
 			this.setBlockAndNotifyAdequately(world, x, y, z, block, meta);
 		}
 	}

@@ -6,8 +6,7 @@ import com.captrojo.crwg.block.ModBlocks;
 import com.captrojo.crwg.mixins.interfaces.WorldCRWG;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
-import com.captrojo.crwg.world.gen.feature.AbstractFeature;
-import com.captrojo.crwg.world.gen.feature.Feature;
+import com.captrojo.crwg.world.gen.feature.WorldGenFeature;
 import com.captrojo.crwg.world.gen.feature.FeatureDoublePlant;
 import com.captrojo.crwg.world.gen.feature.FeatureFlowers;
 import com.captrojo.crwg.world.gen.feature.tree.TreeGens;
@@ -20,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeOakForest extends BiomeCRWGBase
 {
@@ -126,7 +126,7 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getTreeGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.chaparral) {
 			return (rand.nextInt(10) == 0) ? TreeGens.Oak_Big : TreeGens.Oak;
@@ -135,10 +135,10 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getFlowerGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getFlowerGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (this.flower_forest) {
-			AbstractFeature[] flower_arr = this.getFlowerArray(world, origin.x, origin.y, origin.z);
+			WorldGenFeature[] flower_arr = this.getFlowerArray(world, origin.x, origin.y, origin.z);
 			double d = BiomeGenBase.plantNoise.func_151601_a((double) origin.x / 96.0, (double) origin.z / 96.0);
 			d = (d + 1.0) / 2.0;
 			d = MathHelper.clamp_double(d, 0.0, 0.9999);
@@ -152,7 +152,7 @@ public class BiomeOakForest extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		if (rand.nextInt(4) == 0) {
 			return BiomeCRWGBase.Gen_TallGrass;
@@ -166,14 +166,16 @@ public class BiomeOakForest extends BiomeCRWGBase
 	@Override
 	public void decorate(World world, Random rand, int cx0, int cz0)
 	{
-		final BlockPos pos = new BlockPos(cx0 + 8, world.getHeightValue(cx0 + 8, cz0 + 8), cz0 + 8);
+		final int cx8 = cx0 + 8;
+		final int cz8 = cz0 + 8;
+		final int y = world.getHeightValue(cx8, cz8);
 		int tall_flowers = rand.nextInt(5) - 3;
 		if (this.flower_forest) {
 			tall_flowers += 2;
 		}
 		for (int i = 0; i < tall_flowers; i++) {
 			int f = rand.nextInt(FLOWER_FOREST_DOUBLE_PLANTS.length);
-			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, pos);
+			FLOWER_FOREST_DOUBLE_PLANTS[f].generate(world, rand, cx8, y, cz8);
 		}
 		super.decorate(world, rand, cx0, cz0);
 	}

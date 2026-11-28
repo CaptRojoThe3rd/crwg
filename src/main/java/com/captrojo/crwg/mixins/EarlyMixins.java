@@ -72,8 +72,6 @@ public class EarlyMixins extends ConfigurableMixins implements IFMLLoadingPlugin
 		this.addMixin(mixins, "common.ChunkMixin");
 		this.addMixin(mixins, "common.WorldMixin");
 
-		this.addMixin(mixins, "common.WorldGeneratorMixin");
-
 		this.addMixin(mixins, "common.joke.MapGenVillageMixin");
 
 		if (SIDE == MixinEnvironment.Side.CLIENT) {

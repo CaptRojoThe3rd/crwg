@@ -7,13 +7,13 @@ import com.captrojo.crwg.world.biome.data.SoilType;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.Feature;
 import com.captrojo.crwg.world.gen.layer.GenLayerRand;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerSmooth;
 import net.minecraft.world.gen.layer.GenLayerZoom;
@@ -45,15 +45,18 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		final float temperature,
 		final float rainfall,
 		final boolean old_growth
-	)
-	{
+	) {
 		super(info, temperature, rainfall);
 		this.old_growth = old_growth;
 
-		GenLayer layer = new GenLayerRand(100L, TOP_BLOCKS.length);
-		layer = GenLayerZoom.magnify(110L, layer, 4);
-		layer = new GenLayerSmooth(120L, layer);
-		this.genlayer_soil = layer;
+		if (old_growth) {
+			GenLayer layer = new GenLayerRand(100L, TOP_BLOCKS.length);
+			layer = GenLayerZoom.magnify(110L, layer, 4);
+			layer = new GenLayerSmooth(120L, layer);
+			this.genlayer_soil = layer;
+		} else {
+			this.genlayer_soil = null;
+		}
 	}
 
 	@Override
@@ -65,7 +68,6 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 		optns.boulder_chance = 0.1F;
 
 		optns.trees = 4;
-		optns.extra_tree_chance = 0.0F;
 
 		this.decorator.setAllOptions(optns);
 	}
@@ -74,7 +76,9 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 	public void initWithWorldSeed(final long world_seed)
 	{
 		super.initWithWorldSeed(world_seed);
-		this.genlayer_soil.initWorldGenSeed(world_seed);
+		if (this.genlayer_soil != null) {
+			this.genlayer_soil.initWorldGenSeed(world_seed);
+		}
 	}
 
 	@Override
@@ -107,5 +111,5 @@ public abstract class BiomeAbstractConiferous extends BiomeCRWGBase
 	}
 
 	@Override
-	public abstract Feature getTreeGen(final World world, final Random rand, final BlockPos origin);
+	public abstract WorldGenerator getTreeGen(final World world, final Random rand, final BlockPos origin);
 }

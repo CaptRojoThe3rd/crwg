@@ -33,7 +33,7 @@ public class BiomeBog extends BiomeAbstractSwamp
 	public void initDecorators(final long world_seed)
 	{
 		super.initDecorators(world_seed);
-		DecoratorOptions optns = this.decorator.optns_lowland;
+		DecoratorOptions optns = this.decorator.getOptions(null);
 
 		optns.flowers = 0;
 		optns.grass = 20;

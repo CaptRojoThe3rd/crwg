@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 
 @FunctionalInterface
-public interface WorldFunctionA<R>
+public interface WorldXZArgIntProvider
 {
-	R get(final World world, final Random rand, int x, int y, int z);
+	int get(World world, Random rand, int x, int z);
 }

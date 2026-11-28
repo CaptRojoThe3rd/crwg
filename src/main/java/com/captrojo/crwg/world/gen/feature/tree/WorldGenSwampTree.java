@@ -3,7 +3,7 @@ package com.captrojo.crwg.world.gen.feature.tree;
 import java.util.Random;
 
 import com.captrojo.crwg.util.YConst;
-import com.captrojo.crwg.world.gen.feature.PlantFeature;
+import com.captrojo.crwg.world.gen.placement.PlacementChecks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class WorldGenSwampTree extends WorldGenerator implements PlantFeature
+public class WorldGenSwampTree extends WorldGenerator
 {
 	private final Block log_block;
 	private final Block leaf_block;
@@ -105,7 +105,7 @@ public class WorldGenSwampTree extends WorldGenerator implements PlantFeature
 					}
 
 					if (Math.abs(dx) != w || Math.abs(dz) != w || rand.nextInt(2) != 0 && h != 0) {
-						if (this.isReplaceableByLeaves(world, xa, ya, za)) {
+						if (PlacementChecks.isReplaceableByLeaves(world, xa, ya, za)) {
 							this.setBlockAndNotifyAdequately(world, xa, ya, za, this.leaf_block, 0);
 						}
 					}

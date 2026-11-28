@@ -6,16 +6,16 @@ import com.captrojo.crwg.util.block.BlockStates;
 import com.captrojo.crwg.world.biome.decoration.DecoratorOptions;
 import com.captrojo.crwg.world.biome.info.BiomeInfo;
 import com.captrojo.crwg.world.gen.data.GenVals;
-import com.captrojo.crwg.world.gen.feature.Feature;
 
 import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizon.gtnhlib.blockstate.core.BlockState;
 
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class BiomeDesert extends BiomeCRWGBase
 {
-	static final Feature[] GRASS_GENS = {
+	static final WorldGenerator[] GRASS_GENS = {
 		BiomeCRWGBase.Gen_ShortGrass_Dry_A,
 		BiomeCRWGBase.Gen_ShortGrass_Dry_B,
 		BiomeCRWGBase.Gen_ShortGrass_Dry_C,
@@ -57,13 +57,13 @@ public class BiomeDesert extends BiomeCRWGBase
 	}
 
 	@Override
-	public Feature getGrassGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getGrassGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return GRASS_GENS[rand.nextInt(GRASS_GENS.length)];
 	}
 
 	@Override
-	public Feature getBushGen(final World world, final Random rand, final BlockPos origin)
+	public WorldGenerator getBushGen(final World world, final Random rand, final BlockPos origin)
 	{
 		return BiomeCRWGBase.Gen_Bush_Dead;
 	}
